@@ -1,0 +1,149 @@
+% Definiciones y constantes de estilo
+\include{definiciones}
+
+% Definiciones de comandos
+\newcommand{\nombreautor}{Nerea Urrestarazu Mohamed}
+\newcommand{\nombredirector}{Juan Manuel López Navarro}
+\newcommand{\nombretrabajo}{Realización de un prototipo de sistema de adquisición EEG con interfaces inalámbricas WiFi/Bluetooth y USB}
+\newcommand{\nombretrabajocorto}{Prototipado de sistema de adquisición EEG}
+\newcommand{\fecha}{\today}
+\newcommand{\lugar}{Madrid}
+\newcommand{\master}{Máster Universitario en Ingeniería de Telecomunicación}
+% Descomentar si tu trabajo tiene un co-director
+%\newcommand{\nombrecodirector}{TODO: Nombre del co-director}
+% Descomentar si tu trabajo está asociado a un grupo de investigación
+% \newcommand{\grupoInvestigacion}{TODO: Grupo de investigación}
+\newcommand{\departamento}{Grupo de investigación en Intrumentación y Acústica Aplicada}
+\newcommand{\facultad}{Escuela Técnica Superior de Ingenieros de Telecomunición}
+\newcommand{\universidad}{Universidad Politécnica de Madrid}
+\newcommand{\pieparizq}{}
+\newcommand{\pieparcen}{\nombretrabajocorto}
+\newcommand{\logoizq}{logo_politecnica}
+\newcommand{\logoder}{escudo_teleco}
+\newcommand{\correo}{n.urrestarazu@alumnos.upm.es; numnoa@gmail.com}
+
+
+% Glosario y acrónimos
+\makeglossaries
+\input{src/glosario}
+
+% Rerefencias
+\bibliography{src/bibliografia}
+
+% Inicio del documento
+\begin{document}
+
+% Elección del idioma (español)
+\selectlanguage{spanish}
+
+%
+% Portada
+%
+\pagenumbering{gobble}
+\include{portada}
+\hypersetup{pageanchor=true}
+
+% Estilo de párrafo de los capítulos
+\setlength{\parskip}{0.75em}
+\renewcommand{\baselinestretch}{1.25}
+% Interlineado simple
+\spacing{1}
+
+%
+% Agradecimientos
+%
+
+\include{src/dedicatoria}  
+\include{src/agradecimientos}  
+
+%
+% Resumen
+%
+\pagenumbering{roman}
+\setcounter{page}{0}
+\include{src/resumen}
+
+%
+% Glosario
+%
+%\printglossary[title=Glosario,toctitle=Glosario]
+%\printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
+
+% Estilo de párrafo de los índices
+\setlength{\parskip}{1pt}
+\renewcommand{\baselinestretch}{1}
+
+%
+% Tabla de contenidos
+%
+\tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
+
+% Estilo de párrafo de los capítulos
+\setlength{\parskip}{0.75em}
+\renewcommand{\baselinestretch}{1.25}
+% Interlineado simple
+\spacing{1}
+% Numeración contenido
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%
+% Introducción
+%
+\include{src/introduccion}
+%
+% Estado del arte
+%
+\include{src/estadoDelArte}
+
+%
+% Diseño
+%
+\include{src/disenho}
+
+%
+% Desarrollo
+%
+\include{src/desarrollo}
+
+%
+% Resultados
+%
+\include{src/resultados}
+
+%
+% Conclusiones
+%
+\include{src/conclusiones} 
+
+%
+% Página en blanco
+%
+\cleardoublepage
+
+%
+% Bibliografía
+%
+\printbibliography[heading=bibintoc]
+
+% No expandir elementos para llenar toda la página
+\raggedbottom
+
+%
+% Apéndices
+%
+\appendix
+\cleardoublepage
+\addappheadtotoc
+\appendixpage
+
+%
+% TODO: Apéndices del TFG
+%
+\include{src/apendiceEjemplos}
+
+% Fin del documento
+\end{document}

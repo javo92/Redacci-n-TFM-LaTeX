@@ -1,0 +1,160 @@
+% Definiciones y constantes de estilo
+\include{definiciones}
+\usepackage{float} %Para obligar a las figuras a quedarse en un sitio
+
+% Definiciones de comandos
+\newcommand{\nombreautor}{Javier Benavides Caro}
+\newcommand{\nombredirector}{Juan Manuel López Navarro}
+\newcommand{\nombretrabajo}{Desarrollo y puesta en funcionamiento de un sistema de adquisición EEG con capacidades de procesado}
+\newcommand{\nombretrabajocorto}{Prototipado de sistema de adquisición EEG}
+\newcommand{\fecha}{\today}
+\newcommand{\lugar}{Madrid}
+\newcommand{\master}{Máster Universitario en Ingeniería de Telecomunicación}
+% Descomentar si tu trabajo tiene un co-director
+%\newcommand{\nombrecodirector}{TODO: Nombre del co-director}
+% Descomentar si tu trabajo está asociado a un grupo de investigación
+% \newcommand{\grupoInvestigacion}{TODO: Grupo de investigación}
+\newcommand{\departamento}{Grupo de investigación en Intrumentación y Acústica Aplicada}
+\newcommand{\facultad}{Escuela Técnica Superior de Ingenieros de Telecomunición}
+\newcommand{\universidad}{Universidad Politécnica de Madrid}
+\newcommand{\pieparizq}{\nombretrabajocorto}
+\newcommand{\pieparcen}{\nombretrabajocorto}
+\newcommand{\logoizq}{logo_politecnica}
+\newcommand{\logoder}{escudo_teleco}
+\newcommand{\correo}{j.bcaro@alumnos.upm.es; javierbenacaro@gmail.com}
+
+
+% Glosario y acrónimos
+%\makeindex
+%\makeglossaries
+\input{src/glosario}
+
+
+% Inicio del documento
+\begin{document}
+
+% Elección del idioma (español)
+\selectlanguage{spanish}
+
+%
+% Portada
+%
+\pagenumbering{gobble}
+\include{portada}
+\hypersetup{pageanchor=true}
+
+% Estilo de párrafo de los capítulos
+\setlength{\parskip}{0.75em}
+\renewcommand{\baselinestretch}{1.25}
+% Interlineado simple
+\spacing{1}
+
+%
+% Agradecimientos
+%
+
+\include{src/Dedicatoria}  
+\include{src/Agradecimientos}  
+
+%
+% Resumen
+%
+\pagenumbering{roman}
+\setcounter{page}{0}
+\include{src/Resumen}
+
+%
+% Glosario
+%
+%Para que se incluyan debes ejecutar en el terminal el siguiente comando:
+%makeindex -s main.ist -t main.glg -o main.gls main.glo
+\include{src/Glosario}
+\printglossary[title=Glosario,toctitle=Glosario]
+\printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
+
+
+% Estilo de párrafo de los índices
+\setlength{\parskip}{1pt}
+\renewcommand{\baselinestretch}{1}
+
+%
+% Tabla de contenidos
+%
+\tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
+
+% Estilo de párrafo de los capítulos
+\setlength{\parskip}{0.75em}
+\renewcommand{\baselinestretch}{1.25}
+% Interlineado simple
+\spacing{1}
+% Numeración contenido
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%
+% Introducción
+%
+\include{src/1_Introduccion}
+%
+% Estado del arte
+%
+\include{src/2_EstadoDelArte}
+
+%
+% Diseño
+%
+\include{src/3_Disenho}
+
+%
+% Implementación
+%
+\include{src/4_Implementacion}
+
+%
+% Resultados
+%
+\include{src/5_Resultados}
+
+%
+% Conclusiones
+%
+\include{src/6_Conclusiones} 
+
+%
+% Bibliografía
+%
+
+\include{src/Bibliografia}
+
+%
+% Página en blanco
+%
+\cleardoublepage
+
+%
+% Bibliografía
+\printbibliography[heading=bibintoc]
+
+% No expandir elementos para llenar toda la página
+\raggedbottom
+
+%
+% Apéndices
+%
+\appendix
+\cleardoublepage
+\addappheadtotoc
+\appendixpage
+
+%
+% TODO: Apéndices del TFM
+%
+\include{src/ApendiceEjemplos}
+
+%AÑADIR DE ANEXO EL BOM
+
+% Fin del documento
+\end{document}

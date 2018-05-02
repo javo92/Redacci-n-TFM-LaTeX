@@ -1,5 +1,5 @@
 % Definiciones y constantes de estilo
-\include{definiciones}
+\include{Definiciones}
 \usepackage{float} %Para obligar a las figuras a quedarse en un sitio
 
 % Definiciones de comandos
@@ -25,10 +25,9 @@
 
 
 % Glosario y acrónimos
-%\makeindex
-%\makeglossaries
-\input{src/glosario}
-
+\makeindex
+\makeglossaries
+\input{src/Glosario}
 
 % Inicio del documento
 \begin{document}
@@ -66,12 +65,11 @@
 %
 % Glosario
 %
-%Para que se incluyan debes ejecutar en el terminal el siguiente comando:
-%makeindex -s main.ist -t main.glg -o main.gls main.glo
+% Para que se incluyan debes ejecutar en el terminal el siguiente comando:
+% makeindex -s main.ist -t main.glg -o main.gls main.glo
 \include{src/Glosario}
 \printglossary[title=Glosario,toctitle=Glosario]
 \printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
-
 
 % Estilo de párrafo de los índices
 \setlength{\parskip}{1pt}

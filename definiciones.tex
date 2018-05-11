@@ -57,14 +57,13 @@
 \usepackage{setspace}
 % Glosario/Acrónimos
 %\usepackage{hyperref}
-\usepackage[acronym,toc]{glossaries}
+\usepackage[acronym,automake]{glossaries}
 \makeglossaries
 % Fuentes
 \usepackage[T1]{fontenc}
-%\usepackage{fontenc}
 %\setmainfont{Times New Roman}
 % Bibliografía
-\usepackage[sorting=none,natbib=true,backend=bibtex,bibencoding=ascii]{biblatex}
+%\usepackage[sorting=none,natbib=true,backend=bibtex,bibencoding=ascii]{biblatex}
 % Fix biblatex+babel warning
 \usepackage{csquotes}
 
@@ -153,7 +152,7 @@
 \newlength\resalto
 \setlength{\resalto}{2.3ex plus.2ex}
 
-% Estilo de los acrónimos
+%% Estilo de los acrónimos
 \renewcommand{\acronymname}{Glosario}
 \renewcommand{\glossaryname}{Glosario}
 \pretolerance=2000
@@ -178,3 +177,5 @@
 
 % Comando para poder poner imágenes con texto alrededor
 \usepackage{wrapfig}
+
+\usepackage[backend=bibtex,style=numeric]{biblatex}  %backend=biber is 'better'  

@@ -1,6 +1,6 @@
 \chapter{Diseño\label{sec:diseño}}
 
-Este proyecto consiste en una ampliación y cambio de enfoque de otro proyecto llevado a cabo de manera simultánea por una alumna de la Universidad Politécnica de Madrid llamada Nerea Urrestarazu que a su vez se basa en el Kit de demostración de rendimiento del ADS1299 proporcionado por Texas Instrument.
+Este proyecto \cite{Cano} consiste en una ampliación y cambio de enfoque de otro proyecto llevado a cabo de manera simultánea por una alumna de la Universidad Politécnica de Madrid llamada Nerea Urrestarazu que a su vez se basa en el Kit de demostración de rendimiento del ADS1299 proporcionado por Texas Instrument.
 
 \begin{figure} [h]
     \centering
@@ -22,8 +22,8 @@ El proyecto original trata sobre el diseño y desarrollo de una placa de adquisi
 
 \section{Adquisición de datos\label{sec:Adquisicion_N}}
 
-La parte encargada de la adquisición está compuesta por un par de bancos de electrodos dispuestos en los laterales de la placa seguidos de un filtro paso-bajo con frecuencia de corte de 6.79kHz encargado de eliminar las componentes de frecuencias muy altas, no deseadas en el estudio de un \gls{EEG}. A continuación se encuentran conectados a sus respectivos bancos los \gls{ADC} ADS1299. 
-\\Estos convertidores son capaces de adquirir información de forma independiente o en modo ``Daisy Chain'' y transmitirla a través de \gls{SPI} hacia otros dispositivos cuya misión será gestionarla.
+La parte encargada de la adquisición está compuesta por un par de bancos de electrodos dispuestos en los laterales de la placa seguidos de un filtro paso-bajo con frecuencia de corte de 6.79kHz encargado de eliminar las componentes de frecuencias muy altas, no deseadas en el estudio de un \acrshort{EEG}. A continuación se encuentran conectados a sus respectivos bancos los \acrshort{ADC} ADS1299. 
+\\Estos convertidores son capaces de adquirir información de forma independiente o en modo ``Daisy Chain'' y transmitirla a través de \acrshort{SPI} hacia otros dispositivos cuya misión será gestionarla.
 
 \begin{figure} [h]
     \centering
@@ -32,7 +32,7 @@ La parte encargada de la adquisición está compuesta por un par de bancos de el
     \label{fig:ADS1299}
 \end{figure}
 
-El \Gls{SPI} presente en el convertidor permite leer todos los registros del ADS y escribir la gran mayoría. Aunque normalmente se leen los relacionados con los datos convertidos, también es posible saber el estado de los \Gls{GPIO} o el identificador único del dispositivo leyendo su registro asociado.
+El \acrshort{SPI} presente en el convertidor permite leer todos los registros del ADS y escribir la gran mayoría. Aunque normalmente se leen los relacionados con los datos convertidos, también es posible saber el estado de los \acrshort{GPIO} o el identificador único del dispositivo leyendo su registro asociado.
 
 La configuración del ADS se realiza mediante la escritura de ciertos registros, cada uno asociado a un parámetro específico. La tabla \ref{tab:Conf_Reg_ADS} muestra los registros disponibles, tanto de lectura como de configuración, una descripción básica y la dirección de memoria asociada a los mismos.
 
@@ -49,13 +49,13 @@ Como se puede ver en la tabla \ref{tab:Conf_Reg_ADS}, los convertidores cuentan 
 
 \section{Transmisión de datos\label{sec:Transmisión_N}}
 
-Una vez se ha capturado y convertido la información es necesario transmitirla, para ello la placa original contaba con dos alternativas. La primera consiste en, mediante \Gls{USB} y acopladores aislantes, transmitir la información a un ordenador. 
+Una vez se ha capturado y convertido la información es necesario transmitirla, para ello la placa original contaba con dos alternativas. La primera consiste en, mediante \acrshort{USB} y acopladores aislantes, transmitir la información a un ordenador. 
 \\La segunda hace uso de dos tecnologías inalámbricas distintas que funcionan de forma excluyente, seleccionables con un \textit{jumper}: WiFi o Bluetooth.
 
 \subsection{WiFi\label{sec:WiFi_N}}
 
-Para la transmisión de datos a través de WiFi se seleccionó el módulo ESP12-E, basado en el \Gls{SoC} ESP2866, también conocido nodemcu.
-\\Este cuenta con un microcontrolador embebido de 32 bits (Tensilica L106)con una memoria \Gls{RAM} de 36kB y una velocidad de reloj de la \Gls{CPU} de hasta 80MHz, proporcionando suficiente potencia para las tareas básicas.
+Para la transmisión de datos a través de WiFi se seleccionó el módulo ESP12-E, basado en el \acrshort{SoC} ESP2866, también conocido nodemcu.
+\\Este cuenta con un microcontrolador embebido de 32 bits (Tensilica L106) con una memoria \acrshort{RAM} de 36kB y una velocidad de reloj de la \acrshort{CPU} de hasta 80MHz, proporcionando suficiente potencia para las tareas básicas.
 
 Así mismo se incluye montado en el mismo paquete una memoria flash de 4MB en la que almacenar el código de los programas que se ejecutarán. 
 
@@ -66,7 +66,7 @@ Así mismo se incluye montado en el mismo paquete una memoria flash de 4MB en la
     \label{fig:ESP8266}
 \end{figure}
 
-A efectos de diseño es muy importante saber cuales serán las entradas/salidas del dispositivo así como los pines dedicados para su programación. La figura \ref{fig:ESP8266_pinout} muestra un resumen de todas las funciones de cada uno de los pines. Como se puede observar, el SPI hace uso de los pines 5, 6, 7 y 16 de modo que dichos pines deberán reservarse posteriormente en la fase de diseño de la \Gls{PCB}.
+A efectos de diseño es muy importante saber cuales serán las entradas/salidas del dispositivo así como los pines dedicados para su programación. La figura \ref{fig:ESP8266_pinout} muestra un resumen de todas las funciones de cada uno de los pines. Como se puede observar, el \acrshort{SPI} hace uso de los pines 5, 6, 7 y 16. Por otro lado el \acrshort{UART}, necesario para la programación del micro hace uso de los pines 16 y 17. Dichos pines deberán reservarse posteriormente en la fase de diseño de la \acrshort{PCB}.
 
 \begin{figure} [h]
     \centering
@@ -100,7 +100,7 @@ El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que c
 \subsection{USB\label{sec:USB_N}}
 
 
-Como este proyecto tiene como objetivo independizar el sistema lo máximo posible del ordenador se ha optado por desestimar el sistema de transmisión por \Gls{USB} conservando solamente la interfaz inalámbrica. 
+Como este proyecto tiene como objetivo independizar el sistema lo máximo posible del ordenador se ha optado por desestimar el sistema de transmisión por \acrshort{USB} conservando solamente la interfaz inalámbrica. 
 
 Hablar de la placa de Nerea y cómo la haces inteligente
 

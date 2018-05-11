@@ -25,9 +25,9 @@
 
 
 % Glosario y acrónimos
-\makeindex
-\makeglossaries
-\input{src/Glosario}
+\include{src/Glosario}
+
+\addbibresource{src/Bibliografia}  
 
 % Inicio del documento
 \begin{document}
@@ -38,7 +38,9 @@
 %
 % Portada
 %
-\pagenumbering{gobble}
+\frontmatter
+%\pagenumbering{gobble}
+%\setcounter{page}{0}
 \include{portada}
 \hypersetup{pageanchor=true}
 
@@ -65,11 +67,13 @@
 %
 % Glosario
 %
-% Para que se incluyan debes ejecutar en el terminal el siguiente comando:
-% makeindex -s main.ist -t main.glg -o main.gls main.glo
-\include{src/Glosario}
+% Para que aparezca al comienzo del documento será necesario compilar con una copia de ambas sentencias al final 2 veces.  Tras comprobar que aparece en el final eliminar esas sentencias y debería cargar el glosario aquí
+
 \printglossary[title=Glosario,toctitle=Glosario]
 \printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
+%\printglossary[type=\acronymtype]
+%\printglossary
+
 
 % Estilo de párrafo de los índices
 \setlength{\parskip}{1pt}
@@ -125,8 +129,7 @@
 % Bibliografía
 %
 
-\include{src/Bibliografia}
-
+%\include{src/Bibliografia}
 %
 % Página en blanco
 %

@@ -1,0 +1,13 @@
+
+
+ESP_Boot_Modes
+	https://github.com/esp8266/esp8266-wiki/wiki/Boot-Process
+
+
+
+Anatomia
+	https://commons.wikimedia.org/wiki/File:Charta_ex_qva_figvram_parare_convenit,_illi_qvae_nervorvm_seriem_exprimit_appendendam,_1543..JPG
+
+
+esp8266-esp12e-pinout
+	https://naylampmechatronics.com/inalambrico/176-modulo-esp8266-esp-12e.html

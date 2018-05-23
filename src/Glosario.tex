@@ -1,4 +1,7 @@
 
+% Para que compile hace falta tener instalado Perl y ejecutar
+% makeglosaries.exe main desde powershell/cmd
+
 % Acrónimos
 
 %TODO: Añadir aquí los acrónimos
@@ -7,17 +10,35 @@
 \newacronym{PCB}{PCB}{Print Board Circuit}
 \newacronym{EEG}{EEG}{Electroencefalograma}
 \newacronym{ECG}{ECG}{Electrocardiograma}
-\newacronym{SPS}{SPS}{Samples Per Second}
 \newacronym{ADC}{ADC}{Convertidores Analógico-Digital}
 \newacronym{SPI}{SPI}{Serial Peripheral Interface}
 \newacronym{GPIO}{GPIO}{General Purpose Input/Output}
 \newacronym{USB}{USB}{Universal Serial Bus}
-\newacronym{CPU}{USB}{central processing unit}
+\newacronym{CPU}{CPU}{central processing unit}
 \newacronym{RAM}{RAM}{Random Access Memory}
 \newacronym{SoC}{SoC}{System on Chip}
 \newacronym{UART}{UART}{Universal Asynchronous Receiver-Transmitter}
+\newacronym{IDE}{IDE}{Integrated Development Environment}
+\newacronym{SPS}{SPS}{Samples Per Second}
+\newacronym{MCU}{MCU}{Microcontroller Unit}
+\newacronym{DSP}{DSP}{Digital Signal Processing}
+\newacronym{FCPU}{FCPU}{Frecuencia de la CPU}
+\newacronym{FPU}{FPU}{Floating Point Unit}
+\newacronym{LQFP64}{LQFP64}{ 64 pin Low-profile Quad Flat Package}
+\newacronym{OTG}{OTG}{On The Go}
+\newacronym{LED}{LED}{Light-Emitting Diode}
 % Glosario
 
 %TODO: Añadir aquí las definiciones del glosario
 % Ejemplo de glosario
-\newglossaryentry{bitstream}{name={bitstream},description={En este contexto se refiere al binario que configura el Hardware de la FPGA}}
+\newglossaryentry{bitstream}{
+	name={bitstream},
+	description={En este contexto se refiere al binario que configura el Hardware de la FPGA.}}
+
+\newglossaryentry{Full Duplex}{
+	name={Full Duplex},
+	description={Cualidad de los elementos que permiten la entrada y salida de datos de forma simultánea.}}
+
+\newglossaryentry{Tensión de Dropout}{
+	name={Tensión de Dropout},
+	description={Mínima diferencia de tensión entre la entrada y la salida dentro de la cual el circuito es todavía capaz de regular la salida dentro de las especificaciones.}}

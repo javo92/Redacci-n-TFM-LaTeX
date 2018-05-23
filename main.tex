@@ -25,10 +25,10 @@
 
 
 % Glosario y acrónimos
-\include{src/Glosario}
+%\include{src/Glosario}
 
 \addbibresource{src/Bibliografia}  
-
+\input{src/Glosario}
 % Inicio del documento
 \begin{document}
 
@@ -38,9 +38,8 @@
 %
 % Portada
 %
-\frontmatter
-%\pagenumbering{gobble}
-%\setcounter{page}{0}
+\pagenumbering{gobble}
+\setcounter{page}{0}
 \include{portada}
 \hypersetup{pageanchor=true}
 
@@ -68,9 +67,6 @@
 % Glosario
 %
 % Para que aparezca al comienzo del documento será necesario compilar con una copia de ambas sentencias al final 2 veces.  Tras comprobar que aparece en el final eliminar esas sentencias y debería cargar el glosario aquí
-
-\printglossary[title=Glosario,toctitle=Glosario]
-\printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
 %\printglossary[type=\acronymtype]
 %\printglossary
 
@@ -126,10 +122,10 @@
 \include{src/6_Conclusiones} 
 
 %
-% Bibliografía
+% Glosario
 %
-
-%\include{src/Bibliografia}
+\printglossary[title=Glosario,toctitle=Glosario]
+\printglossary[title=Acrónimos,toctitle=Acrónimos,type=\acronymtype]
 %
 % Página en blanco
 %
@@ -137,6 +133,9 @@
 
 %
 % Bibliografía
+%
+%\include{src/Bibliografia}
+\nocite{*}
 \printbibliography[heading=bibintoc]
 
 % No expandir elementos para llenar toda la página

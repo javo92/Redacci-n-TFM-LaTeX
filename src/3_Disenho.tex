@@ -301,24 +301,71 @@ El sistema embebido en esta placa incluirá los elementos que se pueden ver en l
 
 Se ha incluido en la placa un botón de reinicio con su correspondiente circuito electrónico así como una realimentación desde la alimentación hasta uno de los pines \acrshort{ADC} el microcontrolador para poder monitorizar el estado de la batería.
 
-\section{Circuito de alimentación\label{sec:Esquemáticos_alim}}
+\subsection{Circuito de alimentación\label{sec:Esquemáticos_alim}}
 
 Aunando los dos circuitos presentados en la sección \ref{sec:Alimentación} el resultado final es el obtenido en la figura \ref{fig:Alim_final}.
 
 \begin{figure} [h]
     \centering
     \includegraphics[width=14cm]{Alim_final}
-    \caption{Esquema final del circuito de alimentación}
+    \caption{Esquemático final del circuito de alimentación}
     \label{fig:Alim_final}
 \end{figure}
 
-El fusible (F1) garantiza que la máxima corriente que consumirá el dispositivo es de 500mA, evitando así que el circuito o el paciente sufran daños en caso de un cortocircuito. Adicionalmente se ha incluido un diodo \acrshort{LED} cuya función es indicar el estado de la placa. Si la placa ha encendido correctamente o si se encuentra en funcionamiento el \acrshort{LED} se encenderá.
+El fusible (F1) garantiza que la máxima corriente que consumirá el dispositivo es de 500mA, evitando así que el sistema o el paciente sufran daños en caso de un cortocircuito. Adicionalmente se ha incluido un diodo \acrshort{LED} cuya función es indicar el estado de la placa. Si la placa ha encendido correctamente o si se encuentra en funcionamiento el \acrshort{LED} se encenderá.
+
+El diodo (D2) junto con el condensador (C3) evitarán que los transitorios afecten al voltaje de entrada asegurando así que la alimentación que recibirán ambos integrados será lo más estable posible.
 
 Con el objetivo de monitorizar el estado de la batería se ha utilizado el \acrshort{ADC} incorporado en el propio microcontrolador. Como la señal de entrada se encuentra fuera del rango soportado en las especificaciones del STM se ha optado por incorporar las resistencias R2 y R3 formando un divisor de tensión utilizando así la señal resultante para realizar las medidas.
 
+\clearpage
+
+\subsection{Microcontrolador\label{sec:Esquemáticos_micro}}
+
+El microcontrolador es el núcleo del sistema. Este hace de centro de control de todas las señales digitales que se transmiten así como de gestor de dispositivos, decidiendo que dispositivos se encuentran activos en cada momento. 
+Para gestionar que dispositivos se encuentran habilitados se ha sustituido el \textit{jumper} de la placa original por \acrshort{GPIO} del microcontrolador. De esta forma se consigue mayor flexibilidad, automatización y se optimiza el consumo. 
+
+Adicionalmente se ha integrado un \acrshort{LED} conectado al pin PA9 que dotará a la placa de indicadores visuales del estado en el que se encuentra.
+
+La figura \ref{fig:Esquematico_micro} muestra una representación del integrado así como todos los elementos con los que está conectado.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=\textwidth]{Esquematico_micro}
+    \caption{Esquemático del microcontrolador}
+    \label{fig:Esquematico_micro}
+\end{figure}
+
+El modo de arranque del dispositivo viene determinado por el estado de los pines Boot0 y Boot1. Haciendo uso de las resistencias R13, R14, R15 y R16 se consigue forzar que en condiciones normales de operación el STM arranque desde la memoria Flash integrada. 
+\\Con el objetivo de reprogramar el microcontrolador se ha añadido el conector P5. Dicho conector permite alternar entre los distintos modos de arranque del STM así como interactuar con el por UART. Esta última característica será la que permitirá subir el código a ejecutar pero también brinda funciones de \textit{debug}.
+
+\clearpage
+
+El sistema aprovecha dos de los 3 buses \acrshort{SPI}. El bus SPI1, capaz de transmitir a 41Mb/s se ha reservado para la comunicación ESP12-E $\Longleftrightarrow$ STM32F4 mientras que el utilizado para comunicarse con los ADS es el SPI2 con una velocidad de hasta 21Mb/s.
+
+El \acrshort{MCU} puede trabajar con un oscilador interno sin problemas pero la presencia de un oscilador externo basado en un cristal de cuarzo proporciona ciertas ventajas como son mayor precisión en el reloj y la posibilidad de usar \acrshort{PLL} para aumentar la frecuencia de trabajo del procesador.
+\\El circuito asociado al cristal se puede observar en la parte superior izquierda de la figura \ref{fig:Esquematico_micro} pero se incluye a continuación para facilitar la lectura de este documento:
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{Detalle_cristal}
+    \caption{Detalle del circuito asociado al oscilador externo}
+    \label{fig:Detalle_cristal}
+\end{figure}
 
 
-	Comunicación con la otra placa (sandwich) vs Diseño de cero
-	Alimentación
-	Interfaces
+Para realizar un diseño funcional del circuito del oscilador se ha utilizado el \textit{datasheet} del dispositivo junto con una guía de buenas prácticas\cite{Guia_Oscilador}, ambos proporcionados por el fabricante. La configuración utilizada a nivel de software para la gestión de dicho reloj se explicará en mayor profundidad en el capítulo \ref{sec:Implementacion}.
+
+Se han añadido todos los condensadores recomendados por el fabricante. Algunos deben tener una capacidad determinada en función del modo de funcionamiento del microcontrolador (C25 y C26), otros, denominados condensadores de desacoplo, tienen como objetivo eliminar el ruido de altas frecuencias de la zona de alimentación. El condensador C11 es denominado Bulk y tiene como objetivo garantizar una alimentación lo más estable posible.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{Condensadores_micro}
+    \caption{Condensadores Bulk (C11) y de desacoplo}
+    \label{fig:Condensadores_micro}
+\end{figure}
+
+ Por simplicidad y legibilidad se han agrupado todos en una zona del esquemático pero a la hora de diseñar la PCB será necesario tener presente que para que el dispositivo funcione correctamente estos últimos deben localizarse lo más cerca posible de los pines de alimentación.
+
+Finalmente, como el \acrshort{MCU} tiene la capacidad de interactuar directamente con dispositivos \acrshort{USB}, con el objetivo de implementar en un futuro características que aprovechen dicha capacidad se ha añadido un conector \acrshort{USB} cuyo bus de alimentación se encuentra controlado por el propio \acrshort{MCU}. De esta forma es posible habilitar y deshabilitar el dispositivo USB y reducir el consumo.
 

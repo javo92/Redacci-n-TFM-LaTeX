@@ -39,11 +39,11 @@ La configuración del ADS se realiza mediante la escritura de ciertos registros,
 \begin{table} [h]
     \centering
     \includegraphics[width=\textwidth]{Tabla_registros_ADS}
-    \caption{Tabla de registros de la familia ADS}
+    \caption{Tabla de registros de la familia ADS \cite{Datasheet_ADS}}
     \label{tab:Conf_Reg_ADS}
 \end{table}
 
-Una descripción más detallada de cada uno de los bits de cada registro se puede encontrar en el \textit{datasheet} del componente\cite{Datasheet_ADS}.
+Una descripción más detallada de cada uno de los bits de cada registro se puede encontrar en el \textit{datasheet} del componente \cite{Datasheet_ADS}.
 
 Como se puede ver en la tabla \ref{tab:Conf_Reg_ADS}, los convertidores cuentan con una gran cantidad de opciones de configuración. Para el desarrollo de este proyecto se ha implementado un sistema de configuración que permite la lectura y escritura de todos los registros.
 
@@ -68,7 +68,7 @@ Así mismo se incluye montado en el mismo paquete una memoria flash de 4MB en la
 
 A efectos de diseño es muy importante saber cuales serán las entradas/salidas del dispositivo así como los pines dedicados para su programación. La figura \ref{fig:ESP8266_pinout} muestra un resumen de todas las funciones de cada uno de los pines. Como se puede observar, el \acrshort{SPI} hace uso de los pines 5, 6, 7 y 16. Por otro lado el \acrshort{UART}, necesario para la programación del micro hace uso de los pines 16 y 17. Dichos pines deberán reservarse posteriormente en la fase de diseño de la \acrshort{PCB}.
 
-El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que cargue el código y la selección de uno u otro modo viene determinada por los pines MTDO, GPIO0 y GPIO2. \\La tabla \ref{tab:ESP_Boot_Modes} resume los distintos modos de arranque así como el estado en el que debe estar cada uno de los pines para entrar en ese modo.
+El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que cargue el código y la selección de uno u otro modo viene determinada por los pines MTDO, GPIO0 y GPIO2. \\La tabla \ref{tab:ESP_Boot_Modes} los distintos modos de arranque y el estado en el que deben estar de los pines para iniciar en dicho modo.
 \begin{table} [h]
  	\centering
 	\begin{tabular}{|c|c|c|c|c|}
@@ -82,7 +82,7 @@ El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que c
 		H & x & x & SDIO & Carga desde una tarjeta SD \\ 
 		\hline 
 	\end{tabular} 
-	\caption{Modos de arranque del ESP12-E\cite{ESP_Boot_mode}}
+	\caption{Modos de arranque del ESP12-E \cite{ESP_Boot_mode}}
     \label{tab:ESP_Boot_Modes}
 \end{table}	
 
@@ -91,7 +91,7 @@ El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que c
 \begin{figure} [h]
     \centering
     \includegraphics[width=\textwidth]{esp8266-esp12e-pinout}
-    \caption{Resumen de todas las Entradas/Salidas del ESP12-E\cite{ESP_Pinout}}
+    \caption{Resumen de todas las Entradas/Salidas del ESP12-E \cite{ESP_Pinout}}
     \label{fig:ESP8266_pinout}
 \end{figure}
 
@@ -102,7 +102,7 @@ Para la transmisión de datos a través de Bluetooth se seleccionó el módulo S
 \begin{figure} [H]
     \centering
     \includegraphics[width=5cm]{BT}
-    \caption{Simblee™ RFD77101}
+    \caption{Simblee™ RFD77101 \cite{Datasheet_BT}}
     \label{fig:BT}
 \end{figure}
 
@@ -197,7 +197,7 @@ Precio [€] & 8,72 & 12,74 & 9,24 & 13,48 \\
 Todos los dispositivos anteriormente contemplados tienen \acrshort{DSP} integrados así como una Unidad de Punto Flotante (\acrshort{FPU}) que permite realizar operaciones matemáticas avanzadas de forma óptima.
 
 Entre los dispositivos anteriores, los pertenecientes a la familia STM presentan mejor relación coste/prestaciones, pero el verdadero factor diferenciador son las herramientas dispuestas para la comunidad por parte del fabricante.
-\\En la página web se pueden encontrar distintas herramientas y PDFs que facilitan sensiblemente el proceso de desarrollo para esta plataforma. 
+\\En la página web se pueden encontrar distintas aplicaciones y documentación que facilitan sensiblemente el proceso de desarrollo para esta plataforma. 
 
 Finalmente se seleccionó el \acrshort{MCU} STM32F405 en el formato \acrshort{LQFP64} ya que sus características se ajustan perfectamente a las especificaciones, manteniendo unas muy buenas prestaciones y un precio bastante bajo. Todo esto con el valor añadido de que ya se contaba con la placa de desarrollo STM32F4 Discovery lo cual permitió comenzar con el aprendizaje y estudio del entorno sin la necesidad de esperar al diseño, impresión y soldado de la placa final.
 
@@ -208,7 +208,7 @@ Finalmente se seleccionó el \acrshort{MCU} STM32F405 en el formato \acrshort{LQ
     \label{fig:STM32F4_Discovery}
 \end{figure}
 
-El \acrshort{MCU} cuenta con 3 buses SPI independientes que pueden funcionar en modo \textit{\gls{Full Duplex}}. El SPI$_1$  es capaz de funcionar hasta 42Mb/s mientras que los SPI$_2$ y SPI$_3$ pueden comunicar información hasta 21Mb/s. Los pines dedicados a dichos buses se pueden consultar en el \textit{Datasheet} del componente\cite{Datasheet_STM}.
+El \acrshort{MCU} cuenta con 3 buses SPI independientes que pueden funcionar en modo \textit{\gls{Full Duplex}}. El SPI$_1$  es capaz de funcionar hasta 42Mb/s mientras que los SPI$_2$ y SPI$_3$ pueden comunicar información hasta 21Mb/s. Los pines dedicados a dichos buses se pueden consultar en el \textit{Datasheet} del componente \cite{Datasheet_STM}.
 \\Otra característica interesante de este \acrshort{MCU} es la presencia de forma nativa de un gestor de \acrshort{USB} \acrlong{OTG} (\acrshort{OTG}) permitiendo así conectar un dispositivo \acrshort{USB} para almacenar información a largo plazo.
 
 \clearpage
@@ -249,7 +249,7 @@ El sistema de alimentación se compone de dos partes principales, cada una encar
 
 \subsubsection{Alimentación 3.3V\label{sec:Alimentacion_3.3V}}
 Para conseguir un voltaje de 3.3V estable se ha utilizado el regulador AZ1117C-3.3 ya que es capaz de conseguir una precisión para el voltaje de salida del $\pm$1\% así como un ruido de salida de 0.003\% V$_{out}$ entre 10Hz y 10kHz.
-En la figura \ref{fig:Alim_3.3} se muestra el esquema eléctrico utilizado, que es una variación del circuito recomendado por el fabricante en su \textit{datasheet}\cite{Datasheet_3.3}.
+En la figura \ref{fig:Alim_3.3} se muestra el esquema eléctrico utilizado, que es una variación del circuito recomendado por el fabricante en su \textit{datasheet} \cite{Datasheet_3.3}.
 
 \begin{figure} [h]
     \centering
@@ -272,7 +272,7 @@ El regulador encargado de proporcionar 5V es el MCP1711. Este integrado está ca
 \end{figure}
 
 Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tensión de Dropout}''(V$_{DROP}$).
-\\De acuerdo al Datasheet de ambos reguladores, V$_{DROP}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V así como que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
+\\De acuerdo al \textit{datasheet} de ambos reguladores, V$_{DROP}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V de modo que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
 
 Finalmente se ha optado por una fuente de alimentación de 6V ya que esto permitirá hacer uso de pilas o baterías para alimentar el sistema, dotándolo de independencia de la red eléctrica y eliminando el riesgo de electrocución.
 
@@ -282,7 +282,7 @@ Finalmente se ha optado por una fuente de alimentación de 6V ya que esto permit
 
 El último paso de la fase de desarrollo será generar un esquemático capaz de englobar todos los elementos anteriormente presentados, interconectarlos y dar como resultado un sistema funcional.
 
-En este punto es importante valorar dos alternativas de diseño, cada una con sus ventajas e inconvenientes: Implementación de todo el circuito de cero o crear una placa que se conecte a la ya existente.
+En este punto es importante valorar dos alternativas de diseño, cada una con sus ventajas e inconvenientes: implementación de todo el circuito de cero o crear una placa que se conecte a la ya existente.
 
 Si bien es cierto que para un diseño final crear una placa que englobe todos los componentes sería lo ideal, pues presentaría un formato más compacto y mejor presentación, hacerlo también supone crear una placa más grande y desaprovechar aquellas ya construidas en proyectos anteriores.
 
@@ -327,7 +327,7 @@ Para gestionar que dispositivos se encuentran habilitados se ha sustituido el \t
 
 Adicionalmente se ha integrado un \acrshort{LED} conectado al pin PA9 que dotará a la placa de indicadores visuales del estado en el que se encuentra.
 
-La figura \ref{fig:Esquematico_micro} muestra una representación del integrado así como todos los elementos con los que está conectado.
+La figura \ref{fig:Esquematico_micro} muestra una representación del integrado junto con todos los elementos con los que está conectado.
 
 \begin{figure} [h]
     \centering
@@ -337,7 +337,7 @@ La figura \ref{fig:Esquematico_micro} muestra una representación del integrado 
 \end{figure}
 
 El modo de arranque del dispositivo viene determinado por el estado de los pines Boot0 y Boot1. Haciendo uso de las resistencias R13, R14, R15 y R16 se consigue forzar que en condiciones normales de operación el STM arranque desde la memoria Flash integrada. 
-\\Con el objetivo de reprogramar el microcontrolador se ha añadido el conector P5. Dicho conector permite alternar entre los distintos modos de arranque del STM así como interactuar con el por UART. Esta última característica será la que permitirá subir el código a ejecutar pero también brinda funciones de \textit{debug}.
+\\Con el objetivo de reprogramar el microcontrolador se ha añadido el conector P5. Dicho conector permite alternar entre los distintos modos de arranque del STM e interactuar con el por UART. Esta última característica será la que permitirá subir el código a ejecutar pero también brinda funciones de \textit{debug}.
 
 \clearpage
 
@@ -354,9 +354,9 @@ El \acrshort{MCU} puede trabajar con un oscilador interno sin problemas pero la 
 \end{figure}
 
 
-Para realizar un diseño funcional del circuito del oscilador se ha utilizado el \textit{datasheet} del dispositivo junto con una guía de buenas prácticas\cite{Guia_Oscilador}, ambos proporcionados por el fabricante. La configuración utilizada a nivel de software para la gestión de dicho reloj se explicará en mayor profundidad en el capítulo \ref{sec:Implementacion}.
+Para realizar un diseño funcional del circuito del oscilador se ha utilizado el \textit{datasheet} del dispositivo junto con una guía de buenas prácticas \cite{Guia_Oscilador}, ambos proporcionados por el fabricante. La configuración utilizada a nivel de software para la gestión de dicho reloj se explicará en mayor profundidad en el capítulo \ref{sec:Implementacion_soft}.
 
-Se han añadido todos los condensadores recomendados por el fabricante. Algunos deben tener una capacidad determinada en función del modo de funcionamiento del microcontrolador (C25 y C26), otros, denominados condensadores de desacoplo, tienen como objetivo eliminar el ruido de altas frecuencias de la zona de alimentación. El condensador C11 es denominado Bulk y tiene como objetivo garantizar una alimentación lo más estable posible.
+Se han añadido todos los condensadores recomendados por el fabricante. Algunos deben tener una capacidad determinada en función del modo de funcionamiento del microcontrolador (C25 y C26), otros, denominados condensadores de desacoplo, tienen como objetivo eliminar el ruido de altas frecuencias de la zona de alimentación. El condensador C11 es denominado Bulk y su función es garantizar una alimentación lo más estable posible.
 
 \begin{figure} [h]
     \centering
@@ -369,3 +369,37 @@ Se han añadido todos los condensadores recomendados por el fabricante. Algunos 
 
 Finalmente, como el \acrshort{MCU} tiene la capacidad de interactuar directamente con dispositivos \acrshort{USB}, con el objetivo de implementar en un futuro características que aprovechen dicha capacidad se ha añadido un conector \acrshort{USB} cuyo bus de alimentación se encuentra controlado por el propio \acrshort{MCU}. De esta forma es posible habilitar y deshabilitar el dispositivo USB y reducir el consumo.
 
+\subsection{Interfaz inalámbrica\label{sec:Esquematico_inalambrica}}
+
+En comparación con el STM, los esquemáticos necesarios para hacer funcionar los dos microcontroladores encargados de transmitir la información a través de WiFi y Bluetooth son bastante sencillos.
+
+\subsubsection{ESP12-E\label{sec:Esquematico_ESP}}
+
+El ESP necesita, al igual que el STM, condensadores Bulk y de desacoplo. Ambos se pueden apreciar en la figura \ref{fig:Esquematico_ESP} en la parte inferior izquierda y deberán estar localizados en la \acrshort{PCB} lo más cerca posible de los pines de alimentación.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=\textwidth]{Esquematico_ESP}
+    \caption{Esquemático del ESP-12E}
+    \label{fig:Esquematico_ESP}
+\end{figure}
+
+La resistencia R10 fuerza al ESP a estar en un estado activo salvo que a través del pin ``EN\_WIFI'' el STM lo desactive. 
+\\El modo de arranque del STM viene definido por la resistencia R8 junto con el conector P4. Dicho conector permite poner el ESP en modo programación con sólo cortocircuitar los pines 6 y 8 e incluye acceso al bus UART a través de los pines 3 y 5.
+
+\subsubsection{Bluetooth Simblee\label{sec:Esquematico_BT}}
+
+Para el dispositivo Bluetooth se ha habilitado otro conector de programación. En esta ocasión con los pines 2, 3 y 4 es suficiente ya que el \acrshort{IDE} de Arduino se encarga de gestionar el estado de los pines para forzar el modo programación.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=14cm]{Esquematico_BT}
+    \caption{Esquemático del dispositivo Bluetooth Simblee}
+    \label{fig:Esquematico_BT}
+\end{figure}
+
+Se han habilitado los pines relacionados con el bus \acrshort{SPI} así como los de DRDY y START, encargados de gestionar la transmisión de datos.
+
+En esta ocasión se ha dejado sólo un condensador de desacoplo ,pues los de Bulk dispuestos para los otros dispositivos suplen la necesidad de utilizar otro para este.
+
+Todos los esquemáticos presentados a lo largo de este apartado han sido generados haciendo uso de la herramienta Kicad. Al ser un esquemático su lectura e interpretación es independiente de la herramienta salvo por el caso del elemento ``PWR\_FLAG'' presente en algunas figuras. Dicho elemento es característico de esta herramienta y sive para evitar errores, ya que todos los pines categorizados como pines de alimentación que no lleven un ``PWR\_FLAG'' provocarán una alerta al compilar y generar el esquemático.

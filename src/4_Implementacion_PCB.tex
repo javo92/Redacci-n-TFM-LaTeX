@@ -1,12 +1,147 @@
 \chapter{Implementación de la PCB\label{sec:Implementacion_PCB}}
 
-TODO: Implementación
+En el diseño e implementación de la \acrshort{PCB} es muy importante tener presente que cualquier fallo a nivel de hardware supone una gran pérdida de tiempo y, por lo tanto, dinero. Desde que el diseño es terminado y se manda a producir la placa hasta que esta se recibe transcurre una media de dos semanas . Perder esa cantidad de tiempo por un fallo de diseño a nivel docente supone, en el peor de los casos, no entregar el proyecto en la fecha acordada pero a nivel empresarial puede significar perder la exclusividad del diseño cuando se compite con otras compañías. 
+
+Las revisiones manuales permiten evitar ciertos errores pero una buena herramienta bien configurada contribuye a prevenir dichos errores desde el principio. Como ya se ha mencionado en el capítulo \ref{sec:Diseno}, para la realización de este proyecto se ha utilizado la herramienta KiCad, no sólo por ser Software Libre sino porque presenta ciertas características muy interesantes:
+\begin{itemize}
+\item \textbf{Entorno de desarrollo integrado:}
+\\Desde la propia herramienta se pueden hacer los esquemáticos, definir los componenes y librerías e incluso diseñar y previsualizar la PCB.
+\item \textbf{Multiplataforma:}
+\\Disponible en Windows, Linux y Mac OS.
+\item \textbf{Respaldado por una gran comunidad} 
+\\Kicad tiene una gran comunidad que deja a disposición de los usuarios una documentación muy extensa.
+\item \textbf{Constante desarrollo}
+\\Se liberan actualizaciones con regularidad.
+\end{itemize}
+
+Tras instalar y configurar KiCad, al abrir la herramienta se carga un gestor de proyectos desde el que se puede gestionar un gran número de elementos. La figura \ref{fig:Front_end_Kicad} muestra a modo de ejemplo el estado de KiCad al final del proyecto.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{Front_end_Kicad}
+    \caption{Gestor de proyectos de KiCad}
+    \label{fig:Front_end_Kicad}
+\end{figure}
+
+Como se puede observar en la imagen a la izquierda aparecen todos los archivos pertenecientes al proyecto mientras que en la parte superior hay un acceso directo a las distintas partes que componen KiCad (gestor de esquemáticos, librerías, modelos 3D, etc).
+
+Durante la fase de diseño y realización del esquemático, cada componente fue seleccionado de entre los disponibles preinstalados con la herramienta. Aunque los componentes más comunes como son las resistencias o los condensadores se pueden encontrar sin problemas, para trabajar con otros componentes como el ESP ha sido necesario crear una librería propia. Más adelante, cuando las especificaciones de diseño se hayan definido, se enlazará el símbolo que representa cada componente con el elemento físico que estará presente en la \acrshort{PCB}, es decir, su \textit{footprint} y su modelo 3D.
+
+\section{Limitaciones del fabricante\label{sec:ITEAD_PCB}}
+
+El diseño de la PCB tiene ciertas restricciones, algunas impuestas por el propio diseño del circuito (tipo de componentes, número de pistas, tamaño final, etc.), otras, como las tratadas en esta sección, serán impuestas por el propio fabricante de \acrshort{PCB}s.
+
+La mayoría de empresas fabricantes de PCBs del mercado dejan a disposición de sus clientes un listado de las limitaciones con las que cuentan, garantizando que cualquier diseño que se adecue a dichas especificaciones será impreso sin problemas. 
+
+De entre las disponibles en Internet se seleccionó la compañía ITEAD por presentar una buena relación prestaciones/precio, haberse contratado sus servicios previamente y un buen tiempo desde la impresión hasta la recepción de la placa.
+
+En su página web \cite{ITEAD_PCB_Limitations}, ITEAD ha preparado una tabla con un resumen de las características con las que se puede contar si se imprime una PCB en condiciones normales. Dicha tabla se recoge a continuación:
+
+\begin{table} [H]
+\centering
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Característica} & \textbf{Valor} \\
+\hline 
+Layers &	1 - 4 \\
+\hline 
+Material & 	FR-4 \\
+\hline 
+Board Dimension (max) & 	380mm X380mm \\
+\hline 
+Board Dimension (min) &	10mm X10mm \\
+\hline 
+Outline Dimension Accuracy &  $\pm$0.2mm \\
+\hline 
+Board Thickness & 	0.40mm--2.0mm \\
+\hline 
+Board Thickness Tolerance &	 $\pm$10\% \\
+\hline 
+Dielectric Separation thickness &	0.075mm--5.00mm \\
+\hline 
+Conductor Width (min) &	0.15mm (Recommend>8mil) \\
+\hline 
+Conductor Space (min) &	0.15mm (Recommend>8mil) \\
+\hline 
+Outer Conductor thickness &	35um \\
+\hline 
+Inner Conductor thickness &	17um--100um \\
+\hline 
+Copper to Edge &	>0.3mm \\
+\hline 
+Plated Component &	 \multirow{2}{*}{0.3mm--6.30mm} \\
+Plated via Diameter(Mechanical) & \\
+\hline 
+Plated Hole Diameter Tolerance(Mechanical) &	0.08mm \\
+\hline 
+Unplated Hole Diameter Tolerance &	0.05mm \\
+\hline 
+Hole Space(min) &	0.25mm \\
+\hline 
+Hole to Edge &	0.4mm \\
+\hline 
+Annular Ring(min) &	0.15mm \\
+\hline 
+Solder Resist Type & 	Photosensitive ink \\
+\hline 
+Solder Resist Color &	Black, Green, White, Blue, Yellow \\
+\hline 
+Solder Resist Clearance &	0.1mm \\
+\hline 
+Solder Resist Coverage &	0.1mm \\
+\hline 
+Plug Hole Diameter &	0.3mm--0.65mm \\
+\hline 
+Silkscreen line width (mim) &	6mil \\
+\hline 
+\end{tabular} 
+\caption{Restricciones de ITEAD para la fabricación de una PCB}
+\label{tab:ITEAD}
+\end{table}
+
+Aunque la lista de restricciones parece alta, la mayoría de ellas no supone un problema para un proyecto de estas dimensiones. Para comprobar si esta afirmación es correcta bastará con comprobar si la característica más restrictiva se cumple, es decir, comparar la separación mínima de los pads del módulo Bluetooth con la separación mínima entre conductores, denominada en la tabla \ref{tab:ITEAD} como \textit{Conductor Space}. De acuerdo a su \textit{datasheet}, la separación entre pines de este componente es de 9.84 mil (0.25 mm), valor muy superior a los 8 mil (0.2 mm) recomendados por el fabricante.
+\clearpage
+Adicionalmente, informan de que la utilización de \textit{Buried vias} y \textit{Blind vias} no es posible por el momento. En la figura \ref{fig:ITEAD_vias}, proporcionada por ITEAD en su página web, se ilustra como es cada tipo de vía.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{ITEAD_vias}
+    \caption{Tipos de vías}
+    \label{fig:ITEAD_vias}
+\end{figure}
+
+Con toda la información recopilada hasta el momento ya es posible configurar KiCad para forzar que dichas restricciones se cumplan en todo momento. El menú ``\textit{Design Rules}'' permite configurar estos parámetros (ver fig. \ref{fig:Design_rules_general}) así como realizar ciertos ajustes dependiendo de la función que tendrá dicha pista ( ver fig. \ref{fig:Design_rules_especial}).
+
+\begin{figure}[h]
+  \begin{subfigure}[b]{8cm}
+   	\centering
+    \includegraphics[width=8cm]{Design_rules_1}
+    \caption{Condiciones especiales}
+    \label{fig:Design_rules_especial}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{8cm}
+  	\centering
+    \includegraphics[width=8cm]{Design_rules_2}
+    \caption{Reglas de diseño en KiCad}
+    \label{fig:Design_rules_general}
+  \end{subfigure}
+  \caption{Reglas de diseño en KiCad}
+  \label{fig:Design_rules}
+\end{figure}
+
+ En la figura \ref{fig:Design_rules} se puede observar como las restricciones de diseño anteriomente mencionadas ya se encuentran aplicadas.
+
+\clearpage
+
+\section{Selección de los componentes\label{sec:Seleccion_componentes}}
+
+Aunque en el esquemático se escogieron los valores de todos los componentes, a la hora de realizar un diseño final hay que tener en cuenta otros muchos parámetros. ¿Qué tamaño tendrá el componente?, ¿cuál será su tolerancia?, ¿qué formato se ajusta mejor, SMT o SMD?. La respuesta a todas estas preguntas acabará definiendo el componente a elegir, su precio y su disponibilidad.
+
+Por simplicidad y comodidad se ha escogido trabajar con una medida estandar de 0206
 
 Hardware
 	PCB (Añadir BOM)
 	
 	Primeras pruebas y programación
-	
-
-	
 	

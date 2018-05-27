@@ -151,21 +151,65 @@ Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de
     \label{fig:0603}
 \end{figure}
 
-\subsection{Enlazado\label{sec:Enlazado}}
+\subsection{Asignación de footprint\label{sec:Enlazado}}
 
 Tras decidir el tamaño de los componentes ha llegado el momento de enlazar cada uno de los símbolos presentes en el esquemático que se generó al comienzo del proyecto con un componente que contenga un \textit{footprint} y, opcionalmente, un modelo 3D asociado.
 
 Si bien el segundo elemento no es normalmente necesario el primero resulta imprescindible, pues contiene información básica sobre el componente (número de pads y conexiones, tamaño real, serigrafías, etc). 
 
 Como ya se ha mencionado anteriormente, KiCad se caracteriza por tener una gran comunidad que lo respalda. Esto se traduce en que la mayoría de los componentes del mercado ya han sido incluidos en librerías de código abierto disponibles en Internet, lo cual supone un ahorro considerable de tiempo de cara a este o futuros proyectos. 
-Por desgracia esto no es siempre suficiente de modo que KiCad ha sido diseñado para, en caso de ser necesario, crear una librería en la que almacenar los \textit{footprints}, serigrafías y modelos 3D que hagan falta así como herramientas con las que crear o editar uno ya existente para adaptarlo a nuestras necesidades.
+Por desgracia esto no es siempre suficiente de modo que KiCad ha sido diseñado para, en caso de ser necesario, crear una librería en la que almacenar los \textit{footprints}, serigrafías y modelos 3D que hagan falta, conteniendo las herramientas con las que crear o editar uno ya existente para adaptarlo a las necesidades del proyecto.
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=14cm]{Footprint_ESP}
+    \includegraphics[width=16cm]{Footprint_ESP}
     \caption{\textit{Footprint }modificado para adaptarlo al ESP12-E}
     \label{fig:Footprint_ESP}
 \end{figure}
+
+Una vez se han localizado o creado los \textit{footprints} de todos los componentes es necesario asociarlos entre si. Esto permite que en la fase de diseño de la PCB, KiCad pueda cargar una representación física del componente. 
+La asociación se realiza con el complemento CvPcb, accesible desde Eeschema. La figura \ref{fig:cvpcb} muestra la interfaz de usuario tras finalizar este proyecto.
+
+\clearpage
+
+A la izquierda aparecen todas las librerías disponibles, en la columna central los componentes de este proyecto y a la derecha los footprints contenidos en la librería seleccionada en la columna izquierda.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{cvpcb}
+    \caption{Herramienta cvpcb asociando a un componente su \textit{footprint}}
+    \label{fig:cvpcb}
+\end{figure}
+
+Es posible realizar búsquedas para agilizar el proceso haciendo uso de los tres botones situados en la parte superior derecha. De izquierda a derecha permiten filtrar por palabras clave extraídas del componente, por número de pines y por librería activa.
+
+\clearpage
+
+\section{PCBnew\label{sec:PCBnew}}
+
+Eeschema da como salida dos tipos de archivos que representan la interconexión del los elementos del circuito. Por un lado, un archivo PDF destinado a su lectura por humanos, por otro, un fichero en formato NET. Este último será el fichero de entrada de la herramienta de diseño de PCB denominada PCBnew. 
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=14cm]{pcbnew}
+    \caption{Herramienta PCBnew tras finalizar el proyecto}
+    \label{fig:pcbnew_1}
+\end{figure}
+
+Tras cargar el .net todos los componentes aparecen representados en la zona de trabajo. Cada uno de los conectores muestra una línea que indica a que otros dispositivos se debe conectar para que el la netlist se generada por Eeschema se cumpla.
+
+Para proyectos de menor envergadura como este, la disposición de los elementos se puede realizar de forma manual, pero KiCad está pensado para poder trabajar con diseños de miles de componentes. En estos casos es posible utilizar la propia disposición automática de KiCad o importar la disposición de herramientas externas como FreeRoute.
+
+Una vez todos los componentes se encuentran posicionados, es el momento de conectarlos entre ellos. Con este objetivo se utiliza el trazado de las pistas. Como ya se había mencionado, las características de las pistas vendrán determinadas por las reglas de diseño y el tipo de red al que pertenece (por defecto, de alimentación, de tierra, etc).
+
+Para aquellos puntos comunes a varios dispositivos como son GND o Vcc es posible definir planos. La definición de planos permite, además de ahorrar el trazado de un gran número de pistas, disminuir la resistividad de una conexión, consiguiéndose así que el voltaje sea lo más parecido posible en todo el sistema.
+\\La definición de un plano no imposibilita el trazado de una pista que lo atraviese. Todas las pistas que atraviesan un plano son protegidas con una zona de guarda sin cobre que evita cortocircuitos y cuyo grosor viene definido en las reglas de diseño.
+
+En ocasiones será necesario forzar que una parte de la placa no contenga cobre, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{keep out area}''. Al contrario que los planos normales, las pistas no pueden atravesarlos.
+
+En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos, que unos elementos acaban afectando a la visibilidad y ocultando otros. Para evitar estos problemas, en la parte derecha hay habilitado un panel que permite activar o desactivar el renderizado de ciertos objetos. Es posible ocultar cualquier grupo de elementos: planos, serigrafías, componentes, etc.
+ 
+\section{Diseño final de la PCB\label{sec:PCB_final}}
 
 
 

@@ -134,11 +134,22 @@ Con toda la información recopilada hasta el momento ya es posible configurar Ki
 
 \clearpage
 
-\section{Selección de los componentes\label{sec:Seleccion_componentes}}
+\section{Componentes y librerías\label{sec:Componentes_y_librerias}}
 
-Aunque en el esquemático se escogieron los valores de todos los componentes, a la hora de realizar un diseño final hay que tener en cuenta otros muchos parámetros. ¿Qué tamaño tendrá el componente?, ¿cuál será su tolerancia?, ¿qué formato se ajusta mejor, SMT o SMD?. La respuesta a todas estas preguntas acabará definiendo el componente a elegir, su precio y su disponibilidad.
+Aunque en el esquemático se escogieron los valores de todos los componentes, a la hora de realizar un diseño final hay que tener en cuenta otros muchos parámetros. ¿Qué tamaño tendrá el componente?, ¿cuál será su tolerancia?, ¿qué formato se ajusta mejor, \acrshort{THT} o \acrshort{SMT}? La respuesta a todas estas preguntas acabará definiendo el componente a elegir, su precio y su disponibilidad.
 
-Por simplicidad y comodidad se ha escogido trabajar con una medida estandar de 0206
+Utilizar componentes en el formato THT puede suponer una ventaja las primeras veces que se realiza una soldadura o al trabajar con electrónica de potencia. En ambos casos se aprovecha el grosor del conector y el hecho de que atraviese la placa para dar mayor comodidad al técnico y disminuir la resistividad de la unión respectivamente. 
+\\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia la utilización de dichos componentes limita el diseño e impone restricciones que mediante SMT se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo conectores de dichos componentes THT.
+\\A lo largo del diseño de la PCB se seleccionará en la medida de lo posible componentes en su formato SMT.
+
+Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de 0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm) ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales, y por otro, son medidas muy comunes, facilitándose de esta forma la localización de componentes, distribuidores primarios y secundarios.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=5cm]{0603}
+    \caption{Resistencia en formato 0603 \cite{Imagen_0603}}
+    \label{fig:0603}
+\end{figure}
 
 Hardware
 	PCB (Añadir BOM)

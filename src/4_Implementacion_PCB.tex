@@ -23,7 +23,7 @@ Tras instalar y configurar KiCad, al abrir la herramienta se carga un gestor de 
     \label{fig:Front_end_Kicad}
 \end{figure}
 
-Como se puede observar en la imagen a la izquierda aparecen todos los archivos pertenecientes al proyecto mientras que en la parte superior hay un acceso directo a las distintas partes que componen KiCad (gestor de esquemáticos, librerías, modelos 3D, etc).
+Como se puede observar en la imagen, a la izquierda aparecen todos los archivos pertenecientes al proyecto mientras que en la parte superior hay un acceso directo a las distintas partes que componen KiCad (gestor de esquemáticos, librerías, modelos 3D, etc).
 
 Durante la fase de diseño y realización del esquemático, cada componente fue seleccionado de entre los disponibles preinstalados con la herramienta. Aunque los componentes más comunes como son las resistencias o los condensadores se pueden encontrar sin problemas, para trabajar con otros componentes como el ESP ha sido necesario crear una librería propia. Más adelante, cuando las especificaciones de diseño se hayan definido, se enlazará el símbolo que representa cada componente con el elemento físico que estará presente en la \acrshort{PCB}, es decir, su \textit{footprint} y su modelo 3D.
 
@@ -110,7 +110,7 @@ Adicionalmente, informan de que la utilización de \textit{Buried vias} y \texti
     \label{fig:ITEAD_vias}
 \end{figure}
 
-Con toda la información recopilada hasta el momento ya es posible configurar KiCad para forzar que dichas restricciones se cumplan en todo momento. El menú ``\textit{Design Rules}'' permite configurar estos parámetros (ver fig. \ref{fig:Design_rules_general}) así como realizar ciertos ajustes dependiendo de la función que tendrá dicha pista ( ver fig. \ref{fig:Design_rules_especial}).
+Con toda la información recopilada hasta el momento ya es posible configurar KiCad para forzar que dichas restricciones se cumplan en todo momento. El menú ``\textit{Design Rules}'' permite configurar estos parámetros (ver fig. \ref{fig:Design_rules_general}) así como realizar ciertos ajustes dependiendo de la función que tendrá cada pista ( ver fig. \ref{fig:Design_rules_especial}).
 
 \begin{figure}[h]
   \begin{subfigure}[b]{8cm}
@@ -139,10 +139,10 @@ Con toda la información recopilada hasta el momento ya es posible configurar Ki
 Aunque en el esquemático se escogieron los valores de todos los componentes, a la hora de realizar un diseño final hay que tener en cuenta otros muchos parámetros. ¿Qué tamaño tendrá el componente?, ¿cuál será su tolerancia?, ¿qué formato se ajusta mejor, \acrshort{THT} o \acrshort{SMT}? La respuesta a todas estas preguntas acabará definiendo el componente a elegir, su precio y su disponibilidad.
 
 Utilizar componentes en el formato THT puede suponer una ventaja las primeras veces que se realiza una soldadura o al trabajar con electrónica de potencia. En ambos casos se aprovecha el grosor del conector y el hecho de que atraviese la placa para dar mayor comodidad al técnico y disminuir la resistividad de la unión respectivamente. 
-\\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia la utilización de dichos componentes limita el diseño e impone restricciones que mediante SMT se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo conectores de dichos componentes THT.
+\\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia, la utilización de dichos componentes limita el diseño e impone restricciones que mediante SMT se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo los conectores de dichos componentes THT.
 \\A lo largo del diseño de la PCB se seleccionará en la medida de lo posible componentes en su formato SMT.
 
-Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de 0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm) ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales, y por otro, son medidas muy comunes, facilitándose de esta forma la localización de componentes, distribuidores primarios y secundarios.
+Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de 0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm) ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales, y por otro, son medidas muy comunes, facilitándose de esta forma la localización de componentes así como distribuidores primarios y secundarios.
 
 \begin{figure} [h]
     \centering
@@ -150,6 +150,24 @@ Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de
     \caption{Resistencia en formato 0603 \cite{Imagen_0603}}
     \label{fig:0603}
 \end{figure}
+
+\subsection{Enlazado\label{sec:Enlazado}}
+
+Tras decidir el tamaño de los componentes ha llegado el momento de enlazar cada uno de los símbolos presentes en el esquemático que se generó al comienzo del proyecto con un componente que contenga un \textit{footprint} y, opcionalmente, un modelo 3D asociado.
+
+Si bien el segundo elemento no es normalmente necesario el primero resulta imprescindible, pues contiene información básica sobre el componente (número de pads y conexiones, tamaño real, serigrafías, etc). 
+
+Como ya se ha mencionado anteriormente, KiCad se caracteriza por tener una gran comunidad que lo respalda. Esto se traduce en que la mayoría de los componentes del mercado ya han sido incluidos en librerías de código abierto disponibles en Internet, lo cual supone un ahorro considerable de tiempo de cara a este o futuros proyectos. 
+Por desgracia esto no es siempre suficiente de modo que KiCad ha sido diseñado para, en caso de ser necesario, crear una librería en la que almacenar los \textit{footprints}, serigrafías y modelos 3D que hagan falta así como herramientas con las que crear o editar uno ya existente para adaptarlo a nuestras necesidades.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=14cm]{Footprint_ESP}
+    \caption{\textit{Footprint }modificado para adaptarlo al ESP12-E}
+    \label{fig:Footprint_ESP}
+\end{figure}
+
+
 
 Hardware
 	PCB (Añadir BOM)

@@ -211,7 +211,7 @@ En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos
  
 \section{Diseño final de la PCB\label{sec:PCB_final}}
 
-El sistema seguido para la disposición de componentes en la PCB ha venido determinado en gran medida por la disposición de componentes en la placa con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la placa de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
+El sistema seguido para la disposición de componentes en la PCB ha venido determinado en gran medida por la disposición de componentes en la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
 
 \begin{figure} [h]
     \centering
@@ -224,7 +224,27 @@ En las siguientes secciones se explicará con más detalle cada una de las parte
 
 \subsection{Alimentación\label{sec:PCB_alimentacion}}
 
+La alimentación, ha sido agrupada para facilitar la localización de errores asociados a la misma a la vez que se simplifica la conexión con la tarjeta de adquisición. Los conectores se han situado en lugares en los que resulte cómodo realizar la interconexión a la par que se mantiene al mínimo el cable necesario para ello. Se ha posicionado el fusible de tal forma que en caso de ser necesaria su sustitución haya disponible suficiente espacio para maniobrar con comodidad.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{Detalle_alimentacion}
+    \caption{Detalle de la alimentación de la placa}
+    \label{fig:Detalle_alimentacion}
+\end{figure}
+
 \subsection{Microcontrolador\label{sec:PCB_alimentacion}}
+
+Durante el posicionado del microcontrolador es muy importante tener en cuenta las restricciones impuestas por el fabricante, pues algunas de estas no se ven reflejadas en la \textit{netlist} ni en el esquemático. Los condensadores, tanto de desacoplo como bulk, han sido colocados lo más cerca posible de los pines de alimentación para asegurar el correcto funcionamiento del microcontrolador.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{Detalle_micro}
+    \caption{Detalle del microcontrolador y los componentes asociados}
+    \label{fig:Detalle_micro}
+\end{figure}
+
+STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño sino que propone pautas a la hora de disponer los componentes en la PBC.
 
 \subsection{Interfaz inalámbrica\label{sec:PCB_alimentacion}}
 

@@ -205,15 +205,31 @@ Una vez todos los componentes se encuentran posicionados, es el momento de conec
 Para aquellos puntos comunes a varios dispositivos como son GND o Vcc es posible definir planos. La definición de planos permite, además de ahorrar el trazado de un gran número de pistas, disminuir la resistividad de una conexión, consiguiéndose así que el voltaje sea lo más parecido posible en todo el sistema.
 \\La definición de un plano no imposibilita el trazado de una pista que lo atraviese. Todas las pistas que atraviesan un plano son protegidas con una zona de guarda sin cobre que evita cortocircuitos y cuyo grosor viene definido en las reglas de diseño.
 
-En ocasiones será necesario forzar que una parte de la placa no contenga cobre, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{keep out area}''. Al contrario que los planos normales, las pistas no pueden atravesarlos.
+En ocasiones será necesario forzar que una parte de la placa no contenga ningún elemento conductor, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{keep out area}''. Al contrario que los planos normales, las pistas no pueden atravesarlos.
 
 En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos, que unos elementos acaban afectando a la visibilidad y ocultando otros. Para evitar estos problemas, en la parte derecha hay habilitado un panel que permite activar o desactivar el renderizado de ciertos objetos. Es posible ocultar cualquier grupo de elementos: planos, serigrafías, componentes, etc.
  
 \section{Diseño final de la PCB\label{sec:PCB_final}}
 
+El sistema seguido para la disposición de componentes en la PCB ha venido determinado en gran medida por la disposición de componentes en la placa con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la placa de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=14cm]{Esquema_PCB}
+    \caption{Distintas partes que componen la PCB. Alimentación (rojo), microcontrolador (blanco), interfaz inalámbrica (azul).}
+    \label{fig:Esquema_PCB}
+\end{figure}
+
+En las siguientes secciones se explicará con más detalle cada una de las partes de la PCB, haciendo una división en los tres grandes grupos que la componen: alimentación (rojo), microcontrolador (blanco) e interfaz inalámbrica (azul).
+
+\subsection{Alimentación\label{sec:PCB_alimentacion}}
+
+\subsection{Microcontrolador\label{sec:PCB_alimentacion}}
+
+\subsection{Interfaz inalámbrica\label{sec:PCB_alimentacion}}
 
 
-Hardware
+
 	PCB (Añadir BOM)
 	
 	Primeras pruebas y programación

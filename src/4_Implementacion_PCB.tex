@@ -191,7 +191,7 @@ Eeschema da como salida dos tipos de archivos que representan la interconexión 
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=14cm]{pcbnew}
+    \includegraphics[width=16cm]{pcbnew}
     \caption{Herramienta PCBnew tras finalizar el proyecto}
     \label{fig:pcbnew_1}
 \end{figure}
@@ -207,15 +207,24 @@ Para aquellos puntos comunes a varios dispositivos como son GND o Vcc es posible
 
 En ocasiones será necesario forzar que una parte de la placa no contenga ningún elemento conductor, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{keep out area}''. Al contrario que los planos normales, las pistas no pueden atravesarlos.
 
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=15cm]{PCB_zonas_y_pistas}
+    \caption{Ejemplo de zonas y pistas en la PCB}
+    \label{fig:PCB_zonas_y_pistas}
+\end{figure}
+
 En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos, que unos elementos acaban afectando a la visibilidad y ocultando otros. Para evitar estos problemas, en la parte derecha hay habilitado un panel que permite activar o desactivar el renderizado de ciertos objetos. Es posible ocultar cualquier grupo de elementos: planos, serigrafías, componentes, etc.
+ 
+\clearpage 
  
 \section{Diseño final de la PCB\label{sec:PCB_final}}
 
 El sistema seguido para la disposición de componentes en la PCB ha venido determinado en gran medida por la disposición de componentes en la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
 
-\begin{figure} [h]
+\begin{figure} [H]
     \centering
-    \includegraphics[width=14cm]{Esquema_PCB}
+    \includegraphics[width=15cm]{Esquema_PCB}
     \caption{Distintas partes que componen la PCB. Alimentación (rojo), microcontrolador (blanco), interfaz inalámbrica (azul).}
     \label{fig:Esquema_PCB}
 \end{figure}
@@ -228,27 +237,32 @@ La alimentación, ha sido agrupada para facilitar la localización de errores as
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=7cm]{Detalle_alimentacion}
+    \includegraphics[height=15cm, angle = 270]{Detalle_alimentacion}
     \caption{Detalle de la alimentación de la placa}
     \label{fig:Detalle_alimentacion}
 \end{figure}
 
-\subsection{Microcontrolador\label{sec:PCB_alimentacion}}
+\subsection{Microcontrolador\label{sec:PCB_micro}}
 
 Durante el posicionado del microcontrolador es muy importante tener en cuenta las restricciones impuestas por el fabricante, pues algunas de estas no se ven reflejadas en la \textit{netlist} ni en el esquemático. Los condensadores, tanto de desacoplo como bulk, han sido colocados lo más cerca posible de los pines de alimentación para asegurar el correcto funcionamiento del microcontrolador.
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=7cm]{Detalle_micro}
+    \includegraphics[width=15cm]{Detalle_micro}
     \caption{Detalle del microcontrolador y los componentes asociados}
     \label{fig:Detalle_micro}
 \end{figure}
 
 STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño sino que propone pautas a la hora de disponer los componentes en la PBC.
 
-\subsection{Interfaz inalámbrica\label{sec:PCB_alimentacion}}
+\subsection{Interfaz inalámbrica\label{sec:PCB_inalambrica}}
 
-
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{Detalle_inalambrica}
+    \caption{Detalle de los módulos WiFi y Bluetooth}
+    \label{fig:Detalle_inalambrica}
+\end{figure}
 
 	PCB (Añadir BOM)
 	

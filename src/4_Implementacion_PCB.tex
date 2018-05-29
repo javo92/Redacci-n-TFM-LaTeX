@@ -253,9 +253,13 @@ Durante el posicionado del microcontrolador es muy importante tener en cuenta la
     \label{fig:Detalle_micro}
 \end{figure}
 
-STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño sino que propone pautas a la hora de disponer los componentes en la PBC.
+STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño sino que propone pautas a la hora de disponer los componentes en la PBC. Algunas de las recomendaciones son aislar el circuito del oscilador del resto de la placa con un plano de tierra, forzar una distribución de los componentes lo más simétrica posible y, al igual que con los condensadores, colocar el circuito lo más cerca posible de los pines del microcontrolador.
+
+Se ha dotado a la placa de un circuito que fuerza el reinicio del controlador. Dicho circuito será especialmente útil posteriormente ya que, si este se programa correctamente, permitirá reiniciar todos los microcontroladores simultáneamente. Adicionalmente, durante el desarrollo del firmware del microcontrolador se podrá forzar su arranque en modo reprogramación sin necesidad de recurrir a cortar la alimentación de todo el sistema.
 
 \subsection{Interfaz inalámbrica\label{sec:PCB_inalambrica}}
+
+La zona de la PCB que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa.Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
 
 \begin{figure} [h]
     \centering
@@ -264,7 +268,11 @@ STM Electronics ha puesto a disposición de sus clientes un manual para el corre
     \label{fig:Detalle_inalambrica}
 \end{figure}
 
-	PCB (Añadir BOM)
-	
-	Primeras pruebas y programación
+Finalmente se han interconectado ambos módulos a través del bus SPI compartido así como con el microcontrolador y la alimentación. Con el objetivo de eliminar pistas y de unificar la alimentación se ha definido un plano de 3.3V en la parte superior de la placa y un plano de GND en la parte inferior. Por desgracia, debido a la complejidad del diseño y a la cantidad de pistas trazadas, no todas las conexiones entre los elementos se han podido realizar en la capa superior. Por este motivo ha sido necesario hacer uso de vías, puentes y otras técnicas comunes en placas de dos o más capas.
+
+\section{Bill Of Material (BOM)\label{sec:BOM}}
+
+
+
+PCB (Añadir BOM)
 	

@@ -209,8 +209,8 @@ En ocasiones será necesario forzar que una parte de la placa no contenga ningú
 
 \begin{figure} [H]
     \centering
-    \includegraphics[width=15cm]{PCB_zonas_y_pistas}
-    \caption{Ejemplo de zonas y pistas en la PCB}
+    \includegraphics[width=12cm]{PCB_zonas_y_pistas}
+    \caption{Ejemplo de planos, \textit{keep out area} y y pistas en la PCB}
     \label{fig:PCB_zonas_y_pistas}
 \end{figure}
 
@@ -231,13 +231,15 @@ El sistema seguido para la disposición de componentes en la PCB ha venido deter
 
 En las siguientes secciones se explicará con más detalle cada una de las partes de la PCB, haciendo una división en los tres grandes grupos que la componen: alimentación (rojo), microcontrolador (blanco) e interfaz inalámbrica (azul).
 
+\clearpage
+
 \subsection{Alimentación\label{sec:PCB_alimentacion}}
 
 La alimentación, ha sido agrupada para facilitar la localización de errores asociados a la misma a la vez que se simplifica la conexión con la tarjeta de adquisición. Los conectores se han situado en lugares en los que resulte cómodo realizar la interconexión a la par que se mantiene al mínimo el cable necesario para ello. Se ha posicionado el fusible de tal forma que en caso de ser necesaria su sustitución haya disponible suficiente espacio para maniobrar con comodidad.
 
 \begin{figure} [h]
     \centering
-    \includegraphics[height=15cm, angle = 270]{Detalle_alimentacion}
+    \includegraphics[height=16cm, angle = 270]{Detalle_alimentacion}
     \caption{Detalle de la alimentación de la placa}
     \label{fig:Detalle_alimentacion}
 \end{figure}
@@ -246,33 +248,103 @@ La alimentación, ha sido agrupada para facilitar la localización de errores as
 
 Durante el posicionado del microcontrolador es muy importante tener en cuenta las restricciones impuestas por el fabricante, pues algunas de estas no se ven reflejadas en la \textit{netlist} ni en el esquemático. Los condensadores, tanto de desacoplo como bulk, han sido colocados lo más cerca posible de los pines de alimentación para asegurar el correcto funcionamiento del microcontrolador.
 
+STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño, sino que propone pautas a la hora de disponer los componentes en la PBC. Algunas de las recomendaciones son aislar el circuito del oscilador del resto de la placa con un plano de tierra, forzar una distribución de los componentes lo más simétrica posible y, al igual que con los condensadores, colocar el circuito lo más cerca posible de los pines del microcontrolador.
+
+\clearpage
+
 \begin{figure} [h]
     \centering
-    \includegraphics[width=15cm]{Detalle_micro}
+    \includegraphics[width=16cm]{Detalle_micro}
     \caption{Detalle del microcontrolador y los componentes asociados}
     \label{fig:Detalle_micro}
 \end{figure}
 
-STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño sino que propone pautas a la hora de disponer los componentes en la PBC. Algunas de las recomendaciones son aislar el circuito del oscilador del resto de la placa con un plano de tierra, forzar una distribución de los componentes lo más simétrica posible y, al igual que con los condensadores, colocar el circuito lo más cerca posible de los pines del microcontrolador.
-
-Se ha dotado a la placa de un circuito que fuerza el reinicio del controlador. Dicho circuito será especialmente útil posteriormente ya que, si este se programa correctamente, permitirá reiniciar todos los microcontroladores simultáneamente. Adicionalmente, durante el desarrollo del firmware del microcontrolador se podrá forzar su arranque en modo reprogramación sin necesidad de recurrir a cortar la alimentación de todo el sistema.
+Se ha dotado a la placa de un circuito que fuerza el reinicio del controlador. Dicho circuito será especialmente útil posteriormente ya que, si este se programa correctamente, permitirá reiniciar todos los microcontroladores simultáneamente. Adicionalmente, durante el desarrollo del firmware del microcontrolador, se podrá forzar su arranque en modo reprogramación sin necesidad de recurrir a cortar la alimentación de todo el sistema.
 
 \subsection{Interfaz inalámbrica\label{sec:PCB_inalambrica}}
 
-La zona de la PCB que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa.Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
+La zona de la PCB que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa. Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
+
+La localización de los conectores de programación de ambos módulos ha venido determinada por la posición de sus correspondientes pines. El objetivo ha sido aproximarlos al módulo correspondiente sin que por ello se produzcan cruces entre pistas. Al presentar unas restricciones de diseño leves por parte del fabricante, ha sido posible en ocasiones trazar pistas entre los pines del ESP lo cual ha facilitado sensiblemente la tarea de trazado de rutas y disposición de componentes.
+
+\clearpage
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=15cm]{Detalle_inalambrica}
+    \includegraphics[width=16cm]{Detalle_inalambrica}
     \caption{Detalle de los módulos WiFi y Bluetooth}
     \label{fig:Detalle_inalambrica}
 \end{figure}
 
-Finalmente se han interconectado ambos módulos a través del bus SPI compartido así como con el microcontrolador y la alimentación. Con el objetivo de eliminar pistas y de unificar la alimentación se ha definido un plano de 3.3V en la parte superior de la placa y un plano de GND en la parte inferior. Por desgracia, debido a la complejidad del diseño y a la cantidad de pistas trazadas, no todas las conexiones entre los elementos se han podido realizar en la capa superior. Por este motivo ha sido necesario hacer uso de vías, puentes y otras técnicas comunes en placas de dos o más capas.
+Finalmente se han interconectado ambos módulos a través del bus SPI compartido así como con el microcontrolador y la alimentación. Con el objetivo de eliminar pistas y de unificar la alimentación se ha definido un plano de 3.3V en la parte superior de la placa y un plano de GND en la parte inferior. 
 
-\section{Bill Of Material (BOM)\label{sec:BOM}}
+Por desgracia, debido a la complejidad del diseño y a la cantidad de pistas trazadas, no todas las conexiones entre los elementos se han podido realizar en la capa superior. Por este motivo ha sido necesario hacer uso de vías, puentes y otras técnicas comunes en placas de dos o más capas.
+
+\clearpage
+
+\section{Resultados\label{sec:PCB_Resultados}}
+
+A continuación se presenta una comparativa entre el \textit{layout} proyectado utilizando KiCad y el resultado final.
+
+\begin{figure}[h]
+  \begin{subfigure}[b]{8cm}
+   	\centering
+    \includegraphics[height=8cm, angle = 90]{PCB_Front}
+    \caption{\textit{Layout} en KiCad.}
+    \label{fig:PCB_Front}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{8cm}
+  	\centering
+    \includegraphics[width=8cm]{PCB_Front_real}
+    \caption{Impresión final}
+    \label{fig:PCB_Front_real}
+  \end{subfigure}
+  \caption{\textit{Layout} en KiCad (a) e impresión final (b) de la capa superior}
+  \label{fig:PCB_Front_completa}
+\end{figure}
+
+El resultado es bastante positivo. Al haberse respetado todas las restricciones de diseño impuestas por el fabricante, no hay ningún cortocircuito y todas las pistas se han impreso correctamente.
+
+Aquellas zonas en las que no hay conductor en ninguno de los planos aún presenta un soporte físico de fibra de vidrio para dotar de consistencia a la placa.
+
+La serigrafía que acompaña a los componentes así como la generada manualmente se aprecia con mayor claridad incluso que en la previsualización generada por KiCad.
+
+\clearpage
+
+\begin{figure}[h]
+  \begin{subfigure}[b]{8cm}
+   	\centering
+    \includegraphics[height=8cm, angle = 90]{PCB_Back}
+    \caption{\textit{Layout} en KiCad.}
+    \label{fig:PCB_Back}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{8cm}
+  	\centering
+    \includegraphics[width=8cm]{PCB_Back_real}
+    \caption{Impresión final}
+    \label{fig:PCB_Back_real}
+  \end{subfigure}
+  \caption{\textit{Layout} en KiCad (a) e impresión final (b) de la capa inferior}
+  \label{fig:PCB_Back_completa}
+\end{figure}
+
+Como se puede observar, la impresión real se encuentra en modo espejo con el \textit{layout} de KiCad. Este fenómeno ocurre debido a  al trabajar con la capa inferior en KiCad se mantiene la vista cenital y las capas superiores simplemente no se renderizan. Con esto se consigue facilitar el proceso de diseño, no sólo por mantener un punto de referencia constante, sino porque al trazar pistas se puede pasar con comodidad entre unas capas y otras sin tener que cambiar el modo de vista.
+
+\subsection{Previsualización 3D vs resultado final\label{sec:Modelo_3D}}
 
 
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{PCB_3D}
+    \caption{Detalle de los módulos WiFi y Bluetooth}
+    \label{fig:Detalle_inalambrica}
+\end{figure}
 
-PCB (Añadir BOM)
-	
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{PCB_3D_real}
+    \caption{Detalle de los módulos WiFi y Bluetooth}
+    \label{fig:Detalle_inalambrica}
+\end{figure}

@@ -330,22 +330,23 @@ La serigrafía que acompaña a los componentes así como la generada manualmente
   \label{fig:PCB_Back_completa}
 \end{figure}
 
-Como se puede observar, la impresión real se encuentra en modo espejo con el \textit{layout} de KiCad. Este fenómeno ocurre debido a  al trabajar con la capa inferior en KiCad se mantiene la vista cenital y las capas superiores simplemente no se renderizan. Con esto se consigue facilitar el proceso de diseño, no sólo por mantener un punto de referencia constante, sino porque al trazar pistas se puede pasar con comodidad entre unas capas y otras sin tener que cambiar el modo de vista.
+Como se puede observar, la impresión real se encuentra en modo espejo con el \textit{layout} de KiCad de la capa inferior. Este fenómeno ocurre debido a  al trabajar con la capa inferior en KiCad se mantiene la vista cenital y las capas superiores simplemente no se renderizan. Con esto se consigue facilitar el proceso de diseño, no sólo por mantener un punto de referencia constante, sino porque al trazar pistas se puede pasar con comodidad entre unas capas y otras sin tener que cambiar el modo de vista.
 
 \subsection{Previsualización 3D vs resultado final\label{sec:Modelo_3D}}
 
-Prueba de sincronización
+Normalmente el \textit{footprint} de un componente incluye una serigrafía que delimita la zona de la placa que ocupará, garantizando que dos componentes cuya serigrafía no se solape no causarán problemas en el montaje final.
+
+Por desgracia, esto no siempre se cumple y en ocasiones puede ocurrir que dos componentes procedentes de una librería poco fiable contengan información errónea. 
+\\Como ya se ha mencionado anteriormente, un fallo en la fase de diseño de la electrónica del sistema puede tener un coste muy elevado. \\Para minimizar las posibilidades de error y asegurarse que el resultado final será el deseado KiCad permite realizar una representación 3D de todos los componentes así como su posición relativa en la placa.
+
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=16cm]{PCB_3D}
-    \caption{Detalle de los módulos WiFi y Bluetooth}
-    \label{fig:Detalle_inalambrica}
+    \includegraphics[width=15cm]{PCB_3D}
+
+    \includegraphics[width=15cm]{PCB_3D_real}
+    \caption{Modelo 3D del sistema (arriba) y placa final (abajo)}
+    \label{fig:Comparativa_PCB_final}
 \end{figure}
 
-\begin{figure} [h]
-    \centering
-    \includegraphics[width=16cm]{PCB_3D_real}
-    \caption{Detalle de los módulos WiFi y Bluetooth}
-    \label{fig:Detalle_inalambrica}
-\end{figure}
+En la figura \ref{fig:Comparativa_PCB_final} se puede comprobar que, efectivamente, la representación 3D proyectada al principio ha resultado ser fiel al resultado final obtenido.

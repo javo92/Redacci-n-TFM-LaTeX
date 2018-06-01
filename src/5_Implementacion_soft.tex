@@ -28,7 +28,7 @@ Uno de los objetivos de este proyecto era utilizar Software Libre en la medida d
 \begin{itemize}
    \item \textbf{CooCox}: Presenta muchos ejemplos prácticos pero su interfaz es muy lenta. Necesita demasiado tiempo para iniciar.
    \item \textbf{Arduino}: Fase muy temprana de desarrollo.
-   \item \textbf{System Workbench for STM32} Buena comunidad respaldando pero incompatible con las herramientas de STM.
+   \item \textbf{System Workbench for STM32} Buena comunidad pero incompatible con las herramientas de STM.
 
 \begin{figure} [h]
     \centering
@@ -37,8 +37,33 @@ Uno de los objetivos de este proyecto era utilizar Software Libre en la medida d
     \label{fig:Alternative_IDE}
 \end{figure}
 
-Finalmente se optó por armKeil, pues tiene una gran cantidad de ejemplos y librerías descargables desde la propia interfaz, contiene un gran número de funciones adicionales y la compatibilidad con las herramientas de STM es muy buena. Aunque en la figura \ref{fig:STM32_IDEs} aparece entre las alternativas gratuitas se debe destacar que cuenta con dos versiones, una gratuita que permite realizar proyectos básicos y otra comercial destinada a aplicaciones de mayor envergadura. La limitación impuesta en la versión gratuita consiste en una limitación en la cantidad de código que la herramienta permite compilar.
+Finalmente se optó por armKeil, pues tiene una gran cantidad de ejemplos y librerías descargables desde la propia interfaz, contiene un gran número de funciones adicionales y la compatibilidad con las herramientas de STM es muy buena. Aunque en la figura \ref{fig:STM32_IDEs} aparece entre las alternativas gratuitas se debe destacar que cuenta con dos versiones, una gratuita que permite realizar proyectos básicos y otra comercial destinada a aplicaciones de mayor envergadura. La limitación de la versión gratuita consiste en forzar un tamaño máximo de programa de 32KB. Si el código a compilar supera dicha longitud directamente no compilará.
 
+\subsection{Configuración inicial\label{Configuracion_micro}}
+
+Aunque Keil permite comenzar un proyecto utilizando como base algunos de los ejemplos que contiene, la configuración de las características del microcontrolador (reloj, interfaces, etc.) puede resultar una tarea muy compleja y tediosa, incluso para aquellos desarrolladores más experimentados. Con el objetivo de facilitar esta tarea, el fabricante ha creado un software con interfaz amigable que permite configurar de forma gráfica el procesador llamado STM32CubeMX.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{STM32CubeMX}
+    \caption{Inicializador de proyectos STM32CubeMX}
+    \label{fig:STM32CubeMX}
+\end{figure}
+
+La herramienta STM32CubeMX incluye una base de datos de todos los microcontroladores disponibles, permitiendo seleccionar el formato, encapsulado e incluso si se va a utilizar en formato nucleo o en un kit de desarrollo. Incluye también documentación sobre cada microcontrolador y enlaces a distribuidores en caso de que el usuario final quiera comprarlo. 
+
+Tras seleccionar el microcontrolador, se presenta al usuario una zona de trabajo dividida en cuatro pestañas, cada una destinada a configurar un conjunto de características del microcontrolador: pines y sus funciones, reloj, interfaces de comunicación y consumo de energía.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{STM32CubeMX_pin}
+    \caption{Espacio de trabajo del STM32CubeMX}
+    \label{fig:STM32CubeMX_pin}
+\end{figure}
+
+La configuración de pines permite no sólo ver de forma visual cada una de las funciones alternativas de cada pin, sino que además indica si alguna no está disponible y 
+
+La utilización de STM32CubeMX permite una mayor portabilidad del código ya que, si se siguen las reglas de programación sugeridas por la aplicación, esta permite realizar cambios de la configuración e incluso de familia de microcontrolador sin necesidad de reestructurar el código.
 
 
 Software

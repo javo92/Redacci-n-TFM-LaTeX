@@ -7,7 +7,7 @@ El sistema está compuesto por tres microcontroladores, cada uno de ellos con su
 Los distintos elementos se presentarán siguiendo el mismo orden que la información que se desea adquirir. Este es:
 ADS $\Rightarrow$ Microcontrolador $\Rightarrow$ Interfaz inalámbrica $\Rightarrow$ PC.
 
-\section{Microcontrolador STM32F4\label{Software_micro}}
+\section{Microcontrolador STM32F4\label{sec:Software_micro}}
 
 Debido a la complejidad de los microcontroladores de la familia STM32, los desarrolladores han dedicado su tiempo y esfuerzo en crear herramientas que faciliten su programación. Estas herramientas llamadas \acrshort{IDE} contienen una recopilación de funciones, utilidades y ejemplos que simplifican sensiblemente el proceso de diseño e implementación del software que ejecutará el microcontrolador.
 
@@ -24,7 +24,7 @@ Es tan grande la comunidad de desarrolladores que hay detrás del STM que numero
 
 La figura \ref{fig:STM32_IDEs} muestra algunos entornos de desarrollo recomendados por el fabricante en su propia página web. Como se puede apreciar, en la imagen se hace distinción entre las opciones comerciales (azul) y las gratuitas (verde).
 
-Uno de los objetivos de este proyecto era utilizar Software Libre en la medida de lo posible. Por ese motivo se probaron algunas de las alternativas presentes en la imagen anterior así como otras menos conocidas basadas en Oracle como ``System Workbench for STM32'' (AC6). A continuación se presentan algunas de las utilizadas al comienzo del proyecto junto con sus características y el motivo de su descarte:
+Uno de los objetivos de este proyecto era utilizar Software Libre en la medida de lo posible. Por ese motivo se probaron algunas de las alternativas presentes en la imagen anterior dando preferencia a aquellas basadas en Oracle como ``System Workbench for STM32'' (AC6). A continuación se presentan algunas de las utilizadas al comienzo del proyecto junto con sus características y el motivo de su descarte:
 \begin{itemize}
    \item \textbf{CooCox}\\
    Presenta muchos ejemplos prácticos pero su interfaz es muy lenta. Necesita demasiado tiempo para iniciar.
@@ -36,16 +36,16 @@ Uno de los objetivos de este proyecto era utilizar Software Libre en la medida d
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=13cm]{Alternative_IDE}
+    \includegraphics[width=12cm]{Alternative_IDE}
     \caption{Ejemplo de IDE alternativo}
     \label{fig:Alternative_IDE}
 \end{figure}
 
 Finalmente se optó por armKeil, pues tiene una gran cantidad de ejemplos y librerías descargables desde la propia interfaz, contiene un gran número de funciones adicionales y la compatibilidad con las herramientas de STM es muy buena. Aunque en la figura \ref{fig:STM32_IDEs} aparece entre las alternativas gratuitas se debe destacar que cuenta con dos versiones, una gratuita que permite realizar proyectos básicos y otra comercial destinada a aplicaciones de mayor envergadura. La limitación de la versión gratuita consiste en forzar un tamaño máximo de programa de 32KB. Si el código a compilar supera dicha longitud directamente no compilará.
 
-\subsection{Configuración inicial\label{Configuracion_micro}}
+\subsection{Configuración inicial\label{sec:Configuracion_micro}}
 
-Aunque Keil permite comenzar un proyecto utilizando como base algunos de los ejemplos que contiene, la configuración de las características del microcontrolador (reloj, interfaces, etc.) puede resultar una tarea muy compleja y tediosa, incluso para aquellos desarrolladores más experimentados. Con el objetivo de facilitar esta tarea, el fabricante ha creado un software con interfaz amigable que permite configurar de forma gráfica el procesador llamado STM32CubeMX.
+Aunque Keil permite comenzar un proyecto utilizando como base algunos de los ejemplos que contiene, la configuración de las características del microcontrolador (reloj, interfaces, etc.) puede resultar una tarea muy compleja y tediosa, incluso para aquellos desarrolladores más experimentados. Con el objetivo de facilitar esta tarea, el fabricante ha creado un software con interfaz amigable que permite configurar de forma gráfica el procesador llamado STM32CubeMX que hace uso de un conjunto de elementos y \textit{drivers} llamado \acrshort{HAL} que se explicará con más detalle al comienzo del apartado \ref{sec:Software_micro_HAL}.
 
 \begin{figure} [h]
     \centering
@@ -56,7 +56,7 @@ Aunque Keil permite comenzar un proyecto utilizando como base algunos de los eje
 
 La herramienta STM32CubeMX incluye una base de datos de todos los microcontroladores disponibles, permitiendo seleccionar el formato, encapsulado e incluso si se va a utilizar en su formato nucleo o en un kit de desarrollo. Incluye también documentación sobre cada microcontrolador y enlaces a distribuidores en caso de que el usuario final quiera comprarlo. 
 
-\subsubsection{Asignación de funciones\label{Configuracion_micro_asignacion}}
+\subsubsection{Asignación de funciones\label{sec:Configuracion_micro_asignacion}}
 
 Tras seleccionar el microcontrolador, se presenta al usuario una zona de trabajo dividida en cuatro pestañas, cada una destinada a configurar un conjunto de características del microcontrolador: pines y sus funciones, reloj, interfaces de comunicación y consumo de energía.
 
@@ -71,7 +71,7 @@ La configuración de pines permite, no sólo ver de forma visual cada una de las
 
 En la figura \ref{fig:STM32CubeMX_pin} aparece la configuración utilizada en este proyecto. En la imagen se puede apreciar que todas las interfaces necesarias para llevar a cabo este proyecto ya han sido asociadas a su pin correspondiente y aún quedan libres casi la mitad de los pines. Esto es un indicador de la versatilidad de este dispositivo.
 
-\subsubsection{Configuración de los relojes\label{Configuracion_micro_reloj}}
+\subsubsection{Configuración de los relojes\label{sec:Configuracion_micro_reloj}}
 
 Este apartado es el más importante, pues un reloj mal configurado puede provocar errores en la comunicación, una mala gestión del tiempo e incluso que el propio microcontrolador no arranque.
 
@@ -89,11 +89,11 @@ En la figura \ref{fig:STM32CubeMX_clock} representa la configuración aplicada a
 
 Como se puede ver, aprovecha ambos osciladores, el externo (\acrshort{HSE} = 8MHz) y el interno (\acrshort{LSI} = 16MHz) para, usando \acrshort{PLL}, generar un reloj de una frecuencia mucho más elevada (168 MHz). Dicha frecuencia es, según el fabricante, la máxima frecuencia alcanzable por el dispositivo.
 
-La función \acrshort{CSS} garantiza que, en caso de fallo del reloj del microcontrolador, este generará una alerta y entrará en un modo seguro. Esta función es muy útil cuando se está trabajando con elementos en la seguridad de las personas depende directamente del correcto comportamiento microcontrolador.
+La función \acrshort{CSS} garantiza que, en caso de fallo del reloj del microcontrolador, este generará una alerta y entrará en un modo seguro. Esta función es muy útil cuando se está trabajando con elementos en los que la seguridad de las personas depende directamente del correcto comportamiento microcontrolador.
 
 \clearpage
 
-\subsubsection{Configuración de los periféricos\label{Configuracion_micro_com}}
+\subsubsection{Configuración de los periféricos\label{sec:Configuracion_micro_com}}
 
 La tercera pestaña permite configurar los periféricos, esto incluye interfaces de comunicación, puertos GPIO, USB, etc.
 
@@ -115,26 +115,271 @@ En función del estado del periférico, este aparecerá marcado con un \textit{t
 
 En la figura \ref{fig:STM32CubeMX_conf_2} se muestran las opciones seleccionadas para el SPI que se comunicará con el los ADS. Se puede cambiar la velocidad, el modo de transmisión e incluso si la gestión del pin ``\textit{Chip-Select}'' se realizará de forma automática o manual.
 
-\subsubsection{Calculo de consumo y otras opciones\label{Configuracion_micro_otro}}
+\subsubsection{Calculo de consumo\label{sec:Configuracion_micro_consumo}}
 
-Por último, en la pestaña ``\textit{Power Consuption Calculator}'' mostrada en la figura \ref{fig:STM32CubeMX_otro} se muestran numerosas opciones para el análisis del consumo del microcontrolador en función de parámetros como el modo funcionamiento, la fuente de alimentación e incluso la temperatura.
+La última pestaña, ``\textit{Power Consuption Calculator}'', contiene numerosas opciones para el análisis del consumo del microcontrolador. En esta se puede estimar la duración de la batería en función de parámetros como el modo funcionamiento, el tipo de fuente de alimentación e incluso la temperatura.
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=10cm]{STM32CubeMX_otro}
+    \includegraphics[width=15cm]{STM32CubeMX_otro}
     \caption{Calculadora del consumo del microcontrolador}
     \label{fig:STM32CubeMX_otro}
 \end{figure}
 
-Una vez configurado el microcontrolador es necesario seleccionar  activar el generador de código . El STM32CubeMX es capaz de crear un código base para casi cualquier \acrshort{IDE} pero tras un par de usos queda claro que, de entre todos los disponibles, es armKeil con el que la integración da mejores resultados. La herramienta crea el código base con la configuración seleccionada desde la interfaz y lo integra dentro de un proyecto ya configurado y listo para trabajar.
+\subsubsection{Generar código\label{sec:Configuracion_micro_generador}}
+
+Finalmente es el momento de seleccionar el IDE para el cual el STM32CubeMX debe generar la base de código sobre la que se construirá el proyecto.
+
+Esta herramienta es capaz de crear un código base para casi cualquier \acrshort{IDE} pero tras un par de usos queda claro que, de entre todos los disponibles, es armKeil con el que la integración da mejores resultados. La herramienta crea el código base con la configuración seleccionada desde la interfaz y lo integra dentro de un proyecto ya configurado y listo para trabajar.
 
 Es importante destacar que la utilización de STM32CubeMX no sólo está pensada para facilitar el comienzo del diseño proporcionando una base sobre la que trabajar, también permite una mayor portabilidad del código ya que, si se siguen las reglas de programación sugeridas por la aplicación, esta permite realizar cambios de la configuración de los pines, los periféricos e incluso de familia de microcontrolador, todo ello sin necesidad de reestructurar el código.
 
-Software
-	Comunicación ADS - STM
+\clearpage
+
+El código que se ejecuta en el STM está dividido en dos fases. La primera, denominada comúnmente \textit{setup}, sólo se ejecuta la primera vez que se enciende el microcontrolador.
+En esta se suelen declarar todas las variables globales, inicializar los periféricos y, en definitiva, preparar el microcontrolador para funcionar.
+
+La segunda fase, denominada \textit{loop} es, como su nombre indica, un bucle infinito. En esta fase se ejecuta todo el código de forma cíclica. Normalmente en esta fase se incluye el funcionamiento normal del sistema, utilizando condicionales para forzar el comportamiento esperado.
+
+Al generar el proyecto, el STM32CubeMX estructura el código tal como se muestra en el código \ref{algoritmo:Auto_gen}, dejando al usuario ciertas zonas libres para escribir en ellas y restringiendo la escritura en otras.
+
+\begin{lstlisting}[label=algoritmo:Auto_gen,language=C,frame=single,caption=Ejemplo de generación de código automáticamente]
+  /* USER CODE BEGIN 1 */
 	
-	Comunicación STM- ESP
+  /* USER CODE END 1 */
+
+  /* MCU Configuration----------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
 	
-	Arduino (Comunicación ESP - PC)
+  /* USER CODE END Init */
+\end{lstlisting}
+
+Respetar dichas restricciones es opcional, pero en caso de no hacerlo no se podrá volver a cambiar la configuración original del micro mediante el STM32CubeMX, pues dicha herramienta las utiliza como referencia y no respetarlas puede ocasionar la pérdida del trabajo.
+
+Por simplicidad, comodidad y compatibilidad, durante la realización de este trabajo se han respetado dichas restricciones construyendo todo el código en las zonas habilitadas para ello.
+
+\clearpage
+
+\subsection{Implementación del firmware \label{sec:Software_micro_HAL}}
+
+A lo largo de las siguientes páginas se presentará una introducción a los elementos software utilizados, haciendo especial hincapié en aquel código cuya función es indispensable para cumplir con las especificaciones fijadas al comienzo del proyecto.
+
+\subsubsection{HAL \label{sec:Software_micro_HAL}}
+
+La programación de microcontroladores basados en Arduino y su \acrshort{IDE} resulta especialmente intuitiva ya que desde sus comienzos ese era uno de los objetivos: acercar el mundo analógico y digital a gente poco iniciada.
+
+Los ARM de STM en cambio, están destinados a personas con cierta experiencia programando controladores. Permiten libertad total, proporcionando acceso a los registros sin restricciones y un control del hardware muy preciso. Si bien esta aproximación aumenta las posibilidades de la plataforma, también limita al número de personas que pueden ponerse a programar en ella así como la portabilidad de código.
+\\Cuanto más cercano sea al hardware mayor exclusivo será y, por lo tanto, más cambios serán necesarios para portar dicho código a otra familia si en el futuro las especificaciones varían o se desean mejorar las características del sistema.
+
+Con esta problemática en mente los desarrolladores de STM crearon un conjunto de herramientas y drivers que reciben el nombre de Hardware Abstraction Layer (\acrshort{HAL}).
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{HAL-LL}
+    \caption{Resumen del funcionamiento y características del HAL \cite{HAL-LL}}
+    \label{fig:HAL-LL}
+\end{figure}
+
+La utilización de \acrshort{HAL} no sólo permite portar código entre familias de STM sino que simplifica sensiblemente el desarrollo de un proyecto, pues integra un gran número de funciones relacionadas con la gestión de los distintos puertos de comunicaciones y GPIO así como otras encargadas de realizar operaciones matemáticas complejas.
+
+\subsubsection{Estructura del código\label{sec:Software_micro_estados}}
+
+El código está organizado siguiendo el esquema típico de una máquina de estados. Haciendo uso de condicionales de tipo ``switch - case'' se ha construído el programa representado en la figura \ref{fig:Maquina_estados_STM}. 
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{Maquina_estados_STM}
+    \caption{Estructura del programa}
+    \label{fig:Maquina_estados_STM}
+\end{figure}
+
+En primer lugar se realiza una inicialización de todas las variables, los periféricos y el resto de dispositivos que se encuentran conectados con el STM.
+
+A continuación, el microcontrolador se queda a la espera de un comando por parte del ESP-12E que le indicará que hacer. Por el momento se han implementado tres alternativas, dos relacionadas con la adquisición de datos y una para cambios de   configuración, pero está preparado para aumentar el número de condiciones con facilidad. De esta forma el software puede aumentar en funcionalidades sin que haya que reestructurar el código.
+
+Si el microcontrolador recibe la orden de adquirir datos, este activa la comunicación SPI y queda a la espera de una confirmación por parte del ADS de que los datos están listos para ser leídos del bus.
+
+Tras leer los datos el microcontrolador convierte la información a formato \textit{float} y calcula la equivalencia en voltaje de la medida. 
+
+Posteriormente, en función de la orden recibida desde el ESP, el STM transmite la información al ESP o bien realiza operaciones matemáticas sobre los datos y finalmente los transmite al ESP. Estas operaciones pueden ser sumas, restas e incluso un filtrado de la señal para eliminar componentes indeseadas.
+
+\subsubsection{Transmisión de datos por SPI \label{sec:Software_micro_SPI}}
+
+Aunque la capa de abstracción del hardware facilita notablemente el trabajo de desarrollo, para poder trabajar con un bus de comunicaciones de forma eficiente y sin errores es necesario saber como funciona a nivel hardware y, desde ahí, realizar una abstracción progresiva. 
+
+En primer lugar será importante definir que elemento hará las funciones de Máster y cual de Esclavo, pues esto limitará las características de la comunicación y forzará la configuración de los \acrshort{GPIO} de una forma u otra.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{SPI_Master_Slave}
+    \caption{Esquema de comunicaciones SPI}
+    \label{fig:SPI_Master_Slave}
+\end{figure}
+
+Para aprovechar la tasa de transferencia del SPI del STM al máximo lo ideal sería que fuese este el Máster en ambas comunicaciones (hacia el ADS y hacia el ESP). Esto es así porque la máxima velocidad de transmisión es definida por el Máster mientras que el Esclavo se adapta a las normas impuestas, siempre dentro de unos rangos establecidos por el fabricante.
+
+Por desgracia, las limitaciones de las librerías disponibles para el ESP-12E fuerzan que este sea obligatoriamente el Máster de esa comunicación limitando la velocidad a la máxima que sea capaz de alcanzar el ESP.
+
+Para la transmisión de datos desde el STM es muy importante tener en cuenta que el microcontrolador trabaja a bajo nivel. Las funciones implementadas en los \textit{drivers} y librerías de abstracción de hardware facilitan el trabajo, pero debe tenerse presente en todo momento que se está transmitiendo información de registros de memoria y, por lo tanto, no se debe perder de vista el tamaño del dato ni el tipo del mismo.
+
+Las funciones encargadas de transmitir información a través del puerto \acrshort{SPI} son:
+\begin{itemize}
+\item HAL\_StatusTypeDef HAL\_SPI\_Transmit
+\item HAL\_StatusTypeDef HAL\_SPI\_Receive
+\item HAL\_StatusTypeDef HAL\_SPI\_TransmitReceive
+\end{itemize}
+
+Las tres funciones necesitan el puntero al puerto por el que se transmitirá la información, la dirección de memoria de la misma, el tamaño del conjunto de datos y el tiempo de espera por cada transmisión.
+
+El código \ref{algoritmo:STM_Transmision_SPI} muestra la cabecera de la función encargada de transmitir y recibir información de forma simultánea. En el se puede ver con claridad el tipo de datos que necesita para realizar una transmisión de datos de forma satisfactoria.
+
+\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+HAL_StatusTypeDef HAL_SPI_TransmitReceive(
+	SPI_HandleTypeDef *hspi,
+ 	uint8_t *pTxData, 
+ 	uint8_t *pRxData, 
+ 	uint16_t Size, 
+	uint32_t Timeout)
+\end{lstlisting}
+
+Las funciones encargadas de transmitir y recibir información, ya sea a través de SPI o a través de otro periférico, funcionan de forma similar y por lo tanto necesitan las mismas variables. Salta a la vista que, a pesar de que la función simplifica sensiblemente la gestión de memoria y pines, aún es necesario tener en cuenta ciertas limitaciones que marcarán el modo de trabajo:
+\begin{itemize}
+\item \textbf{Tamaño de transmisión fijo}\\
+El tamaño de los datos a transmitir debe ser de 8 bits. En caso de querer transmitir una variable cuyo tamaño en memoria sea superior a este será necesario realizar una transformación.
+\item \textbf{Gestión de pines manual o automática}\\
+La gestión de pines como ``\textsc{Data-Ready}'' y ``\textsc{Start}'' se debe realizar de forma manual. ``\textsc{Chip-Select}'' en cambio está pensado para gestionarlo de forma manual o automática en función de las circunstancias.
+\item \textbf{Gestión de memoria}\\
+El STM es capaz de transmitir una gran cantidad de datos por \acrshort{SPI}. Es importante tener claro la cantidad de datos a recibir o transmitir, pues equivocarse puede suponer acceder a una dirección de memoria no permitida, recibir valores incorrectos o incluso corromper el código y forzar el reinicio del microcontrolador.
+\end{itemize}
+
+\clearpage
+
+\subsubsection{Comunicación con el ADS \label{sec:Software_micro_ADS}}
+
+El ADS está preparado para recibir y transmitir información a través del puerto SPI integrado. Aunque puede transmitir información el integrado sólo es capaz de actuar en modo Esclavo y \gls{Full Duplex}. Utilizando el microcontrolador STM como Master es posible comunicar ambos dispositivos a muy altas velocidades.
+
+La memoria del ADS está organizada en distintos registros, cada uno de los cuales con una función definida en la hoja de características del componente. La configuración del dispositivo se realiza de forma casi exclusiva mediante SPI escribiendo directamente sobre el registro deseado.
+
+Al tratarse de registros de memoria, para su modificación resulta indispensable conocer la posición exacta. Aunque para una máquina esto no es un problema, para un ser humano puede resultar complicado recordar e identificar de forma eficiente cada uno de ellos. 
+\\Por este motivo se ha creado un archivo ``.h'' con definiciones de todos los registros, asociando cada uno de ellos a un comando. Así por ejemplo la posición de memoria encargada del control de los GPIO en lugar de llamarse escribiendo en el registro 0x14 basta con escribir en el registro \textsc{GPIO}. Con esta transformación se consigue además aumentar la legibilidad del código.
+
+\begin{lstlisting}[label=algoritmo:STM_ADS_reg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+//Position in memory of registers: (Pg. 39)
+
+#define ID 						0x00	// (0000 0000)
+#define CONFIG1  		 	0x01	// (0000 0001) 
+#define CONFIG2  			0x02 	// (0000 0010)
+.		.						  .					.
+#define CONFIG4   		0x17 	// (0001 0111)
+\end{lstlisting}
+
+El manual de funcionamiento del ADS muestra distintas formas de configuración. Es posible leer y/o escribir un registro o varios de forma simultánea con pocos comandos. De acuerdo al manual, para realizar una escritura de un registro es necesario transmitir tres datos al ADS. El primero indicará la dirección de memoria sobre la que se trabajará. El segundo sirve para seleccionar el número de registros a escribir. Por último el tercer dato es el que se almacenará en memoria. La figura \ref{fig:ADS_wreg} muestra una representación de la transmisión de datos llevada a cabo para la escritura de dos registros en el ADS:
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{ADS_wreg}
+    \caption{Escritura de dos registros del ADS \cite{Datasheet_ADS}}
+    \label{fig:ADS_wreg}
+\end{figure}
+
+El código generado en el STM para realizar esta función es el presentado en \ref{algoritmo:STM_wreg}.
+
+\begin{lstlisting}[label=algoritmo:STM_wreg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+void adc_wreg(uint8_t reg, uint8_t val, SPI_HandleTypeDef *SPI){
+	uint8_t zero_t = 0x00;
+	uint8_t zero_r = 0x00;
+	uint8_t reg_temp = WREG | reg;
+	uint8_t val_temp = val;
 	
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(SPI, &reg_temp, &zero_r, 1, 100);
+	HAL_SPI_TransmitReceive(SPI, &zero_t, &zero_r, 1, 100);	
+	HAL_SPI_TransmitReceive(SPI, &val_temp, &zero_r, 1, 100);	
+
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_SET);
+}
+\end{lstlisting}
+
+La lectura de los registros del ADS se realiza de una forma análoga. En esta ocasión se transmiten los mismos dos datos que para escribir en un registro siendo la única diferencia que el tercer dato (y los siguientes en caso de ser más de un registro) se transmitirán desde el ADS hacia el STM tal y como aparece en la figura \ref{fig:ADS_rreg}.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{ADS_rreg}
+    \caption{CAPTION}
+    \label{fig:ADS_rreg}
+\end{figure}
+
+\begin{lstlisting}[label=algoritmo:STM_rreg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+uint8_t adc_rreg(uint8_t reg, SPI_HandleTypeDef *SPI){
+	uint8_t val = 0x00;
+	uint8_t zero_t = 0x00;
+	uint8_t zero_r = 0x00;
+	uint8_t temp = RREG | reg;
 	
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(SPI, &temp, &zero_r, 1, 100);
+	HAL_SPI_TransmitReceive(SPI, &zero_t, &zero_r, 1, 100);	
+	HAL_SPI_TransmitReceive(SPI, &zero_t, &val, 1, 100);
+
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_SET);
+
+	return val;
+}
+\end{lstlisting}
+
+Para que la transmisión sea correcta es muy importante que todas las variables definidas sean independientes. Además, el ADS necesita que durante la lectura de datos el pin \textsc{MOSI} se mantenga en un 0 lógico todo el rato.
+
+
+\subsubsection{Lectura y conversión de datos \label{sec:Software_micro_Datos}}
+
+\subsubsection{DSP - Implementación de filtros \label{sec:Software_micro_DSP}}
+
+\subsubsection{Comunicación con el ESP \label{sec:Software_micro_ESP}}
+
+El código \ref{algoritmo:STM_Transmision_SPI} es el utilizado para transmitir información al ESP y recibirla.
+
+\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+uint8_t commandFromESP(uint8_t command, SPI_HandleTypeDef *hspi1)
+{
+	uint8_t response = 0x00;	
+
+		HAL_GPIO_WritePin(DRDY_N_GPIO_Port,DRDY_N_Pin, GPIO_PIN_RESET);
+		HAL_SPI_TransmitReceive(hspi1, &command, &response, 1, 100);
+		HAL_GPIO_WritePin(DRDY_N_GPIO_Port,DRDY_N_Pin, GPIO_PIN_SET);
+		HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin); 	//LED OFF
+		HAL_Delay(50);
+	
+	return response;
+}
+\end{lstlisting}
+
+\subsubsection{Programación del microcontrolador\label{sec:Software_micro_ESP}}
+
+%Software
+%Microcontrolador STM
+%	CubeMX
+%	HAL
+%	Implementación del Firmware
+%		Maquina de estados
+%		Transmisión de datos por SPI
+%		Comunicación con ADS
+%		Lectura y conversión de datos
+%		DSP - Implementación de filtros
+%		Comunicación con el ESP
+%		
+%Microcontrolador ESP
+%	Arduino
+%	Configuración 
+%	Firmware
+%		Maquina de estados
+%		Transmisión de datos por SPI
+%		Comunicación con el STM
+%
+%LabView

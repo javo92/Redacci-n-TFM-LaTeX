@@ -188,8 +188,9 @@
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 %Code listing style named "mystyle"
-\lstdefinestyle{mystyle}{
-  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+\lstdefinestyle{STM-code}{
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{codegray},
   stringstyle=\color{codepurple},
@@ -203,11 +204,12 @@
   showspaces=false,                
   showstringspaces=false,
   showtabs=false,                  
-  tabsize=2
+  tabsize=2,
+  morekeywords = {hint8_t},
 }
 
 %"mystyle" code listing set
-\lstset{style=mystyle}
+\lstset{style=STM-code}
 
 \lstset{
      literate=

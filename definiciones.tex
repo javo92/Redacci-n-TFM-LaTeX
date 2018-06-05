@@ -189,10 +189,11 @@
 
 %Code listing style named "mystyle"
 \lstdefinestyle{STM-code}{
+  language = C,
   backgroundcolor=\color{backcolour},   
   commentstyle=\color{codegreen},
-  keywordstyle=\color{magenta},
-  numberstyle=\tiny\color{codegray},
+  keywordstyle=\color{blue},
+  numberstyle=\color{orange},%\tiny\color{codegray},
   stringstyle=\color{codepurple},
   basicstyle=\footnotesize,
   breakatwhitespace=false,         
@@ -205,14 +206,8 @@
   showstringspaces=false,
   showtabs=false,                  
   tabsize=2,
-  morekeywords = {hint8_t},
-}
-
-%"mystyle" code listing set
-\lstset{style=STM-code}
-
-\lstset{
-     literate=
+  morekeywords = {uint8_t, uint16_t, float32_t, SPI_HandleTypeDef},
+  literate=
          {á}{{\'a}}1
          {é}{{\'e}}1
          {í}{{\'i}}1
@@ -225,6 +220,12 @@
          {Ú}{{\'U}}1
          {ñ}{{\~n}}1
          {Ñ}{{\~N}}1
+         {~}{{$\sim$}}1
+}
+
+%"mystyle" code listing set
+\lstset{
+	style=STM-code
 }
 
 \usepackage{caption}

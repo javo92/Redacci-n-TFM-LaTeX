@@ -143,7 +143,7 @@ La segunda fase, denominada \textit{loop} es, como su nombre indica, un bucle in
 
 Al generar el proyecto, el STM32CubeMX estructura el código tal como se muestra en el código \ref{algoritmo:Auto_gen}, dejando al usuario ciertas zonas libres para escribir en ellas y restringiendo la escritura en otras.
 
-\begin{lstlisting}[label=algoritmo:Auto_gen,language=C,frame=single,caption=Ejemplo de generación de código automáticamente]
+\begin{lstlisting}[label=algoritmo:Auto_gen,style = STM-code,frame=single,caption=Ejemplo de generación de código automáticamente]
   /* USER CODE BEGIN 1 */
 	
   /* USER CODE END 1 */
@@ -238,7 +238,7 @@ Las tres funciones necesitan el puntero al puerto por el que se transmitirá la 
 
 El código \ref{algoritmo:STM_Transmision_SPI} muestra la cabecera de la función encargada de transmitir y recibir información de forma simultánea. En el se puede ver con claridad el tipo de datos que necesita para realizar una transmisión de datos de forma satisfactoria.
 
-\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,style = STM-code,frame=single,caption=Transmisión de datos a través de SPI con el STM]
 HAL_StatusTypeDef HAL_SPI_TransmitReceive(
 	SPI_HandleTypeDef *hspi,
  	uint8_t *pTxData, 
@@ -257,6 +257,18 @@ La gestión de pines como ``\textsc{Data-Ready}'' y ``\textsc{Start}'' se debe r
 El STM es capaz de transmitir una gran cantidad de datos por \acrshort{SPI}. Es importante tener claro la cantidad de datos a recibir o transmitir, pues equivocarse puede suponer acceder a una dirección de memoria no permitida, recibir valores incorrectos o incluso corromper el código y forzar el reinicio del microcontrolador.
 \end{itemize}
 
+Al ser obligatorio transmitir datos de 8bits se vuelve indispensable crear algún metodo para poder dividir aquellas variables cuyos tamaño sea superior (float, long, etc).
+El tipo de dato \textbf{union} definido en \textbf{C} está pensado justo para este cometido. Permite definir varias variables cuyo tamaño total sea equivalente y asignar la misma dirección de memoria a todas ellas. A continuación se muestra un fragmento del código necesario para dividir una variable \textbf{long} (32bits) en un array de 4 posiciones de tipo \textbf{int} (8bits cada una).
+
+\begin{lstlisting}[label=algoritmo:STM_Divisor,style = STM-code,frame=single,caption=División de variables en otras de menor tamaño]
+union miDato{
+	struct
+	{
+		uint8_t  b[4];     // Array de bytes de tamaño equivalente
+	}split;
+		long dato;
+} long_data; 
+\end{lstlisting}
 \clearpage
 
 \subsubsection{Comunicación con el ADS \label{sec:Software_micro_ADS}}
@@ -268,7 +280,7 @@ La memoria del ADS está organizada en distintos registros, cada uno de los cual
 Al tratarse de registros de memoria, para su modificación resulta indispensable conocer la posición exacta. Aunque para una máquina esto no es un problema, para un ser humano puede resultar complicado recordar e identificar de forma eficiente cada uno de ellos. 
 \\Por este motivo se ha creado un archivo ``.h'' con definiciones de todos los registros, asociando cada uno de ellos a un comando. Así por ejemplo la posición de memoria encargada del control de los GPIO en lugar de llamarse escribiendo en el registro 0x14 basta con escribir en el registro \textsc{GPIO}. Con esta transformación se consigue además aumentar la legibilidad del código.
 
-\begin{lstlisting}[label=algoritmo:STM_ADS_reg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+\begin{lstlisting}[label=algoritmo:STM_ADS_def,style = STM-code,frame=single,caption=Ejemplo de definiciones de los registros y funciones del ADS]
 //Position in memory of registers: (Pg. 39)
 
 #define ID 						0x00	// (0000 0000)
@@ -289,7 +301,7 @@ El manual de funcionamiento del ADS muestra distintas formas de configuración. 
 
 El código generado en el STM para realizar esta función es el presentado en \ref{algoritmo:STM_wreg}.
 
-\begin{lstlisting}[label=algoritmo:STM_wreg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+\begin{lstlisting}[label=algoritmo:STM_wreg,style = STM-code,frame=single,caption=Escritura en registros del ADS]
 void adc_wreg(uint8_t reg, uint8_t val, SPI_HandleTypeDef *SPI){
 	uint8_t zero_t = 0x00;
 	uint8_t zero_r = 0x00;
@@ -311,11 +323,11 @@ La lectura de los registros del ADS se realiza de una forma análoga. En esta oc
 \begin{figure} [h]
     \centering
     \includegraphics[width=13cm]{ADS_rreg}
-    \caption{CAPTION}
+    \caption{Lectura de dos registros del ADS \cite{Datasheet_ADS}}
     \label{fig:ADS_rreg}
 \end{figure}
 
-\begin{lstlisting}[label=algoritmo:STM_rreg,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+\begin{lstlisting}[label=algoritmo:STM_rreg,style = STM-code,frame=single,caption=Lectura de registros del ADS]
 uint8_t adc_rreg(uint8_t reg, SPI_HandleTypeDef *SPI){
 	uint8_t val = 0x00;
 	uint8_t zero_t = 0x00;
@@ -336,16 +348,213 @@ uint8_t adc_rreg(uint8_t reg, SPI_HandleTypeDef *SPI){
 
 Para que la transmisión sea correcta es muy importante que todas las variables definidas sean independientes. Además, el ADS necesita que durante la lectura de datos el pin \textsc{MOSI} se mantenga en un 0 lógico todo el rato.
 
-
 \subsubsection{Lectura y conversión de datos \label{sec:Software_micro_Datos}}
 
+El ADS está construído utilizando un sistema adquisidor de 8 canales, todos adquiridos de forma simultánea utilizando un sistema $\Delta\Sigma$ de 24 bits y ganancia variable.
+
+Tras adquirir los datos estos son codificados siguiendo el siguiente formato:
+\begin{table} [H]
+ \centering
+ \begin{tabular}{|c|c|}
+ \hline 
+\textbf{Señal de entrada, V$_{IN}$} &  \multirow{2}{*}{\textbf{Código de salida ideal}}\\ 
+ \textbf{(INxP - INxN)} &  \\ 
+ \hline 
+ +FS & 7FFFFFh\\ 
+ \hline 
+ +FS$/(2^{23}-1)$ & 000001h \\ 
+ \hline 
+ 0 & 000000h\\ 
+ \hline 
+ -FS & FFFFFFh\\ 
+ \hline 
+ +FS$(2^{23}/(2^{23}-1))$ & 800000 \\ 
+ \hline 
+ \end{tabular} 
+ \caption{Equivalencia de voltaje ideal de entrada y código de salida}
+ \label{tab:ADS_equivalencia}
+\end{table}
+
+La tabla anterior es una modificación de la proporcionada en la hoja de características del ADS corrigiendo algunas pequeñas erratas. La variable ``FS'' corresponde a la escala completa de entrada del ADS. En este caso son 4.5V divididos por la ganancia (G).
+
+Para \textbf{voltajes positivos} la decodificación de estos valores es muy sencilla, pues basta con aplicar una simple \textbf{regla de tres} en la que cada bit es un incremento de $4.5V/(2^{23}*G)$.\\
+Para \textbf{voltajes negativos} basta con \textbf{invertir} todos los bits y aplicar la misma regla de tres.\\
+El bit más significativo indica si el voltaje final será positivo (0) o negativo (1) y es el que se ha usado como referencia para aplicar la conversión anterior en caso de ser necesaria.
+
+Al trabajar con datos de 24 bits no es posible realizar una inversión directa del valor de la variable o los 8 bits más significativos se verían invertidos también. Por suerte el ADS transmite los datos en paquetes de 8 bits lo cual facilita tratarlos de forma independiente y, tras hacer la transformación a nivel de bit, crear una variable que represente el valor real.
+
+Unir los tres bytes una vez se ha realizado la conversión es posible de múltiples formas. Por motivos de eficiencia y de reutilización del código se ha realizado la misma aproximación ya expuesta previamente haciendo uso de datos de tipo \textbf{union}.
+
+El código \ref{algoritmo:ADS_decodificacion}, incluído en una librería creada para interactuar con el ADS, es el utilizado para este fin.
+
+\clearpage
+
+\begin{lstlisting}[label=algoritmo:ADS_decodificacion,style = STM-code,frame=single,caption=Decodificación de datos binarios a Voltajes]
+float32_t byte2float (uint8_t data_23_16, uint8_t data_15_8, uint8_t data_7_0, uint8_t ganancia)
+	{
+		float32_t value = 0;
+		
+		union miDato{
+		struct
+		{
+			uint8_t  b[4];     // Array de bytes de tamaño igual al tamaño de la primera variable: int = 2 bytes, float = 4 bytes
+		}split;
+			long dato;
+	 } long_data; 
+		
+	 long_data.dato = 0;
+	 
+		if (data_23_16>=0x80) //1000 0000
+		{
+			long_data.split.b[2] = ~data_23_16;
+			long_data.split.b[1] = ~data_15_8;
+			long_data.split.b[0] = ~data_7_0;
+			value = long_data.dato;
+			value = -value;
+		}
+		else
+		{
+			long_data.split.b[2] = data_23_16;
+			long_data.split.b[1] = data_15_8;
+			long_data.split.b[0] = data_7_0;
+			value = long_data.dato;
+		}
+		
+		value = value*4.5f/(8388607.0f*ganancia); //4.5/(2^23*G)
+		
+		return value;
+	}
+\end{lstlisting}
+
+El código anterior realiza una conversión triple: 4 bytes $\Rightarrow$ long $\Rightarrow$ float, donde el valor final devuelto es el voltaje real medido una vez se ha aplicado el factor de ganancia correspondiente.
+
+El ADS tiene embebido un sistema de control basado en comandos a través de SPI. Estos comandos permiten realizar ciertas operaciones en tiempo real que facilitan el control del integrado y amplian sus características. 
+
+La tabla \ref{tab:ADS_comandos}, sacada de la hoja de características del componente, muestra todos los comandos que el ADS es capaz de reconocer, sus funciones y el conjunto de bytes que representa cada uno. Los últimos dos comandos corresponden a la lectura y escritura en registros y ya han sido explicados previamente.
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=16cm]{ADS_comandos}
+    \caption{Comandos del ADS1299}
+    \label{tab:ADS_comandos}
+\end{table}
+
+Durante la realización de este proyecto ha sido necesario utilizar la mayor parte de los comandos presentados en la tabla anterior. Cabe destacar que aquellos categorizados como ``Comandos del sistema'' han sido necesarios durante la secuencia de inicio del ADS casi en exclusiva, pues no se han implementado funciones de ahorro de energía. Estas se han contemplado como una mejora a llevar a cabo en futuras iteraciones de este proyecto.
+
+El ADS cuenta con dos modos de lectura: continua y bajo demanda. Los comandos categorizados como ``Comandos de lectura'' están relacionados con la gestión de estos dos modos y se dividen a su vez en dos tipos según su función:
+\begin{itemize}
+\item \textbf{Configuración}\\
+\textsc{RDATAC} y \textsc{SDATAC} activan y desactivan el modo de lectura continua respectivamente. El ADS se encuentra por defecto en modo continuo tras completar la secuencia de inicio.
+\item \textbf{Lectura}\\
+\textsc{RDATA} solicita en el modo de lectura bajo demanda la transmisión de los datos capturados en ese momento.
+\end{itemize} 
+
+El modo bajo demanda está pensado para aquellos sistemas en los que es necesario adquirir poca información a lo largo del tiempo. En esta configuración el ADS se mantiene inactivo hasta que recibe el comando de lectura y sólo entonces es cuando la realiza. Este comportamiento favorece la implementación de sistemas de ahorro de energía basados en los comandos \textsc{STANDBY} y \textsc{WAKEUP}. De esta forma es posible aumentar la autonomía del sistema completo considerablemente.
+
+Por desgracia, este modo no es compatible con la transmisión de grandes cantidades de datos o mediciones muy continuas. Por cada medida es necesario utilizar el comando \textsc{RDATA}, afectando directamente al rendimiento y eficiencia en la transmisión.
+
+La figura \ref{fig:ADS_SDATAC} ilustra la transmisión de información usando el modo bajo demanda.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=15cm]{ADS_SDATAC}
+    \caption{Modo de uso del comando \textsc{RDATA}}
+    \label{fig:ADS_SDATAC}
+\end{figure}
+
+Por los motivos explicados anteriormente este modo no será utilizado normalmente pero aún así se ha decidido trabajar en su implementación en caso de que fuese necesario en el futuro. El código utilizado para adquirir datos es el siguiente:
+
+\begin{lstlisting}[label=algoritmo:ADS_oneshot,style = STM-code,frame=single,caption=Lectura de datos en modo \textit{one-shot}]
+void one_shot (uint8_t data[], SPI_HandleTypeDef *SPI)
+{
+	uint8_t zero = 0x00;
+	uint8_t cmd = RDATA;
+			
+	while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_SET){}
+
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_RESET);
+	
+	HAL_SPI_TransmitReceive(SPI, &cmd, &zero,  1, 100);
+
+	read_data_frame(data, SPI);
+			
+	while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_RESET) {}			
+				
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_SET);
+
+	update_bias_ref(data, SPI);
+}
+\end{lstlisting}
+
+Para recibir una gran cantidad de información de forma ininterrumpida el ADS cuenta con el modo continuo. Se transmite el comando \textsc{RDATAC} y desde ese momento el ADS empieza a adquirir información y transmitirla. El pin \textsc{DRDY} es utilizado por el ADS para indicar que la siguiente tanda de datos está disponible para su lectura. 
+
+La figura \ref{fig:ADS_RDATAC} representa la transmisión de información en modo continuo y el código \ref{algoritmo:ADS_continuo} el código equivalente.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=16cm]{ADS_RDATAC}
+    \caption{Transmisión de datos en modo continuo}
+    \label{fig:ADS_RDATAC}
+\end{figure}
+
+\begin{lstlisting}[label=algoritmo:ADS_continuo,style = STM-code,frame=single,caption=Lectura de datos en modo continuo]
+void adquire_array_data (uint8_t data[], float32_t channel_1[],float32_t channel_2[],float32_t channel_3[],float32_t channel_4[],float32_t channel_5[],float32_t channel_6[],float32_t channel_7[],float32_t channel_8[], uint8_t gain[], SPI_HandleTypeDef *SPI)
+{
+	int debug = 255;
+	// read LENGTH_SAMPLES samples
+		
+	adc_send_command(RDATAC, SPI);
+		
+	while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_SET){}
+		
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_RESET);
+		
+	read_data_frame(data, SPI);
+			
+	channel_1[0]=byte2float(data[1*3], data[1*3+1], data[1*3+2], gain[0]);
+	channel_2[0]=byte2float(data[2*3], data[2*3+1], data[2*3+2], gain[1]);
+	channel_3[0]=byte2float(data[3*3], data[3*3+1], data[3*3+2], gain[2]);
+	channel_4[0]=byte2float(data[4*3], data[4*3+1], data[4*3+2], gain[3]);
+	channel_5[0]=byte2float(data[5*3], data[5*3+1], data[5*3+2], gain[4]);
+	channel_6[0]=byte2float(data[6*3], data[6*3+1], data[6*3+2], gain[5]);
+	channel_7[0]=byte2float(data[7*3], data[7*3+1], data[7*3+2], gain[6]);
+	channel_8[0]=byte2float(data[8*3], data[8*3+1], data[8*3+2], gain[7]);
+			
+	while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_RESET){}
+			
+	for (int i = 1; i<LENGTH_SAMPLES; i++)
+	{
+		while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_SET){}
+			
+		read_data_frame(data, SPI);
+
+		channel_1[i]=byte2float(data[1*3], data[1*3+1], data[1*3+2], gain[0]);
+		channel_2[i]=byte2float(data[2*3], data[2*3+1], data[2*3+2], gain[1]);
+		channel_3[i]=byte2float(data[3*3], data[3*3+1], data[3*3+2], gain[2]);
+		channel_4[i]=byte2float(data[4*3], data[4*3+1], data[4*3+2], gain[3]);
+		channel_5[i]=byte2float(data[5*3], data[5*3+1], data[5*3+2], gain[4]);
+		channel_6[i]=byte2float(data[6*3], data[6*3+1], data[6*3+2], gain[5]);
+		channel_7[i]=byte2float(data[7*3], data[7*3+1], data[7*3+2], gain[6]);
+		channel_8[i]=byte2float(data[8*3], data[8*3+1], data[8*3+2], gain[7]);
+				
+		while (HAL_GPIO_ReadPin(A_DRDY_N_GPIO_Port, A_DRDY_N_Pin) == GPIO_PIN_RESET){}
+	}
+		
+	HAL_GPIO_WritePin(A_CS0_N_GPIO_Port, A_CS0_N_Pin, GPIO_PIN_SET);
+}
+\end{lstlisting}
+
+El STM no permite trabajar con vectores de varias dimensiones de la misma forma que otros lenguajes de programación, así que para capturar todos los canales ha sido necesario repetir código. A cambio, el escalado del código de un canal a varios se realiza de una forma sencilla e intuitiva. En posteriores revisiones de este proyecto se valorará su sustitución por otro sistema más eficiente.
+
 \subsubsection{DSP - Implementación de filtros \label{sec:Software_micro_DSP}}
+
+Una de las características que diferencian los microcontroladores de esta familia de los de otras es la capacidad de realizar operaciones matemáticas sin que ello repercuta de forma muy significativa en el rendimiento. 
 
 \subsubsection{Comunicación con el ESP \label{sec:Software_micro_ESP}}
 
 El código \ref{algoritmo:STM_Transmision_SPI} es el utilizado para transmitir información al ESP y recibirla.
 
-\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,language=C,frame=single,caption=Transmisión de datos a través de SPI con el STM]
+\begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,style = STM-code,frame=single,caption=Transmisión de datos a través de SPI con el STM]
 uint8_t commandFromESP(uint8_t command, SPI_HandleTypeDef *hspi1)
 {
 	uint8_t response = 0x00;	

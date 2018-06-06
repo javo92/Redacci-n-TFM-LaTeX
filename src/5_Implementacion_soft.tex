@@ -550,6 +550,89 @@ El STM no permite trabajar con vectores de varias dimensiones de la misma forma 
 
 Una de las características que diferencian los microcontroladores de esta familia de los de otras es la capacidad de realizar operaciones matemáticas sin que ello repercuta de forma muy significativa en el rendimiento. 
 
+Para facilitar su utilización y unificar a todos los desarrolladores ARM ha creado una librería llamada CMSIS-DSP que engloba todas las funcionalidades de procesado de señal más comunes, optimizando dichos algoritmos para hacerlos lo más eficientes posible.
+Esta librería incluye los siguientes tipos de operaciones:
+
+\begin{itemize}
+\item Operaciones matemáticas básicas, rápidas y complejas
+\item \textbf{Filtrado}
+\item Matrices
+\item Transformaciones
+\item Estadísticas
+\item Controladores (PID, senos, etc)
+\item Interpolación
+\item Apoyo
+\end{itemize}
+
+Estas funciones utilizan variables de tipo enteros de 8, 16 y 32 bits y float de 32 bits. En esta ocasión se han utilizado exclusivamente las funciones de filtrado de señal, concretamente aquellas dedicadas a la realización de filtros FIR y su aplicación a señales.
+
+ARM ha puesto a disposición de los consumidores una página web de referencia en la que se puede encontrar una descripción detallada de cada función incluyendo su modo de uso y ejemplos \cite{CMSIS-DSP}.
+
+El filtrado de una señal con un filtro FIR en ARM es un proceso sencillo pero que engloba varias herramientas, pues el diseño del filtro se debe realizar de forma independiente. La función utilizada para este fin es ``arm\_fir\_f32()''. \\
+Esta función recibe una señal en formato \textbf{float32\_t} (x[n]), los coeficientes del filtro y la longitud de la ventana y devuelve una señal filtrada (y[n]) con las características deseadas.
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{arm_fir_f32}
+    \caption{Diagrama de bloques del filtrado de una señal x[n]}
+    \label{fig:arm_fir_f32}
+\end{figure}
+
+El código necesario para aplicar un filtro FIR a una señal es el siguiente:
+
+\begin{lstlisting}[label=algoritmo:STM_filtro,style = STM-code,frame=single,caption=Filtro FIR en STM]
+/* ----------------------------------------------------------------------
+** Includes necesarios
+** ------------------------------------------------------------------- */
+#include "arm_math.h"
+#include "math_helper.h"
+const float32_t firCoeffs32[NUM_TAPS] = {h1, h2, ....,hn}
+/* ------------------------------------------------------------------
+ * Variables globales para el filtro FIR
+ * ------------------------------------------------------------------- */
+uint32_t blockSize = BLOCK_SIZE;
+uint32_t numBlocks = TEST_LENGTH_SAMPLES/BLOCK_SIZE;
+ * ------------------------------------------------------------------- */
+arm_fir_instance_f32 S;
+arm_status status;
+float32_t  *inputF32, *outputF32;
+/* Inicialización de buffers de entrada y salida */
+inputF32 = &testInput_f32_1kHz_15kHz[0];
+outputF32 = &testOutput[0];
+/* Inicialización de la estructura de la instancia del filtro FIR. */
+arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], blockSize);
+/* ----------------------------------------------------------------------
+** Aplicación del filtro a cada conjunto de blockSize
+** ------------------------------------------------------------------- */
+for(i=0; i < numBlocks; i++)
+{
+  arm_fir_f32(&S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);
+}
+\end{lstlisting}
+
+Es una función muy versátil que permite, entre otras cosas, preparar un gran número de filtros y utilizar el más adecuado para cada ocasión sin apenas cambiar el código.
+
+Una de las componentes en frecuencia que más afecta a todas las señales es la de 50 Hz. Para su eliminación se hace uso del equivalente a un filtro \textit{Notch} implementado en un filtro \acrshort{FIR}. Esto se consigue creando un filtro de rechazo de banda lo suficientemente estrecho como para que afecte poco a frecuencias cercanas a la frecuencia a eliminar.
+
+El diseño del filtro se puede hacer con cualquiera de las herramientas disponibles en MatLab. La función ``fir1'' es capaz de definir un filtro con cualquier característica. Tras una primera aproximación con esa función se consiguió un filtro con la respuesta en frecuencia de la figura \ref{fig:FIR_fir1}.
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=15cm]{FIR_fir1}
+    \caption{Respuesta en frecuencia del filtro definido con fir1}
+    \label{fig:FIR_fir1}
+\end{figure}
+
+Este filtro presenta un comportamiento similar al esperado y un rizado apenas apreciable pero con un factor de rechazo muy bajo. Utilizando otra herramienta diseñada por F.S. Schlindwein disponible en el \textit{workshop} de MatLab es posible ajustar aún más el filtro sin apenas esfuerzo. Tras un par de iteraciones el resultado final fue
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=13cm]{NOTCH_50Hz}
+    \caption{CAPTION}
+    \label{fig:NOTCH_50Hz}
+\end{figure}
+
+
+Por desgracia la utilización de esta librería provoca que el código supere las limitaciones de la versión gratuita de Keil haciendo necesaria una licencia para poder compilar.
+
 \subsubsection{Comunicación con el ESP \label{sec:Software_micro_ESP}}
 
 El código \ref{algoritmo:STM_Transmision_SPI} es el utilizado para transmitir información al ESP y recibirla.

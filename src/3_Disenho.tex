@@ -222,7 +222,7 @@ Tras seleccionar todos los elementos se va a proceder a escoger una alimentació
 	\centering
 	\begin{tabular}{|c|c|c|}
 	\hline 
-	Dispositivo & V$_{min}$ [V] & V$_{max}$ [V] \\ 
+	Dispositivo & V$_{\text{min}}$ [V] & V$_{\text{max}}$ [V] \\ 
 	\hline 
 	Simblee BT & 1.8 & 3.6 \\ 
 	\hline 
@@ -248,7 +248,7 @@ Por motivos de compatibilidad con el diseño anterior y tras comprobar que se cu
 El sistema de alimentación se compone de dos partes principales, cada una encargada de proporcionar el voltaje deseado manteniendo el ruido generado por el mismo al mínimo.
 
 \subsubsection{Alimentación 3.3V\label{sec:Alimentacion_3.3V}}
-Para conseguir un voltaje de 3.3V estable se ha utilizado el regulador AZ1117C-3.3 ya que es capaz de conseguir una precisión para el voltaje de salida del $\pm$1\% así como un ruido de salida de 0.003\% V$_{out}$ entre 10Hz y 10kHz.
+Para conseguir un voltaje de 3.3V estable se ha utilizado el regulador AZ1117C-3.3 ya que es capaz de conseguir una precisión para el voltaje de salida del $\pm$1\% así como un ruido de salida de 0.003\% V$_{\text{out}}$ entre 10Hz y 10kHz.
 En la figura \ref{fig:Alim_3.3} se muestra el esquema eléctrico utilizado, que es una variación del circuito recomendado por el fabricante en su \textit{datasheet} \cite{Datasheet_3.3}.
 
 \begin{figure} [h]
@@ -271,8 +271,8 @@ El regulador encargado de proporcionar 5V es el MCP1711. Este integrado está ca
     \label{fig:Alim_5}
 \end{figure}
 
-Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tensión de Dropout}''(V$_{DROP}$).
-\\De acuerdo al \textit{datasheet} de ambos reguladores, V$_{DROP}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V de modo que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
+Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tensión de Dropout}''(V$_{\text{DROP}}$).
+\\De acuerdo al \textit{datasheet} de ambos reguladores, V$_{\text{DROP}}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V de modo que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
 
 Finalmente se ha optado por una fuente de alimentación de 6V ya que esto permitirá hacer uso de pilas o baterías para alimentar el sistema, dotándolo de independencia de la red eléctrica y eliminando el riesgo de electrocución.
 

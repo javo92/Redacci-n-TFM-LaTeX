@@ -252,7 +252,7 @@ Las funciones encargadas de transmitir y recibir información, ya sea a través 
 \item \textbf{Tamaño de transmisión fijo}\\
 El tamaño de los datos a transmitir debe ser de 8 bits. En caso de querer transmitir una variable cuyo tamaño en memoria sea superior a este será necesario realizar una transformación.
 \item \textbf{Gestión de pines manual o automática}\\
-La gestión de pines como ``\textsc{Data-Ready}'' y ``\textsc{Start}'' se debe realizar de forma manual. ``\textsc{Chip-Select}'' en cambio está pensado para gestionarlo de forma manual o automática en función de las circunstancias.
+La gestión de pines como ``$\overline{\text{DRDY}}$'' y ``\textsc{Start}'' se debe realizar de forma manual. ``$\overline{\text{CS}}$'' en cambio está pensado para ser gestionado de forma manual o automática en función de las circunstancias.
 \item \textbf{Gestión de memoria}\\
 El STM es capaz de transmitir una gran cantidad de datos por \acrshort{SPI}. Es importante tener claro la cantidad de datos a recibir o transmitir, pues equivocarse puede suponer acceder a una dirección de memoria no permitida, recibir valores incorrectos o incluso corromper el código y forzar el reinicio del microcontrolador.
 \end{itemize}
@@ -486,7 +486,7 @@ void one_shot (uint8_t data[], SPI_HandleTypeDef *SPI)
 }
 \end{lstlisting}
 
-Para recibir una gran cantidad de información de forma ininterrumpida el ADS cuenta con el modo continuo. Se transmite el comando \textsc{RDATAC} y desde ese momento el ADS empieza a adquirir información y transmitirla. El pin \textsc{DRDY} es utilizado por el ADS para indicar que la siguiente tanda de datos está disponible para su lectura. 
+Para recibir una gran cantidad de información de forma ininterrumpida el ADS cuenta con el modo continuo. Se transmite el comando \textsc{RDATAC} y desde ese momento el ADS empieza a adquirir información y transmitirla. El pin $\overline{\text{DRDY}}$ es utilizado por el ADS para indicar que la siguiente tanda de datos está disponible para su lectura. 
 
 La figura \ref{fig:ADS_RDATAC} representa la transmisión de información en modo continuo y el código \ref{algoritmo:ADS_continuo} el código equivalente.
 
@@ -609,9 +609,12 @@ for(i=0; i < numBlocks; i++)
 }
 \end{lstlisting}
 
-Es una función muy versátil que permite, entre otras cosas, preparar un gran número de filtros y utilizar el más adecuado para cada ocasión sin apenas cambiar el código.
+Es una función muy versátil que permite, entre otras cosas, preparar un gran número de filtros y utilizar el más adecuado para cada ocasión sin apenas cambiar el código. 
 
-Una de las componentes en frecuencia que más afecta a todas las señales es la de 50 Hz. Para su eliminación se hace uso del equivalente a un filtro \textit{Notch} implementado en un filtro \acrshort{FIR}. Esto se consigue creando un filtro de rechazo de banda lo suficientemente estrecho como para que afecte poco a frecuencias cercanas a la frecuencia a eliminar.
+La utilización de filtros FIR en este proyecto está centrada en la eliminación de una de las componentes en frecuencia que más afecta a todas las señales: la de 50 Hz.\\
+Para su eliminación, normalmente se aplica un filtro IIR denominado \textit{\textbf{Notch}} o de rechazo de banda a la señal, pues estos presentan una selectividad en frecuencia muy alta a pesar de poder ser inestables. 
+
+Haciendo uso de la función \textbf{arm\_fir\_f32} es posible implementar una \textbf{aproximación} a dicho filtro con uno de tipo \acrshort{FIR} cuyas características sea lo suficientemente buenas como para atenuar las componentes en frecuencia de 50Hz sin afectar demasiado al resto de la señal. Esto se consigue creando un filtro de rechazo de banda lo suficientemente estrecho centrado en torno a la frecuencia deseada a la par que se mantiene un rizado mínimo en el resto de las frecuencias.
 
 El diseño del filtro se puede hacer con cualquiera de las herramientas disponibles en MatLab. La función ``fir1'' es capaz de definir un filtro con cualquier característica. Tras una primera aproximación con esa función se consiguió un filtro con la respuesta en frecuencia de la figura \ref{fig:FIR_fir1}.
 \begin{figure} [H]
@@ -621,21 +624,36 @@ El diseño del filtro se puede hacer con cualquiera de las herramientas disponib
     \label{fig:FIR_fir1}
 \end{figure}
 
-Este filtro presenta un comportamiento similar al esperado y un rizado apenas apreciable pero con un factor de rechazo muy bajo. Utilizando otra herramienta diseñada por F.S. Schlindwein disponible en el \textit{workshop} de MatLab es posible ajustar aún más el filtro sin apenas esfuerzo. Tras un par de iteraciones el resultado final fue
+Este filtro presenta un comportamiento similar al esperado y un rizado apenas apreciable, pero con un factor de calidad y de rechazo de banda muy bajo. 
+
+Utilizando otra herramienta diseñada por F.S. Schlindwein disponible en el \textit{workshop} de MatLab es posible ajustar aún más el filtro sin apenas esfuerzo. \\
+Tras un par de iteraciones el resultado final es el representado en la figura \ref{fig:NOTCH_50Hz}.
 
 \begin{figure} [H]
     \centering
-    \includegraphics[width=13cm]{NOTCH_50Hz}
-    \caption{CAPTION}
+    \includegraphics[width=15cm]{NOTCH_50Hz}
+    \caption{Respuesta en frecuencia del filtro FIR definido con FIRFILT \cite{FIRFILT}}
     \label{fig:NOTCH_50Hz}
 \end{figure}
 
+Este filtro presenta un ancho de banda similar, pero a cambio de introducir un pequeño rizado en la banda deseada, la atenuación a 50 Hz es sensiblemente mayor que en el caso representado en la figura \ref{fig:FIR_fir1}.
+
+El filtrado analógico es inmediato pero muy poco flexible. Utilizando filtros digitales se consigue adaptar el el filtro en función de las necesidades y, en caso necesario, siempre es posible eliminar dicho filtro simplemente cambiando el software. No se debe olvidar que desde el punto de vista del coste/cambio, un cambio a nivel de software casi siempre será mucho más rentable en el producto final que uno a nivel de hardware.
 
 Por desgracia la utilización de esta librería provoca que el código supere las limitaciones de la versión gratuita de Keil haciendo necesaria una licencia para poder compilar.
 
-\subsubsection{Comunicación con el ESP \label{sec:Software_micro_ESP}}
+\clearpage
 
-El código \ref{algoritmo:STM_Transmision_SPI} es el utilizado para transmitir información al ESP y recibirla.
+\subsubsection{Comunicación con la interfaz inalámbrica\label{sec:Software_micro_ESP}}
+
+La transmisión de datos a la interfaz inalámbrica se realiza de forma similar a la ya explicada para comunicar el STM con el ADS. En esta ocasión el STM actuará como Esclavo mientras que el dispositivo que actúa como Master es aquel que hace la función de transmisor de la información. Esto es así debido a las limitaciones impuestas por el ESP12-E. 
+
+En la comunicación con el otro microcontrolador hay tres etapas bien diferenciadas.\\
+En la primera la información transmitida son comandos que indican al STM el comportamiento que deberá seguir.\\
+La segunda, centrada en la transmisión de pequeñas cantidades de información, no necesita una gran eficiencia en la transmisión. Esta información se utilizará por parte del STM para configurar el ADS.\\
+La última fase contempla la transmisión de grandes cantidades de información y por tanto su optimización debe ser máxima.
+
+El código \ref{algoritmo:STM_Transmision_SPI} es el utilizado para transmitir información al ESP y recibirla en caso de que las restricciones de tiempo no sean críticas (primera y segunda fase).
 
 \begin{lstlisting}[label=algoritmo:STM_Transmision_SPI,style = STM-code,frame=single,caption=Transmisión de datos a través de SPI con el STM]
 uint8_t commandFromESP(uint8_t command, SPI_HandleTypeDef *hspi1)
@@ -652,19 +670,37 @@ uint8_t commandFromESP(uint8_t command, SPI_HandleTypeDef *hspi1)
 }
 \end{lstlisting}
 
+Por la forma en la que está construida la transmisión de datos a través de SPI, la gestión de los pines involucrados directamente en la transmisión la información se realiza de forma automática y es tremendamente eficiente. Sin embargo, la gestión de los pines $\overline{\text{CS}}$ y $\overline{\text{DRDY}}$ se realiza de forma manual y la sincronización entre ambos microcontroladores provoca que la eficiencia de la transmisión se reduzca drásticamente. 
+
+El STM contempla la transmisión de grandes cantidades de información pero, para que esta funcione correctamente, dicha información debe estar en posiciones de memoria consecutivas. Aprovechando esta característica, es posible minimizar el retardo introducido en la sincronización de ambos microcontroladores creando un \textit{buffer} de transmisión de un tamaño lo suficiente grande. De esta forma, cuanto mayor sea la cantidad de datos a transmitir, mayor será la eficiencia de la comunicación.
+
+El código utilizado en la fase 3 es equivalente al código \ref{algoritmo:STM_Transmision_SPI} siendo la única diferencia la cantidad de bytes a transmitir, que es adaptada en función al tamaño del \textit{buffer} de transmisión.
+
 \subsubsection{Programación del microcontrolador\label{sec:Software_micro_ESP}}
 
-%Software
-%Microcontrolador STM
-%	CubeMX
-%	HAL
-%	Implementación del Firmware
-%		Maquina de estados
-%		Transmisión de datos por SPI
-%		Comunicación con ADS
-%		Lectura y conversión de datos
-%		DSP - Implementación de filtros
-%		Comunicación con el ESP
+Finalmente, tras tener preparado el \textit{firmware} del STM es el momento de cargar dicho código en el microcontrolador. Los microcontroladores de esta familia cuentan con dos métodos para cargar código: usando \textit{jtag} y mediante un \textit{bootloader} embebido.
+
+La primera opción es muy interesante, pues además de programar el microcontrolador da acceso a otras funciones relacionadas con la depuración del código (ejecución en tiempo real, \textit{breackpoints}, visualización de variables, etc). Sin embargo para funcionar es necesario utilizar un hardware específico, y al no disponer de el durante el comienzo del proyecto no se tuvo en cuenta su inclusión durante el desarrollo de la placa.
+
+La segunda opción aprovecha los puertos de UART del microcontrolador para, usando un conversor UART $\leftrightarrow$ USB, programar el STM. Este sistema sólo permite la programación del dispositivo, pero a cambio el hardware extra necesario es mínimo, más teniendo en cuenta que ya se disponía de dicho conversor y, por lo tanto, no fue necesario realizar el desembolso.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{STM_prog}
+    \caption{Herramienta de programación a través de UART}
+    \label{fig:STM_prog}
+\end{figure}
+
+Para poder reprogramar el microcontrolador es necesario reiniciarlo mientras se cortocircuitan los pines 1 y 2 del conector preparado para ese fin.
+
+\clearpage
+
+\section{Interfaz inalámbrica\label{sec:Software_inalambrica}}
+
+
+
+Los dispositivos integrados en la interfaz inalambrica han sido seleccionados 
+
 %		
 %Microcontrolador ESP
 %	Arduino

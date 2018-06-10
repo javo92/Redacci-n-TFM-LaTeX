@@ -193,7 +193,7 @@ El código está organizado siguiendo el esquema típico de una máquina de esta
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=16cm]{Maquina_estados_STM}
+    \includegraphics[width=14cm]{Maquina_estados_STM}
     \caption{Estructura del programa}
     \label{fig:Maquina_estados_STM}
 \end{figure}
@@ -697,17 +697,353 @@ Para poder reprogramar el microcontrolador es necesario reiniciarlo mientras se 
 
 \section{Interfaz inalámbrica\label{sec:Software_inalambrica}}
 
+Los dispositivos integrados en la interfaz inalambrica han sido relegados a una función casi meramente de transmisión pero no se debe olvidar que ambos son microcontroladores y que, por tanto, los dos necesitan ejecutar un \textit{firmware} para funcionar.
 
+Estos dispositivos fueron seleccionados con múltiples objetivos en mente. Por un lado su relación características/coste es muy adecuada, permitiendo crear un sistema final muy completo con un coste muy bajo. Por otro, ambos microcontroladores son compatibles con el IDE de Arduino.
 
-Los dispositivos integrados en la interfaz inalambrica han sido seleccionados 
+Ser compatible con Arduino \acrshort{IDE} minimiza el tiempo de desarrollo del software, pues el propio IDE realiza la función de abstracción del hardware e incluye un gran número de ejemplos funcionales. Además, al ser ambos dispositivos compatibles, las modificaciones necesarias para portar el código de un microcontrolador a otro son mínimas. Por este motivo a lo largo de este capítulo se expandirá el código implementado en el ESP12-E, quedando el del Bluetooth en segundo plano.
 
-%		
-%Microcontrolador ESP
-%	Arduino
-%	Configuración 
-%	Firmware
-%		Maquina de estados
-%		Transmisión de datos por SPI
-%		Comunicación con el STM
-%
-%LabView
+\subsection{Arduino\label{sec:Software_Arduino}}
+
+Arduino fue una iniciativa de Massimo Banzi en 2005 pensada para acercar la electrónica a los estudiantes de un modo sencillo y económico.\\\
+Con el paso del tiempo esta plataforma ha ido creciendo, incorporando nuevas placas y microcontroladores, y mejorando tanto en la interfaz como en la comunidad que la respalda.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=8cm]{Arduino}
+    \caption{Arduino IDE utilizado para la programación del ESP}
+    \label{fig:Arduino}
+\end{figure}
+
+Por defecto Arduino incluye sólo aquellas placas comercializadas oficialmente por la empresa, pero los desarrolladores han habilitado la posibilidad de crear nuevas librerías e importarlas para que así cualquier persona con suficientes conocimientos pueda añadir las suyas propias.
+
+\clearpage
+
+\subsection{Configuración\label{sec:Software_Arduino_conf}}
+
+Para trabajar con el ESP12-E (esp8266) basta con importar la librería y escoger el componente en el selector de placas integrado.
+
+Las placas no contempladas de forma oficial por Arduino se importan desde File $\Rightarrow$ Preferences.
+
+A continuación se debe introducir la ruta al .json de la librería para que así Arduino tenga un repositorio desde el que buscar aquellas placas que no están instaladas. El resultado final es el mostrado en la figura \ref{fig:Arduino_conf_2}.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{Arduino_conf_2}
+    \caption{Importar librerías en Arduino}
+    \label{fig:Arduino_conf_2}
+\end{figure}
+
+Por último se procede a la instalación de las placas deseadas. Para ello se ha habilitado un repositorio con buscador e interfaz gráfica. Este es accesible desde Tools $\Rightarrow$ Board $\Rightarrow$ Boads Manager... 
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{Arduino_conf_4}
+    \caption{Instalar librerías para nuevas placas}
+    \label{fig:Arduino_conf}
+\end{figure}
+
+\subsection{Firmware\label{sec:Software_Arduino_firm}}
+
+En los siguientes apartados se detallará el software diseñado para funcionar dentro del microcontrolador. 
+
+\subsubsection{Maquina de estados\label{sec:Software_Arduino_MEstados}}
+
+El código de Arduino está organizado de forma similar al ya explicado para el STM. Este se divide en dos partes, una de \textit{setup} que sólo se ejecuta una vez y otra cíclica denominada \textit{loop}.\\
+Para caracterizar el comportamiento del ESP en todo momento se ha creado un sistema de máquina de estados basada en estructuras \textit{switch}/\textit{case} similar al ya explicado para el STM.
+
+En esta ocasión la variable de control principal viene determinada por el sistema de control externo y, en función del estado en el que se encuentre el microcontrolador, este interactúa de una forma u otra con el STM.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{Maquina_estados_ESP}
+    \caption{Maquina de estados del ESP}
+    \label{fig:Maquina_estados_ESP}
+\end{figure}
+
+Cada una de las funciones deseadas para el sistema tiene su estado asociado. Además ha sido necesario implementar un sistema de sincronización entre el ESP y el STM que asegure que la transición entre estados de ambos microcontroladores sea siempre simultánea.
+
+\clearpage
+
+\subsubsection{Transmisión de datos por SPI\label{sec:Software_Arduino_Com}}
+
+La transmisión de datos a través de SPI es una de las primeras funciones que los desarrolladores incluyen en las librerías cuando realizan un componente. La librería del ESP8266 no es una excepción y por lo tanto incluye bastantes funciones y definiciones como para poder trabajar de forma cómoda con el ESP en modo Master.
+
+Para funcionar correctamente, eso sí, es necesario conocer perfectamente que pines serán utilizados para la transmisión y configurar tanto los pines como el propio SPI de acuerdo a las necesidades del proyecto.
+
+El ESP cuenta con varios buses SPI. En este proyecto se hace uso de los pines 5 (HSPI\_CLK) , 6 (HSPI\_MISO) y 7 (HSPI\_MOSI) y un GPIO adicional para el $\overline{\text{CS}}$, en esta ocasión el pin 16.
+
+El codigo \ref{algoritmo:ESP_SPI} muestra una configuración funcional de todos los pines así como del SPI.
+
+\begin{lstlisting}[label=algoritmo:ESP_SPI,style = STM-code,frame=single,caption=Configuración de pines para el uso de \acrshort{SPI}]
+SPI.setClockDivider(SPI_CLOCK_DIV2); //Divides 16MHz clock by 2 to set CLK speed to 8MHz
+SPI.setDataMode(SPI_MODE1);  //clock polarity = 0; clock phase = 1 (pg. 8)
+SPI.setBitOrder(MSBFIRST);  //data format is MSB (pg. 25)  
+  
+pinMode(HSPI_CS,OUTPUT);
+pinMode(HSPI_CLK,SPECIAL);
+pinMode(HSPI_MISO,SPECIAL);
+pinMode(HSPI_MOSI,SPECIAL);
+pinMode(DRDY_N,INPUT);
+pinMode(START,OUTPUT);
+\end{lstlisting}
+
+Por simplicidad, a lo largo de todo el proyecto se ha utilizado el mismo modo de funcionamiento del SPI, adaptando el de los microcontroladores al del ADS, pues este viene impuesto por el fabricante mientras que todos los microcontroladores contemplan la utilización de varios modos alternativos.
+
+Cabe destacar del código \ref{algoritmo:ESP_SPI} que el modo de los pines denominado \textsc{ESPECIAL} es característico de aquellos destinados a la transmisión de información. Aunque el pin MISO se considere de entrada, si se configura en modo INPUT la comunicación fallará.
+
+Para transmitir información a través de SPI en cualquier dispositivo de la familia de Arduino (Uno, Due, mega, etc.) se hace uso de la función SPI.transfer() o SPI.transfer16() para datos de 8 o 16 bits respectivamente. \\
+Una de las ventajas de Arduino consiste en la estandarización en la medida de lo posible de aquellas funciones que tengan el mismo objetivo y la librería del ESP no es una excepción. Esa misma función y los ejemplos que la acompañan en la referencia oficial para comprender su funcionamiento
+
+\clearpage
+
+La transmisión por SPI desde el STM hacia el ESP se realiza en paquetes de un \textbf{byte}. Para recibir variables tipo \textbf{int} no hay ningún problema, pues al tener ese mismo tamaño se pueden transmitir directamente. Otras variables de mayor tamaño necesitan ser divididas en fragmentos más pequeños para ser transmitidas.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{Transmision_float}
+    \caption{Proceso de división y ensamblado de float para su transmisión}
+    \label{fig:Transmision_float}
+\end{figure}
+
+Tras recibir los cuatro paquetes de un \textbf{byte} será necesario ensamblarlos para volver obtener la variable original. La misma estructura de datos utilizada para separar los datos en variables independientes se puede usar para revertir el proceso.
+
+\begin{lstlisting}[label=algoritmo:ESP_split_var,style = STM-code,frame=single,caption=Variables y tipos de dato específicos]
+union miDato{
+ 	struct
+	{
+		byte  b[4];     // Array de bytes de tamaño igual al tamaño de la primera variable: int = 2 bytes, float = 4 bytes
+	}split;
+	float fval;
+} F_recibido; 
+\end{lstlisting}
+
+El código \ref{algoritmo:ESP_split_var} es idéntico al usado en el STM para realizar el proceso inverso ya que ambos lenguajes de programación tienen sus bases en \textbf{C}.
+
+Esta operación se repetirá por cada una de las medidas que se realicen.
+
+\clearpage
+
+\subsubsection{Configuración WiFi\label{sec:Software_Arduino_Conf_WiFi}}
+
+El ESP12-E está preparado para trabajar con redes WiFi de 2.4GHz. Para poder funcionar correctamente es necesario configurar aquellos parámetros de red típicos de cualquier conexión Wifi. Estos se ven reflejados en el código \ref{algoritmo:ESP_Wifi_var}.
+
+\begin{lstlisting}[label=algoritmo:ESP_Wifi_var,style = STM-code,frame=single,caption=Variables y tipos de dato específicos]
+char ssid[] = "SSID_NAME"; //  your network SSID (name)
+char pass[] = "PASSWORD";    // your network password (use for WPA, or use as key for WEP)
+
+IPAddress local_IP(192,168,4,22);
+IPAddress gateway(192,168,4,9);
+IPAddress subnet(255,255,255,0);
+IPAddress remote_IP(192,168,4,121);
+\end{lstlisting}
+  
+El importante que la contraseña de red contenga mínimo 8 caracteres o el sistema no iniciará correctamente.
+
+Una vez configurados los parámetros básicos de comunicación es necesario iniciar la conexión. Para ello es posible iniciar dos modos distintos: conexión a red ya existente o modo \textit{hotspot}.
+
+La conexión a una red ya existente se realiza con el siguiente código durante la fase de configuración del ESP:
+  
+\begin{lstlisting}[label=algoritmo:ESP_Wifi,style = STM-code,frame=single,caption=Conexión del ESP a una red WiFi ya existente]
+// We start by connecting to a WiFi network
+Serial.print("Connecting to ");
+Serial.println(ssid);
+WiFi.begin(ssid, pass)
+
+while (WiFi.status() != WL_CONNECTED) {
+	delay(500);
+	Serial.print(".");
+}
+Serial.println("");
+  
+Serial.println("WiFi connected");
+Serial.println("IP address: ");
+Serial.println(WiFi.localIP());
+\end{lstlisting}
+
+Como se puede apreciar, hasta que la conexión no sea satisfactoria el ESP no arrancará. Tras unos segundos el ESP acaba mostrando por pantalla la dirección IP con la que se ha conectado a la red, IP que debería coincidir con la introducida previamente en el parámetro ``local\_IP''.
+
+Este modo funciona muy bien, permite conexiones rápidas y el consumo de energía es relativamente bajo, pero se hace imprescindible la presencia de una red WiFi ya existente cuyos parámetros sean conocidos.
+
+El modo \textit{Hotspot} es la otra alternativa a este modo. Con esta configuración el ESP hace las funciones de router y punto de acceso, creando una red WiFi de las características deseadas. El código para esto es el mostrado a continuación:
+
+\begin{lstlisting}[label=algoritmo:ESP_Hotspot,style = STM-code,frame=single,caption=Creacion de un punto de acceso en el ESP]
+Serial.print("Setting soft-AP configuration ... ");
+Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
+
+Serial.print("Setting soft-AP ... ");
+Serial.println(WiFi.softAP("ESPBCI_WIFI", "Password_01", false) ? "Ready" : "Failed!");
+
+Serial.print("Soft-AP IP address = ");
+Serial.println(WiFi.softAPIP());
+\end{lstlisting}
+
+Este modo dota al ESP de una gran libertad e independencia al eliminar la necesidad de una red WiFi externa, pero la gestión de la información y el consumo de energía se ven perjudicados debido al aumento de carga que recibe el microcontrolador.
+
+Una vez establecida la conexión el ESP se queda en modo de espera de forma indefinida hasta que un nuevo cliente se conecta:
+
+\begin{lstlisting}[label=algoritmo:ESP_Server_handler,style = STM-code,frame=single,caption=Gestión de clientes y peticiones en Arduino]
+//########### Server handler #################
+// Check if a client has connected
+WiFiClient client = server.available();
+if (!client) {
+	//No client available
+	return;
+}
+\end{lstlisting}
+
+Tras conectarse, el cliente deberá transmitir algún tipo de información. Para evitar el cuelgue del sistema si por algún motivo el cliente no manda datos o la conexión se interrumpe, el ESP espera un tiempo prudencial y si no se ha recibido nada desecha al cliente.
+
+\begin{lstlisting}[label=algoritmo:ESP_Server_handler_2,style = STM-code,frame=single,caption=Gestión de clientes y peticiones en Arduino]
+// Wait until the client sends some data
+Serial.println("new client");
+t1 = millis();
+while(!client.available()){
+	delay(1);
+	Serial.print(".");
+	ESP.wdtFeed();    // Evita reinicios por watchdog
+	if (millis()-t1 >= 10000){
+		Serial.println("Timeout");
+		return;
+	}
+}
+\end{lstlisting}
+
+Por último se interpreta la información almacenándola en una variable para su posterior utilización.
+
+\begin{lstlisting}[label=algoritmo:ESP_Server_handler_2,style = STM-code,frame=single,caption=Gestión de clientes y peticiones en Arduino]
+// Read the first line of the request
+String req = client.readStringUntil('\r\n');
+\end{lstlisting}
+
+Todos los microcontroladores tienen un sistema de control llamado \textbf{Watchdog} que monitoriza el estado del microcontrolador. Si detecta que el dispositivo lleva demasiado tiempo en un bucle este se activa y realiza un reinicio de emergencia. 
+
+El ESP cuenta con dos tipos distintos de Watchdog, uno accionado por software y otro por hardware. El primero se activa en caso de que el programa funcione correctamente y se haya producido un bucle no deseado o no contemplado. El segundo lo hace en caso de fallo total del sistema. Para evitar que en ciertas partes del código en las que el ESP se queda esperando de forma indefinida se active el whatchdog por software es necesario introducir la siguiente línea:
+\begin{lstlisting}[label=algoritmo:ESP_Server_wdt,style = STM-code,frame=single,caption=Reinicios por \textit{watchdog}]
+ESP.wdtFeed();    // Evita reinicios por watchdog
+\end{lstlisting}
+De esta forma el contador que utiliza para monitorizar el tiempo que lleva en el bucle inicializa y se evita un reinicio indeseado.
+
+\subsubsection{Transmisión de datos a través de WiFi\label{sec:Software_Arduino_Com_WiFi}}
+
+Una vez se ha establecido la conexión entre ambos dispositivos es el momento de transmitir información. Arduino cuenta con varias funciones asociadas a la gestión de la información tanto a nivel servidor como a nivel cliente, todas ellas englobadas dentro de la librería ``WIFI''.
+
+Si se desea usar el protocolo TCP la utilización de client.print resulta altamente tentadora. Esta estructura presenta ciertos paralelismos con Serial.print y permite además la interpretación del valor directamente al realizar una representación en formato comprensible para los humanos.
+ 
+Sin embargo, al utilizar esta función se realiza también una conversión de la variable a otro formato junto con su correspondiente pérdida de precisión y cambio en el tamaño. La siguiente tabla ilustra con ejemplos los resultados de estas transformaciones si se representan con 5 dígitos de precisión.
+\begin{table} [H]
+	\centering
+	\begin{tabular}{|c|c|c|}
+\hline 
+\textbf{Valor real} & \textbf{Representación} & \textbf{Tamaño [bits]} \\ 
+\hline 
+1 & 1 & 8 \\ 
+\hline 
+$1.\wideparen{3}$ & 1.33333 & 56\footnotemark \\ 
+\hline 
+	\end{tabular} 
+	\caption{Representación de datos usando client.print()}
+	\label{tab:client_print_rep}
+\end{table}
+\footnotetext{{(n*enteros + 1 (punto) + k*decimales)}}
+
+Al tratar con variables en las que los decimales contienen una gran cantidad de información, el uso de la función client.print() queda completamente descartado, pues provoca una pérdida de precisión muy alta o un aumento drástico del espacio ocupado en memoria por cada medida.
+
+Una alternativa a esta función es client.write(). Esta es capaz de transmitir 8 bits o un fichero de datos del cliente al servidor, independientemente de la representación de esos datos.\\
+Este sistema es menos intuitivo pero a cambio evita pérdida de precisión y asegura que los datos transmitidos conservarán su integridad, tanto de valor como de tipo de variable y tamaño.
+
+La transmisión a través de TCP está orientada a asegurar que los datos llegarán sin errores a costa de disminuir la velocidad efectiva. 
+
+En un intento de mejorar la velocidad de transmisión se ha explorado la utilización de UDP usando las funciones udp.beginPacket(), udp.write() y udp.endPacket().\\
+Los resultados se presentan en el capítulo \ref{sec:Resultados}, pero su inclusión al sistema ha sido desechada porque el ahorro de tiempo no es muy destacable y en cambio en función de las condiciones de la red, la cantidad de paquetes perdidos puede resultar demasiado elevada.
+
+\clearpage
+
+\section{LabView\label{sec:Software_Labview}}
+
+El sistema en este punto puede hacer uso de cualquier ordenador o \textit{smartphone} como interfaz. Por comodidad, se ha escogido LabView como entorno de prototipado para la interfaz, ya que incluye un gran número de funciones y elementos gráficos que simplifican el desarrollo de un proyecto y permite generar un ejecutable que funcione en cualquier ordenador, tenga o no instalada una versión de LabView.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{LabView}
+    \caption{Logotipo de LabView}
+    \label{fig:LabView}
+\end{figure}
+
+\subsection{Interfaz gráfica\label{sec:Software_Labview_interfaz}}
+
+Desde LabView se han habilitado funciones para la representación de la información recibida desde el sistema de adquisición de datos. En una versión inicial contiene aquellos elementos necesarios para comprobar que todo funciona correctamente y representar las señales recibidas.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{Labview_interfaz}
+    \caption{Interfaz de LabView: Representación de la información}
+    \label{fig:Labview_interfaz}
+\end{figure}
+
+Como se puede apreciar en la imagen \ref{fig:Labview_interfaz}, la interfaz está organizada en pestañas.\\
+La primera presenta los datos recibidos, los enviados y otros elementos de control.\\
+La segunda contiene todos los elementos necesarios para modificar los parámetros de configuración del ADS.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=16cm]{Labview_interfaz_2}
+    \caption{Interfaz de LabView: Configuración del ADS}
+    \label{fig:Labview_interfaz_2}
+\end{figure}
+
+La figura \ref{fig:Labview_interfaz_2} muestra todos los parámetros del ADS, estando dispuesta la configuración de los canales de forma que se puedan ver todas las opciones disponibles.
+
+Esta interfaz ha sido desarrollada por parte de la alumna Nerea Urrestarazu durante la realización de su Trabajo fin de Máster y cedida con el objetivo de ahorrar tiempo. El archivo .vi ha sido utilizado como base, conservando la distribución y elementos básicos relacionados con los registros y funciones del ADS mientras que la lógica ha sido rehecha para cumplir con las necesidades de este proyecto.
+
+La lógica consta de varias partes, por un lado una encargada de transmitir y recibir información desde la red WiFi a la que esté conectado el ordenador. Por otro lado, otra cuya función es construir la orden que se desea transmitir a la placa adquisidora. Finalmente, tras recibir la contestación de la placa, esta se interpreta realizando las acciones pertinentes en función del significado, normalmente almacenado y representación de las mediciones.
+
+\clearpage
+
+\subsection{Comunicación WiFi\label{sec:Software_Labview_WiFi}}
+
+El envío y recepción de los datos en el PC ha sido implementado de dos maneras: por TCP y por UDP. 
+
+La figura \ref{fig:Labview_Transmision_TCP} muestra una representación simplificada de los bloques necesarios para la transmisión por TCP. Con esta configuración el ordenador inicia la conexión, manda una petición al ESP indicando que se desean medir datos y espera hasta que se reciba un paquete que contenga la cadena de caracteres retorno de carro seguida de nueva linea (\textbackslash r\textbackslash n).
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{Transmision_TCP}
+    \caption{LabView: Transmisión y recepción de datos a través de TCP}
+    \label{fig:Labview_Transmision_TCP}
+\end{figure}
+
+En caso de que la comunicación se cierre por parte del ESP o por un error de red se genera un evento de error que será gestionado por el siguiente conjunto de bloques y mostrado al usuario sin interrumpir el resto del programa.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=9cm]{Labview_error}
+    \caption{Bloques para ignorar errores conocidos}
+    \label{fig:Labview_error}
+\end{figure}
+
+\subsection{Conversión de datos\label{sec:Software_Labview_ConvDatos}}
+
+Los datos se reciben en un \textbf{string} de longitud igual a cuatro veces el total de los datos medidos y si estos son representados directamente resultan ilegibles. Para poder obtener los datos originales es imprescindible realizar una división cada cuatro bytes y reinterpretar los valores como \textbf{float} con el bloque \textit{cast}. En la figura \ref{fig:LabView_convertir_datos} se muestran los bloques encargados de realizar esta función.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{LabView_convertir_datos}
+    \caption{Extracción y conversión de datos}
+    \label{fig:LabView_convertir_datos}
+\end{figure}
+
+Estos bloques están pensados para funcionar independientemente del número de muestras adquiridas, aportando mayor flexibilidad al diseño.
+
+\subsection{Alternativa UDP\label{sec:Software_Labview_AltUDP}}
+
+Como se ha mencionado anteriormente, se ha trabajado en una alternativa que aprovecha las ventajas del UDP para transmitir la información hacia el ordenador. Los bloques utilizados para realizar esta función los siguientes:
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=15cm]{LabView_UDP}
+    \caption{Recepción de datos a través de UDP}
+    \label{fig:LabView_UDP}
+\end{figure}
+
+Este sistema funciona de forma similar al equivalente en TCP. En esta ocasión que en lugar de esperar a un caracter concreto para dar la comunicación por concluida esta se cierra tras un tiempo de espera sin recepción de datos. De esta forma se evita un bloqueo en caso de que se pierda alguna muestra.

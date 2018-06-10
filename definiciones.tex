@@ -192,9 +192,10 @@
   language = C,
   backgroundcolor=\color{backcolour},   
   commentstyle=\color{codegreen},
+  firstnumber=0,
   keywordstyle=\color{blue},
   numberstyle=\color{orange},%\tiny\color{codegray},
-  stringstyle=\color{codepurple},
+  stringstyle=\color{codegray},
   basicstyle=\footnotesize,
   breakatwhitespace=false,         
   breaklines=true,                 
@@ -204,7 +205,8 @@
   numbersep=5pt,                  
   showspaces=false,                
   showstringspaces=false,
-  showtabs=false,                  
+  showtabs=false,    
+  stepnumber=5,
   tabsize=2,
   morekeywords = {uint8_t, uint16_t, float32_t, SPI_HandleTypeDef},
   literate=
@@ -230,4 +232,6 @@
 
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{multirow}
+\usepackage{multirow}  	% Tablas con elementos que ocupan múltiples filas
+
+\usepackage{yhmath}		% Representación de números periódicos

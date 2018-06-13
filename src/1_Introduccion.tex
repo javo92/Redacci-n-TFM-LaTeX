@@ -26,7 +26,7 @@ Haciendo uso de este sistema y en función del origen de dichas señales dichos 
 
 \begin{figure} [H] %this figure will be at the center
     \centering
-    \includegraphics[width=10cm]{ECG}
+    \includegraphics[width=7.5cm]{ECG}
     \caption{Ejemplo de ECG}
     \label{fig:ECG}
 \end{figure}
@@ -48,15 +48,72 @@ Adicionalmente se pondrá en marcha un programa para el ordenador basado en LabV
 % Documentación interesante para esta sección: 
 % http://slideplayer.es/slide/3413933/
 
-Antes de empezar a desarrollar el dispositivo ya mencionado es indispensable realizar una investigación previa que debe abarcar desde el origen de las señales que se quieren adquirir hasta el 
+Antes de empezar a desarrollar el dispositivo ya mencionado es indispensable realizar una investigación previa del origen de las señales que se quieren adquirir, haciendo especial hincapié en las características de las mismas.
 
-Partes a redactar de esta sección:
+\begin{wrapfigure}[14]{R}{8cm}
+    \centering
+    \includegraphics[width=8cm]{Intro_neuronas}
+    \caption{Sinapsis neuronal \cite{wikipedia}}
+    \label{fig:Intro_neuronas}
+
+\end{wrapfigure}
+En el cerebro se realizan \textbf{millones de conexiones} diarias entre las células que la conforman. Dichas células reciben el nombre de \textbf{neuronas}. La comunicación entre ellas se realiza mediante el \textbf{intercambio de neurotransmisores}, proceso que recibe el nombre de sinapsis y que provoca una corriente eléctrica de mayor o menor intensidad que permite la inhibición o activación de las distintas neuronas. 
+
+La suma de todas las corrientes eléctricas conforma lo que se denomina \textbf{actividad bioeléctrica cerebral}. Mediante el uso de sensores es posible medirla y representarla.
+
+Las señales del EEG dependen del estado de consciencia del usuario y se pueden clasificar en función de su amplitud y frecuencia. Las principales ondas son las siguientes\footnote{Contenido obtenido de \cite{apuntes}}:
+
 \begin{itemize}
-\item base física/química de las señales del cerebro
-\item tipos de señales:
+\item\textbf{Ondas delta} (hasta 3.5 Hz). Término introducido por W. G. Walter en 1937 para describir a estas ondas de baja frecuencia y alta intensidad (unos centenares de $\mu$V). Tienen lugar en niños de corta edad y en adultos sólo en estado de sueño profundo, inconsciencia o situaciones que aumenten la presión intercraneal como tumores cerebrales.
+\end{itemize}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=13cm]{ondas_delta}
+    \caption{Ondas delta \cite{apuntes}}
+    \label{fig:ondas_delta}
+\end{figure}
+
+\clearpage
+
 \begin{itemize}
-	\item características físicas de las señales
-	\item información asociada a cada tipo
+\item\textbf{Ondas theta} (3.5 - 7.5 Hz). Término también Walter aunque mucho más tarde, en 1953. Estas ondas de amplitud inferior a 20 $\mu$ se dan durante el proceso de maduración en toda la corteza cerebral, aunque predomina en la región occipital y temporal y es más rápida en la zona frontal. Dominante en niños entre 5 y 7 años y aún quedan rastros en la juventud. En adultos y adolescentes se asocia a situaciones emocionales y pensamientos de tipo creativo, a estrés o a desordenes psíquicos.
 \end{itemize}
-\item posiciones donde se pueden medir
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=13cm]{ondas_theta}
+    \caption{Ondas theta \cite{apuntes}}
+    \label{fig:ondas_theta}
+\end{figure}
+
+\begin{itemize}
+\item\textbf{Ondas alfa} (7.5 - 12.5 Hz). Berger utilizó el término de ritmo alfa para ráfagas de 20-100 $\mu$V de amplitud y gran periodicidad a esas frecuencias predominantes sobre la región occipital pero que aparecen en todo el córtex. Se asocian a estados de relajación, de inactividad y son muy patentes en ausencia de estímulos visuales. Existe mucha variabilidad interpersonal en el ritmo alfa.
 \end{itemize}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=13cm]{ondas_alfa}
+    \caption{Ondas alfa \cite{apuntes}}
+    \label{fig:ondas_alfa}
+\end{figure}
+
+\begin{itemize}
+\item\textbf{Ondas beta} (12.5 - 30 Hz). Estas señales de pequeña amplitud, por debajo de 20$\mu$V, son bastante comunes y predominan durante la edad adulta. Suele dividirse en beta baja, beta media y beta alta. El ritmo beta bajo se suele localizar en los lóbulos frontal y occipital y los otros dos están menos localizados. Más irregular que el ritmo alfa, se asocia a actividad psicofísica, estados de agitación, alerta o la actividad mental que se realiza en la resolución de problemas.
+\end{itemize}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=13cm]{ondas_beta}
+    \caption{Ondas beta \cite{apuntes}}
+    \label{fig:ondas_beta}
+\end{figure}
+
+\begin{itemize}
+\item\textbf{Ondas gamma} (12.5 - 30 Hz). Esta banda tiene un pico de resonancia, similar a los ritmos alfa, cercano a 40Hz al que se da el nombre de épsilon que se asocia a actividad mental abstracta que interviene en percibir como único por ejemplo el olor, los rasgos de la cara, la personalidad y la voz de una persona. Actualmente hay quien habla de ondas de frecuencias superiores a 50 Hz, son las hipergamma hasta 100 Hz y las lambda hasta 200 Hz, se dice aparecen en los monjes tibetanos en estados de meditación profunda
+\end{itemize}
+
+Para la realización de un electroencefalograma existe una disposición estándar en la colocación de los sensores denominada \textbf{sistema 10-20}. Se trata de un sistema internacional que indica la posición en la que se deben colocar los electrodos para una medición del EEG.  Este sistema separa el cuero cabelludo en torno a un eje Z, colocando los electrodos numerado de manera par a la derecha y los impares a la izquierda (tal y como se puede ver en la figura \ref{fig:colocacion_electrodos)}.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{colocacion_electrodos}
+    \caption{Esquema de colocación de los electrodos}
+    \label{fig:colocacion_electrodos}
+\end{figure}

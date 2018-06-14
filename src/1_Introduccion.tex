@@ -117,3 +117,58 @@ Para la realización de un electroencefalograma existe una disposición estánda
     \caption{Esquema de colocación de los electrodos}
     \label{fig:colocacion_electrodos}
 \end{figure}
+
+\clearpage
+
+Dependiendo del tipo de electrodo que se utilice para captar las señales se hablará de dispositivos basados en electrodos húmedos o en electrodos secos.
+
+\section{Tipos de electrodos\label{sec:Tipos_Electrodos}}
+
+Los electrodos hacen la función de interfaz adaptadora entre los distintos medios por los que se transmiten las señales permitiendo así obtener una señal de mejores características. Este es un funcionamiento similar al de los huesos del oído, pues estos adaptan la señal acústica para que la señal percibida en la coclea tenga unas características determinadas. El funcionamiento de la mayoría de los dispositivos de adquisición de señales en el cuerpo humano depende de estos elementos y hacen uso de dos tipos principales, de trabajo y auxiliar.
+\\El electrodo denominado ``de trabajo'' (\textit{working electrode}) es el que adquiere la señal de interés. El otro, denominado auxiliar, es el encargado de crear una referencia. El esquema de la figura \ref{fig:electrodos} muestra un esquema básico de funcionamiento:
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{electrodos}
+    \caption{Electrodos de en un sistema de adquisición \cite{apuntes}}
+    \label{fig:electrodos}
+\end{figure}
+
+En función del método utilizado por el electrodo para hacer la interfaz con el cuerpo humano estos electrodos se pueden dividir en dos grandes grupos, cada uno con sus ventajas e inconvenientes. 
+
+\subsection{Electrodos húmedos\label{sec:Elec_humedos}}
+
+Los electrodos húmedos se caracterizan por utilizar algún material acuoso para realizar la interfaz entre el dispositivo y el cuerpo humano. Al estar conformados por varios materiales de distinta naturaleza estos electrodos suelen ser de construcción compleja. La figura \ref{fig:electrodo_humedo_2} muestra el esquema de un electrodo húmedo.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=10cm]{electrodo_humedo_2}
+    \caption{Esquema de un electrodo húmedo \cite{apuntes}}
+    \label{fig:electrodo_humedo_2}
+\end{figure}
+
+Estos dispositivos suelen dar muy buen resultado, consiguiendo señales con una buena amplitud y \acrshort{SNR} pero el material utilizado como interfaz suele ser desechable lo que obliga a usar electrodos de usar y tirar o a tener que dedicar mucho tiempo en la preparación y rellenado con gel de la cámara interior del dispositivo. Además, desde el punto de vista de la comodidad del usuario, la utilización de electrodos húmedos puede resultar incómoda al obligarlo a lavar la zona antes y después de su utilización.
+
+La figura \ref{fig:electrodo_humedo_1} muestra un ejemplo de adquisición de \acrshort{EEG} utilizando electrodos húmedos.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=7cm]{electrodo_humedo_1}
+    \caption{Medida de un EEG usando electrodos húmedos \cite{apuntes}}
+    \label{fig:electrodo_humedo_1}
+\end{figure}
+
+\clearpage
+
+\subsection{Electrodos secos\label{sec:Elec_secos}}
+
+Los electrodos secos utilizan materiales sólidos cuya interacción con el cuerpo humano resulta favorable. Al realizar una interfaz con materiales sólidos las señales se transmiten con mayor dificultad, pero este sistema resulta mucho más cómodo para el usuario y los electrodos son de fabricación más sencilla y reutilizables. La figura \ref{fig:electrodo_seco} muestra una representación 3D de un electrodo seco (derecha) y un electrodo seco real junto con sus correspondientes conectores (izquierda).
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=13cm]{electrodo_seco}
+    \caption{Electrodo seco real(izquierda) y representación 3D (derecha) \cite{apuntes}}
+    \label{fig:electrodo_seco}
+\end{figure}
+
+Por comodidad durante la realización de este proyecto se utilizarán principalmente electrodos secos pero la posibilidad de usar electrodos húmedos se mantendrá, pues la utilización de unos u otros afecta al usuario final y a los resultados pero apenas al equipo encargado de su adquisición.

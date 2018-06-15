@@ -24,35 +24,47 @@ La página web \textbf{instructables.com} ha propuesto a sus usuarios la creaci�
 \begin{figure} [h]
     \centering
     \includegraphics[width=13cm]{EdA_EEG_0}
-    \hfill
-    \includegraphics[width=9cm]{EdA_EEG_1}
+    \includegraphics[width=6cm]{EdA_EEG_1}
     \caption{Esquema electrónico casero para la captura de un EEG \cite{DIY_EEG}}
     \label{fig:EdA_EEG_1}
 \end{figure}
 
 Este sistema es muy interesante y para fines educativos cumple perfectamente su función pero tiene en cuenta el ruido que afecta a la señal ni otras características importantes como son el aislamiento del paciente de la red eléctrica.
 
+En su página web no especifican el coste total del proyecto pero en base al número de componentes se estima que el coste final es de 60€.
+
 \subsubsection{OpenEEG}
 
+OpenEEG es un proyecto de software libre que pone a disposición de cualquiera que lo necesite un conjunto de herramientas, software y esquemáticos que permiten crear un sistema de adquisición EEG utilizando una base que se encuentra en continuo desarrollo.
+
+A lo largo de Internet se pueden encontrar un gran número de pruebas de concepto y prototipos basados en este proyecto. En general muestran los resultados obtenidos pero hay algunos que además guían a los más curiosos que se atrevan a intentar construirse uno. Este es el caso de la web http://openeeg.sourceforge.net/buildeeg/ (aún en construcción), donde un usuario anónimo muestra sus resultados y anima a cualquiera con conocimientos básicos de electrónica a intentar repetir el proceso, proporcionando esquemáticos, consejos y software.
+
+El resultado final de este proyecto es el que se muestra en la figura \ref{fig:OpenEEG}.
 
 \begin{figure}[h]
-  \begin{subfigure}[b]{7cm}
+  \centering
+  \begin{subfigure}[b]{6.5cm}
    	\centering
-    \includegraphics[width=7cm]{Openeeg_amp_l}
+    \includegraphics[width=6cm]{Openeeg_amp_l}
     \caption{Tarjeta de adquisición}
     \label{fig:Openeeg_amp_l}
   \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{7cm}
+%  \hfill
+  \begin{subfigure}[b]{6.5cm}
   	\centering
-    \includegraphics[width=7cm]{openeeg_digital_l}
+    \includegraphics[width=6cm]{openeeg_digital_l}
     \caption{Tarjeta de procesado}
     \label{fig:openeeg_digital_l}
   \end{subfigure}
-  \caption{Elementos que conforman OpenEEG}
+  \caption{Elementos que conforman OpenEEG \cite{OpenEEG}}
   \label{fig:OpenEEG}
 \end{figure}
 
+El sistema está dividido en dos placas principales, una de adquisición encargada del acondicionamiento de la señal mediante resistencias, condensadores y amplificadores operacionales y otra de procesado donde el núcleo es un microcontrolador de ATMEL (presentes también en Arduino). 
+
+Resulta evidente que este proyecto presenta un acabado más profesional ya que tiene en cuenta factores muy importantes como el a acondicionado de la señal para minimizar el ruido y el aislamiento de la alimentación del paciente.
+
+El precio total estimado de este sistema es de 180€ aproximadamente.
 
 \subsubsection{Beanie}
 
@@ -61,7 +73,7 @@ Esta curiosa iniciativa utiliza un analizador de EEG acoplado a un gorro para qu
 \begin{figure} [h]
     \centering
     \includegraphics[width=7cm]{EdA_Beanie}
-    \caption{Beanie en funcionamiento}
+    \caption{Beanie en funcionamiento \cite{beanie}}
     \label{fig:EdA_Beanie}
 \end{figure}
 
@@ -71,21 +83,101 @@ Para la adquisición de la señal utiliza un chip de la compañía Neurosky llam
 
 El dispositivo se monta con relativa facilidad (1-2 días) y su precio ronda los 130€.
 
-Hablar de los códigos accesibles en distintas páginas web, github y otros sitios.
+\subsubsection{GitHub}
 
-Explicar que me he basado en ellos para agilizar el diseño ya que las definiciones de los distintos registros son similares.
+Por último es importante destacar la presencia de GitHub. Esta plataforma permite que la gente suba una gran cantidad de proyectos que normalmente están accesibles.
+
+Aunque los proyectos encontrados no suelen contener información acerca del diseño de placas y el precio final, sí que incluyen una gran cantidad de código que será utilizado como referencia para la implementación del código de este proyecto. Se incluye en la bibliografía algunas de los repositorios de mayor interés.
 
 \subsection{Proyectos docentes\label{sec:Pro_docentes}}
 
-Hablar del de Nerea, como se ha trabajado con el y en que se basa.
+Los proyectos llevados a cabo por universidades y otras instituciones centradas en el estudio y la docencia suelen ser de difícil acceso, pues la documentación generada tras un proyecto se suele aprovechar para realizar publicaciones en las revistas científicas más conocidas.
 
-\subsection{Comerciales\label{sec:Pro_empresa}}
+Sin embargo, en ocasiones los Trabajos Fin de Carrera abordan temas similares y estos si que se encuentran disponibles para cualquiera que tenga acceso a Internet. 
 
-Ejemplos comerciales como zanna u otras empresas.
+Un ejemplo de esta situación es el Trabajo Fin de Máster de la alumna Nerea Urrestarazu. En este se aborda la creación de un sistema de adquisición de EEG haciendo uso de un convertidor analógico-digital y un ordenador. Este proyecto se ha utilizado como base para construir otro que mejore sus prestaciones, así que sus características serán ampliadas en posteriores capítulos.
 
-Sistemas BCI comerciales.
+El coste final del proyecto contando sólo los materiales asciende a 100€ aproximadamente.
 
-Claramente todos los ejemplos anteriores presentan un coste bastante dispar entre ellos costando desde los cientos de euros de los proyectos personales y docentes hasta algunos miles de euros en el caso de productos comerciales.
+\subsection{Sistemas comerciales\label{sec:Pro_empresa}}
 
-Historia procesadores (Gráfica de procesadores)
-Antecedentes de la placa (Open BCI)
+Muchas empresas han visto este campo como una oportunidad de negocio y han desarrollado varias aplicaciones que hacen uso de la medida de EEG para diversos propósitos.
+
+\subsubsection{The XWave Headset}
+
+Este sistema es exclusivo de usuarios de iPhone. Por el momento incluye una diadema que, mediante el contacto con la frente, permite ver al usuario sus ondas cerebrales y controlar ciertas aplicaciones.
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=10cm]{xwave}
+    \caption{Imagen promocionando el producto}
+    \label{fig:xwave}
+\end{figure}
+
+El estudio que realiza del EEG no es muy exhaustivo de modo que no es un candidato a utilizar para estudios médicos pero sí que permite a los usuarios familiarizarse con la terminología y acostumbrarse a dispositivos similares.
+
+Su precio es de 99.90\$, (86€).
+
+\subsubsection{NeuroSky}
+
+Esta compañía ha creado una diadema similar a la presentada con anterioridad. Esta compañía pone a disposición del usuario un paquete de inicio que incluye la diadema, software y una guía de inicio. Este software contiene entre otras aplicaciones una película cuya trama cambia en función del estado mental del usuario
+
+\begin{figure} [h]
+    \centering
+    \includegraphics[width=5cm]{MindWave-StarterKit}
+    \caption{CAPTION}
+    \label{fig:MindWave-StarterKit}
+\end{figure}
+
+El precio comercial es de 99.99\$ (86€).
+
+\subsubsection{OpenBCI}
+
+Los ejemplos anteriores tienen características muy interesantes pero ambos son poco adecuados para realizar estudios médicos de las ondas cerebrales. Siguiendo esta premisa se ha creado un proyecto denominado OpenBCI con una extensa comunidad de desarrolladores.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=7cm]{GANGLION-mounted}
+    \caption{Módulo Ganglion montado sobre un casco \cite{OpenBCI}}
+    \label{fig:GANGLION-mounted}
+\end{figure}
+
+Este sistema hace uso del convertidor analógico ADS1299 para realizar una adquisición de las señales procedentes del cerebro usando 4 canales. A continuación realiza un procesado inicial y las transmite a un ordenador, donde serán filtradas y reprocesadas para extraer la información de interés.
+
+Está basado en la utilización de módulos, siendo necesario comprar el módulo base (Ganglion) por 200\$ (175€) para funcionar mientras que el resto de módulos son opcionales y son usados para aumentar sus funcionalidades.
+
+\section{Comparativa\label{sec:EdA_comparativa}}
+
+Las mayoría de las alternativas comerciales presentadas a lo largo de este capítulo intentan maximizar el confort del usuario aunque esto afecte al rendimiento del dispositivo. 
+
+Los sistemas orientados a la investigación se centran en los resultados mientras dejan el confort en segundo plano. Por supuesto intentan que el dispositivo sea lo más cómodo posible pero no permiten que esto afecte a las señales medidas.
+
+La tabla \ref{tab:EdA_Comparativa} hace una comparativa de los equipos anteriormente expuestos
+
+\begin{table} [H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\multirow{2}{*}{Dispositivo} 	& Apto para la investigación / 	& \multirow{2}{*}{Precio[€]} \\
+ 								& Aplicable a la medicina 		&  \\
+\hline
+Instructables & Sí\footnotemark{} & 60 \\
+\hline
+OpenEEG & Sí & 180 \\
+\hline
+Beanie & No & 130 \\
+\hline
+XWave Headset & No & 86 \\
+\hline
+NeuroSky & No & 86 \\
+\hline
+OpenBCI & Sí & 175 \\
+\hline
+\end{tabular}
+\label{tab:EdA_Comparativa}
+\caption{Comparativa entre los dispositivos}
+\end{table}
+
+\footnotetext{Es posible aplicarlo a esos campos pero no se debe olvidar que no realiza una eliminación del ruido}
+
+Todos los dispositivos anteriores tienen un precio que ronda los cientos de euros. En función del objetivo del equipo algunos sacrifican parte de las funcionalidades para que el coste disminuya pero aun así el resultado final puede significar un esfuerzo económico para el usuario medio.

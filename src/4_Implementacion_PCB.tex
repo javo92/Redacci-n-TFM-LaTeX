@@ -5,7 +5,7 @@ En el diseño e implementación de la \acrshort{PCB} es muy importante tener pre
 Las revisiones manuales permiten evitar ciertos errores pero una buena herramienta bien configurada contribuye a prevenir dichos errores desde el principio. Como ya se ha mencionado en el capítulo \ref{sec:Diseno}, para la realización de este proyecto se ha utilizado la herramienta KiCad, no sólo por ser Software Libre sino porque presenta ciertas características muy interesantes:
 \begin{itemize}
 \item \textbf{Entorno de desarrollo integrado:}
-\\Desde la propia herramienta se pueden hacer los esquemáticos, definir los componenes y librerías e incluso diseñar y previsualizar la PCB.
+\\Desde la propia herramienta se pueden hacer los esquemáticos, definir los componenes y librerías e incluso diseñar y previsualizar la \acrshort{PCB}.
 \item \textbf{Multiplataforma:}
 \\Disponible en Windows, Linux y Mac OS.
 \item \textbf{Respaldado por una gran comunidad} 
@@ -29,13 +29,13 @@ Durante la fase de diseño y realización del esquemático, cada componente fue 
 
 \section{Limitaciones del fabricante\label{sec:ITEAD_PCB}}
 
-El diseño de la PCB tiene ciertas restricciones, algunas impuestas por el propio diseño del circuito (tipo de componentes, número de pistas, tamaño final, etc.), otras, como las tratadas en esta sección, serán impuestas por el propio fabricante de \acrshort{PCB}s.
+El diseño de la \acrshort{PCB} tiene ciertas restricciones, algunas impuestas por el propio diseño del circuito (tipo de componentes, número de pistas, tamaño final, etc.), otras, como las tratadas en esta sección, serán impuestas por el propio fabricante de \acrshort{PCB}s.
 
 La mayoría de empresas fabricantes de PCBs del mercado dejan a disposición de sus clientes un listado de las limitaciones con las que cuentan, garantizando que cualquier diseño que se adecue a dichas especificaciones será impreso sin problemas. 
 
 De entre las disponibles en Internet se seleccionó la compañía ITEAD por presentar una buena relación prestaciones/precio, haberse contratado sus servicios previamente y un buen tiempo desde la impresión hasta la recepción de la placa.
 
-En su página web \cite{ITEAD_PCB_Limitations}, ITEAD ha preparado una tabla con un resumen de las características con las que se puede contar si se imprime una PCB en condiciones normales. Dicha tabla se recoge a continuación:
+En su página web \cite{ITEAD_PCB_Limitations}, ITEAD ha preparado una tabla con un resumen de las características con las que se puede contar si se imprime una \acrshort{PCB} en condiciones normales. Dicha tabla se recoge a continuación:
 
 \begin{table} [H]
 \centering
@@ -138,9 +138,9 @@ Con toda la información recopilada hasta el momento ya es posible configurar Ki
 
 Aunque en el esquemático se escogieron los valores de todos los componentes, a la hora de realizar un diseño final hay que tener en cuenta otros muchos parámetros. ¿Qué tamaño tendrá el componente?, ¿cuál será su tolerancia?, ¿qué formato se ajusta mejor, \acrshort{THT} o \acrshort{SMT}? La respuesta a todas estas preguntas acabará definiendo el componente a elegir, su precio y su disponibilidad.
 
-Utilizar componentes en el formato THT puede suponer una ventaja las primeras veces que se realiza una soldadura o al trabajar con electrónica de potencia. En ambos casos se aprovecha el grosor del conector y el hecho de que atraviese la placa para dar mayor comodidad al técnico y disminuir la resistividad de la unión respectivamente. 
-\\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia, la utilización de dichos componentes limita el diseño e impone restricciones que mediante SMT se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo los conectores de dichos componentes THT.
-\\A lo largo del diseño de la PCB se seleccionará en la medida de lo posible componentes en su formato SMT.
+Utilizar componentes en el formato \acrshort{THT} puede suponer una ventaja las primeras veces que se realiza una soldadura o al trabajar con electrónica de potencia. En ambos casos se aprovecha el grosor del conector y el hecho de que atraviese la placa para dar mayor comodidad al técnico y disminuir la resistividad de la unión respectivamente. 
+\\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia, la utilización de dichos componentes limita el diseño e impone restricciones que mediante \acrshort{SMT} se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo los conectores de dichos componentes \acrshort{THT}.
+\\A lo largo del diseño de la \acrshort{PCB} se seleccionará en la medida de lo posible componentes en su formato \acrshort{SMT}.
 
 Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de 0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm) ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales, y por otro, son medidas muy comunes, facilitándose de esta forma la localización de componentes así como distribuidores primarios y secundarios.
 
@@ -167,7 +167,7 @@ Por desgracia esto no es siempre suficiente de modo que KiCad ha sido diseñado 
     \label{fig:Footprint_ESP}
 \end{figure}
 
-Una vez se han localizado o creado los \textit{footprints} de todos los componentes es necesario asociarlos entre si. Esto permite que en la fase de diseño de la PCB, KiCad pueda cargar una representación física del componente. 
+Una vez se han localizado o creado los \textit{footprints} de todos los componentes es necesario asociarlos entre si. Esto permite que en la fase de diseño de la \acrshort{PCB}, KiCad pueda cargar una representación física del componente. 
 La asociación se realiza con el complemento CvPcb, accesible desde Eeschema. La figura \ref{fig:cvpcb} muestra la interfaz de usuario tras finalizar este proyecto.
 
 \clearpage
@@ -187,7 +187,7 @@ Es posible realizar búsquedas para agilizar el proceso haciendo uso de los tres
 
 \section{PCBnew\label{sec:PCBnew}}
 
-Eeschema da como salida dos tipos de archivos que representan la interconexión del los elementos del circuito. Por un lado, un archivo PDF destinado a su lectura por humanos, por otro, un fichero en formato NET. Este último será el fichero de entrada de la herramienta de diseño de PCB denominada PCBnew. 
+Eeschema da como salida dos tipos de archivos que representan la interconexión del los elementos del circuito. Por un lado, un archivo PDF destinado a su lectura por humanos, por otro, un fichero en formato NET. Este último será el fichero de entrada de la herramienta de diseño de \acrshort{PCB} denominada PCBnew. 
 
 \begin{figure} [h]
     \centering
@@ -220,7 +220,7 @@ En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos
  
 \section{Diseño final de la PCB\label{sec:PCB_final}}
 
-El sistema seguido para la disposición de componentes en la PCB ha venido determinado en gran medida por la disposición de componentes en la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
+El sistema seguido para la disposición de componentes en la \acrshort{PCB} ha venido determinado en gran medida por la disposición de componentes en la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
 
 \begin{figure} [H]
     \centering
@@ -229,7 +229,7 @@ El sistema seguido para la disposición de componentes en la PCB ha venido deter
     \label{fig:Esquema_PCB}
 \end{figure}
 
-En las siguientes secciones se explicará con más detalle cada una de las partes de la PCB, haciendo una división en los tres grandes grupos que la componen: alimentación (rojo), microcontrolador (blanco) e interfaz inalámbrica (azul).
+En las siguientes secciones se explicará con más detalle cada una de las partes de la \acrshort{PCB}, haciendo una división en los tres grandes grupos que la componen: alimentación (rojo), microcontrolador (blanco) e interfaz inalámbrica (azul).
 
 \clearpage
 
@@ -263,7 +263,7 @@ Se ha dotado a la placa de un circuito que fuerza el reinicio del controlador. D
 
 \subsection{Interfaz inalámbrica\label{sec:PCB_inalambrica}}
 
-La zona de la PCB que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa. Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
+La zona de la \acrshort{PCB} que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa. Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
 
 La localización de los conectores de programación de ambos módulos ha venido determinada por la posición de sus correspondientes pines. El objetivo ha sido aproximarlos al módulo correspondiente sin que por ello se produzcan cruces entre pistas. Al presentar unas restricciones de diseño leves por parte del fabricante, ha sido posible en ocasiones trazar pistas entre los pines del ESP lo cual ha facilitado sensiblemente la tarea de trazado de rutas y disposición de componentes.
 

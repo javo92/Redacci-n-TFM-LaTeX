@@ -170,6 +170,10 @@
 \renewcommand\appendixtocname{Apéndices}
 \renewcommand\appendixpagename{Apéndices}
 
+% Listing --> Índice de códigos
+\renewcommand\lstlistlistingname{Índice de códigos}
+
+
 % Comando code (lstlisting sin cambio de página)
 \lstnewenvironment{code}[1][]%
   { \noindent\minipage{0.935\linewidth}\medskip
@@ -235,3 +239,5 @@
 \usepackage{multirow}  	% Tablas con elementos que ocupan múltiples filas
 
 \usepackage{yhmath}		% Representación de números periódicos
+
+\usepackage{pdfpages} 	% Permite incluir PDFs

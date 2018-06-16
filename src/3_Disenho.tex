@@ -1,6 +1,6 @@
 \chapter{Diseño\label{sec:Diseno}}
 
-Este proyecto consiste en una ampliación y cambio de enfoque de otro proyecto llevado a cabo de manera simultánea por una alumna de la Universidad Politécnica de Madrid llamada Nerea Urrestarazu que a su vez se basa en el Kit de demostración de rendimiento del ADS1299 proporcionado por Texas Instrument.
+Este proyecto consiste en una \textbf{ampliación y cambio de enfoque} de otro proyecto llevado a cabo de manera simultánea por una alumna de la Universidad Politécnica de Madrid llamada Nerea Urrestarazu que, a su vez, se basa en el Kit de demostración de rendimiento del ADS1299 proporcionado por Texas Instrument.
 
 \begin{figure} [h]
     \centering
@@ -11,7 +11,7 @@ Este proyecto consiste en una ampliación y cambio de enfoque de otro proyecto l
 
 \section{Diseño base\label{sec:Diseno_base_N}}
 
-El proyecto original trata sobre el diseño y desarrollo de una placa de adquisición de \acrshort{EEG} haciendo uso de los integrados ADS1299 junto con un sistema de transmisión hacia el ordenador tanto inalámbricamente como a través de USB. La figura \ref{fig:Diseno_base} muestra las partes que componen dicho diseño.
+El \textbf{proyecto original} consiste en el \textbf{diseño y desarrollo} de una \textbf{placa de adquisición de \acrshort{EEG}} haciendo uso de los integrados ADS1299 junto con un sistema de transmisión hacia el ordenador tanto inalámbricamente como a través de USB. La figura \ref{fig:Diseno_base} muestra las partes que componen dicho diseño.
 
 \begin{figure} [h]
     \centering
@@ -22,8 +22,8 @@ El proyecto original trata sobre el diseño y desarrollo de una placa de adquisi
 
 \subsection{Adquisición de datos\label{sec:Adquisicion_N}}
 
-La parte encargada de la adquisición está compuesta por un par de bancos de electrodos dispuestos en los laterales de la placa seguidos de un filtro paso-bajo con frecuencia de corte de 6.79kHz encargado de eliminar las componentes de frecuencias muy altas, no deseadas en el estudio de un \acrshort{EEG}. A continuación se encuentran conectados a sus respectivos bancos los \acrshort{ADC} ADS1299. 
-\\Estos convertidores son capaces de adquirir información de forma independiente o en modo ``Daisy Chain'' y transmitirla a través de \acrshort{SPI} hacia otros dispositivos cuya misión será gestionarla.
+La parte encargada de la \textbf{adquisición} está compuesta por un par de \textbf{bancos de electrodos} dispuestos en los laterales de la placa seguidos por un filtro paso-bajo con frecuencia de corte de 6.79kHz, encargado de eliminar las componentes de frecuencias muy altas, no deseadas en el estudio de un \acrshort{EEG}. A continuación se encuentran conectados a sus respectivos bancos los \textbf{\acrshort{ADC} ADS1299}. 
+\\Estos convertidores son capaces de adquirir información de forma independiente o en modo ``\textit{Daisy Chain}'' y \textbf{transmitirla a través de \acrshort{SPI}} hacia otros dispositivos cuya misión será gestionarla.
 
 \begin{figure} [h]
     \centering
@@ -34,7 +34,7 @@ La parte encargada de la adquisición está compuesta por un par de bancos de el
 
 El \acrshort{SPI} presente en el convertidor permite leer todos los registros del ADS y escribir la gran mayoría. Aunque normalmente se leen los relacionados con los datos convertidos, también es posible saber el estado de los \acrshort{GPIO} o el identificador único del dispositivo leyendo su registro asociado.
 
-La configuración del ADS se realiza mediante la escritura de ciertos registros, cada uno asociado a un parámetro específico. La tabla \ref{tab:Conf_Reg_ADS} muestra los registros disponibles, tanto de lectura como de configuración, una descripción básica y la dirección de memoria asociada a los mismos.
+La \textbf{configuración} del ADS se realiza mediante la \textbf{escritura de ciertos registros}, cada uno asociado a un parámetro específico. La tabla \ref{tab:Conf_Reg_ADS} muestra los registros disponibles, tanto de lectura como de configuración, una descripción básica y la dirección de memoria asociada a los mismos.
 
 \begin{table} [h]
     \centering
@@ -45,16 +45,16 @@ La configuración del ADS se realiza mediante la escritura de ciertos registros,
 
 Una descripción más detallada de cada uno de los bits de cada registro se puede encontrar en el \textit{datasheet} del componente \cite{Datasheet_ADS}.
 
-Como se puede ver en la tabla \ref{tab:Conf_Reg_ADS}, los convertidores cuentan con una gran cantidad de opciones de configuración. Para el desarrollo de este proyecto se ha implementado un sistema de configuración que permite la lectura y escritura de todos los registros.
+Como se puede ver en la tabla \ref{tab:Conf_Reg_ADS}, los convertidores cuentan con una gran cantidad de opciones de configuración. Para el desarrollo de este proyecto \textbf{se ha implementado un sistema de configuración que permite la lectura y escritura de todos los registros}.
 
 \subsection{Transmisión de datos\label{sec:Transmisión_N}}
 
-Tras completar el proceso de adquisición de datos resulta necesario transmitir dicha información hacia un dispositivo capaz de procesarla. Para ello la placa original contaba con dos alternativas. La primera consiste en, mediante \acrshort{USB} y acopladores aislantes, transmitir la información a un ordenador. 
-\\La segunda hace uso de dos tecnologías inalámbricas distintas que funcionan de forma excluyente y son seleccionables con un \textit{jumper}: WiFi o Bluetooth.
+Tras completar el proceso de adquisición de datos resulta necesario transmitir dicha información hacia un dispositivo capaz de procesarla. Para ello la placa original contaba con dos alternativas. La primera consiste en, mediante \textbf{\acrshort{USB}} y acopladores aislantes, transmitir la información a un ordenador. 
+\\La segunda hace uso de dos tecnologías inalámbricas distintas que funcionan de forma excluyente y son seleccionables con un \textit{jumper}: \textbf{WiFi} o \textbf{Bluetooth}.
 
 \subsubsection{WiFi\label{sec:WiFi_N}}
 
-Para la transmisión de datos a través de WiFi se seleccionó el módulo ESP12-E, basado en el \acrshort{SoC} ESP2866, también conocido nodemcu.
+Para la transmisión de datos a través de \textbf{WiFi} se seleccionó el \textbf{módulo ESP12-E}, basado en el \acrshort{SoC} ESP2866, también conocido nodemcu.
 \\Este cuenta con un microcontrolador (\acrshort{MCU}) embebido de 32 bits (Tensilica L106) con una memoria \acrshort{RAM} de 36kB y una velocidad de reloj de la \acrshort{CPU} de hasta 80MHz, proporcionando suficiente potencia para las tareas básicas.
 
 Así mismo se incluye montado en el mismo paquete una memoria flash de 4MB en la que almacenar el código de los programas que se ejecutarán y una antena embebida, dotando al módulo de conectividad en la banda de 2.4GHz.
@@ -66,7 +66,7 @@ Así mismo se incluye montado en el mismo paquete una memoria flash de 4MB en la
     \label{fig:ESP8266}
 \end{figure}
 
-A efectos de diseño es muy importante saber cuales serán las entradas/salidas del dispositivo así como los pines dedicados para su programación. La figura \ref{fig:ESP8266_pinout} muestra un resumen de todas las funciones de cada uno de los pines. Como se puede observar, el \acrshort{SPI} hace uso de los pines 5, 6, 7 y 16. Por otro lado el \acrshort{UART}, necesario para la programación del micro hace uso de los pines 16 y 17. Dichos pines deberán reservarse posteriormente en la fase de diseño de la \acrshort{PCB}.
+A efectos de diseño es muy importante saber cuales serán las entradas/salidas del dispositivo así como los \textbf{pines dedicados para su programación}. La figura \ref{fig:ESP8266_pinout} muestra un resumen de todas las funciones de cada uno de los pines. Como se puede observar, el \acrshort{SPI} hace uso de los pines 5, 6, 7 y 16. Por otro lado el \acrshort{UART}, necesario para la programación del micro hace uso de los pines 16 y 17. Dichos pines deberán \textbf{reservarse} posteriormente en la fase de diseño de la \acrshort{PCB}.
 
 El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que cargue el código y la selección de uno u otro modo viene determinada por los pines MTDO, GPIO0 y GPIO2. \\La tabla \ref{tab:ESP_Boot_Modes} los distintos modos de arranque y el estado en el que deben estar de los pines para iniciar en dicho modo.
 \begin{table} [h]
@@ -97,7 +97,7 @@ El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que c
 
 \subsubsection{Bluetooth\label{sec:Bluetooth_N}}
 
-Para la transmisión de datos a través de Bluetooth se seleccionó el módulo Simblee™ RFD77101 ya que al igual que el módulo WiFi, cuenta con interfaces de comunicación a través de \acrshort{SPI} para conectarse con el \acrshort{ADC} (pines 21, 22, 31 y 32) y de \acrshort{UART} para su programación posterior programación (pines 23 y 24).
+Para la transmisión de datos a través de \textbf{Bluetooth} se seleccionó el módulo Simblee™ RFD77101 ya que al igual que el módulo WiFi, cuenta con interfaces de \textbf{comunicación a través de \acrshort{SPI}} para conectarse con el \acrshort{ADC} (pines 21, 22, 31 y 32) y de \acrshort{UART} para su programación posterior programación (pines 23 y 24).
 
 \begin{figure} [H]
     \centering
@@ -108,13 +108,13 @@ Para la transmisión de datos a través de Bluetooth se seleccionó el módulo S
 
 El módulo presenta un ARM Cortex-M0 como \acrshort{CPU} con 128KB de memoria Flash, 24KB de \acrshort{RAM} y una frecuencia de reloj de 16MHz. 
 
-Todos los dispositivos de transmisión inalámbrica anteriormente mencionados permiten su programación utilizando el \acrshort{IDE} de Arduino lo cual facilita sensiblemente el proceso de desarrollo y prototipado teniendo la ventaja adicional de que es Software Libre.
+Todos los dispositivos de transmisión inalámbrica anteriormente mencionados permiten su \textbf{programación utilizando el \acrshort{IDE} de Arduino} lo cual facilita sensiblemente el proceso de desarrollo y prototipado teniendo la ventaja adicional de que es Software Libre.
 
 
 \subsubsection{USB\label{sec:USB_N}}
 
 
-Como este proyecto tiene como objetivo independizar el sistema lo máximo posible del ordenador se ha optado por desestimar el sistema de transmisión por \acrshort{USB} conservando solamente la interfaz inalámbrica. 
+Como este proyecto tiene como objetivo independizar el sistema lo máximo posible del ordenador se ha optado por \textbf{desestimar} el sistema de transmisión por \acrshort{USB} conservando solamente la interfaz inalámbrica. 
 
 \section{Diseño final\label{sec:Diseño_final}}
           
@@ -271,7 +271,7 @@ El regulador encargado de proporcionar 5V es el MCP1711. Este integrado está ca
     \label{fig:Alim_5}
 \end{figure}
 
-Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tensión de Dropout}''(V$_{\text{DROP}}$).
+Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tension de Dropout}''(V$_{\text{DROP}}$).
 \\De acuerdo al \textit{datasheet} de ambos reguladores, V$_{\text{DROP}}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V de modo que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
 
 Finalmente se ha optado por una fuente de alimentación de 6V ya que esto permitirá hacer uso de pilas o baterías para alimentar el sistema, dotándolo de independencia de la red eléctrica y eliminando el riesgo de electrocución.

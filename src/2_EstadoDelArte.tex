@@ -1,9 +1,9 @@
 \chapter{Estado del Arte\label{sec:EstadoDelArte}}
 
-Con el paso del tiempo se ha demostrado que una de nuestras mayores virtudes como seres humanos es la habilidad de aprovechar el saber cultivado por otras personas para realizar nuevos descubrimientos con mayor facilidad. En la actualidad, con la ayuda de Internet esta ventaja se ha visto potenciada hasta límites insospechados.
+Con el paso del tiempo se ha demostrado que una de nuestras mayores virtudes como seres humanos es la habilidad de \textbf{aprovechar el saber cultivado por otras personas} para realizar nuevos descubrimientos con mayor facilidad. En la actualidad, con la ayuda de Internet esta ventaja se ha visto potenciada hasta límites insospechados.
 
 Como se ha mencionado con anterioridad en el capítulo \ref{sec:introduccion}, a lo largo de los años se han desarrollado numerosas alternativas a los dispositivos presentes en los hospitales y laboratorios utilizados normalmente para el estudio del cerebro. 
-\\Aunque se han invertido muchos recursos en estos dispositivos, el objetivo es permitir ampliar el número de personas capaces de estudiar el cerebro humano, consiguiendo  así aumentar las posibilidades de mejorar nuestro conocimiento sobre el mismo.
+\\Aunque se han invertido muchos recursos en estos dispositivos, el objetivo es permitir \textbf{ampliar el número de personas} capaces de estudiar el cerebro humano, consiguiendo  así aumentar las posibilidades de mejorar nuestro conocimiento sobre el mismo.
 
 De esta forma debería ser más fácil realizar nuevos descubrimientos como, por ejemplo, nuevas formas de diagnosticar enfermedades o de realizar una comunicación hombre-máquina para aquellas personas que por algún tipo de discapacidad física o mental no puedan utilizar los medios convencionales.
 
@@ -19,7 +19,7 @@ En internet se pueden encontrar algunos ejemplos de personas que han dedicado su
 
 \subsubsection{Instructables}
 
-La página web \textbf{instructables.com} ha propuesto a sus usuarios la creación de un sistema de adquisición de \acrshort{EEG} y \acrshort{ECG} sencillo y barato. El dispositivo final resulta muy interesante, pues con unas pocas resistencias, condensadores y un par de amplificadores operacionales son capaces de montar un dispositivo funcional. La figura \ref{} muestra el esquemático final del dispositivo.
+La página web \textbf{instructables.com} ha propuesto a sus usuarios la creación de un sistema de adquisición de \acrshort{EEG} y \acrshort{ECG} sencillo y barato. El dispositivo final resulta muy interesante, pues con unas pocas resistencias, condensadores y un par de amplificadores operacionales son capaces de \textbf{montar un dispositivo funcional}. La figura \ref{fig:EdA_EEG_1} muestra el esquemático final del dispositivo.
 
 \begin{figure} [h]
     \centering
@@ -29,13 +29,13 @@ La página web \textbf{instructables.com} ha propuesto a sus usuarios la creaci�
     \label{fig:EdA_EEG_1}
 \end{figure}
 
-Este sistema es muy interesante y para fines educativos cumple perfectamente su función pero tiene en cuenta el ruido que afecta a la señal ni otras características importantes como son el aislamiento del paciente de la red eléctrica.
+Este sistema es muy interesante y para fines educativos cumple perfectamente su función pero \textbf{no tiene en cuenta el ruido que afecta a la señal} ni otras características importantes como son el \textbf{aislamiento} del paciente de la red eléctrica.
 
-En su página web no especifican el coste total del proyecto pero en base al número de componentes se estima que el coste final es de 60€.
+En su página web no especifican el coste total del proyecto pero en base al número de componentes se estima que el \textbf{coste final es superior a los 60€.}
 
 \subsubsection{OpenEEG}
 
-OpenEEG es un proyecto de software libre que pone a disposición de cualquiera que lo necesite un conjunto de herramientas, software y esquemáticos que permiten crear un sistema de adquisición \acrshort{EEG} utilizando una base que se encuentra en continuo desarrollo.
+OpenEEG es un proyecto de software libre que pone a disposición de cualquiera que lo necesite un conjunto de herramientas, software y esquemáticos que permiten crear un sistema de adquisición \acrshort{EEG} utilizando una base que \textbf{se encuentra en continuo desarrollo}.
 
 A lo largo de Internet se pueden encontrar un gran número de pruebas de concepto y prototipos basados en este proyecto. En general muestran los resultados obtenidos pero hay algunos que además guían a los más curiosos que se atrevan a intentar construirse uno. Este es el caso de la web http://openeeg.sourceforge.net/buildeeg/ (aún en construcción), donde un usuario anónimo muestra sus resultados y anima a cualquiera con conocimientos básicos de electrónica a intentar repetir el proceso, proporcionando esquemáticos, consejos y software.
 
@@ -60,15 +60,15 @@ El resultado final de este proyecto es el que se muestra en la figura \ref{fig:O
   \label{fig:OpenEEG}
 \end{figure}
 
-El sistema está dividido en dos placas principales, una de adquisición encargada del acondicionamiento de la señal mediante resistencias, condensadores y amplificadores operacionales y otra de procesado donde el núcleo es un microcontrolador de ATMEL (presentes también en Arduino). 
+El sistema está dividido en \textbf{dos placas} principales, una de \textbf{adquisición} encargada del acondicionamiento de la señal mediante resistencias, condensadores y amplificadores operacionales y otra de \textbf{procesado} donde el núcleo es un microcontrolador de ATMEL (presentes también en Arduino). 
 
-Resulta evidente que este proyecto presenta un acabado más profesional ya que tiene en cuenta factores muy importantes como el a acondicionado de la señal para minimizar el ruido y el aislamiento de la alimentación del paciente.
+Resulta evidente que este proyecto presenta un \textbf{acabado más profesional} ya que tiene en cuenta factores muy importantes como el a acondicionado de la señal para minimizar el ruido y el aislamiento de la alimentación del paciente.
 
-El precio total estimado de este sistema es de 180€ aproximadamente.
+El \textbf{precio total} estimado de este sistema es de \textbf{180€} aproximadamente.
 
 \subsubsection{Beanie}
 
-Esta curiosa iniciativa utiliza un analizador de \acrshort{EEG} acoplado a un gorro para que este se ilumine en función del estado y concentración de la persona.
+Esta curiosa iniciativa utiliza un analizador de \acrshort{EEG} acoplado a un gorro para que este se \textbf{ilumine en función del estado y concentración de la persona}.
 
 \begin{figure} [h]
     \centering
@@ -79,9 +79,9 @@ Esta curiosa iniciativa utiliza un analizador de \acrshort{EEG} acoplado a un go
 
 El funcionamiento es muy similar al resto de dispositivos ya explicados: se adquieren señales desde electrodos situados en la cabeza, se filtra la señal para eliminar el ruido y se presenta al usuario.
 
-Para la adquisición de la señal utiliza un chip de la compañía Neurosky llamado ThinkGear ASIC Module que tiene integrado un sistema de adquisición y filtrado de señales. Posteriormente está se transfiere a un módulo TinyLily de Arduino que se encargará de realizar un segundo procesado para iluminar el pompón del gorro de la forma deseada.
+Para la adquisición de la señal utiliza un chip de la compañía Neurosky llamado \textbf{ThinkGear ASIC Module} que tiene integrado un sistema de adquisición y filtrado de señales. Posteriormente está se transfiere a un módulo \textbf{TinyLily de Arduino} que se encargará de realizar un segundo procesado para iluminar el pompón del gorro de la forma deseada.
 
-El dispositivo se monta con relativa facilidad (1-2 días) y su precio ronda los 130€.
+El dispositivo se monta con relativa facilidad (1-2 días) y su \textbf{precio} ronda los \textbf{130€}.
 
 \subsubsection{GitHub}
 
@@ -101,11 +101,11 @@ El coste final del proyecto contando sólo los materiales asciende a 100€ apro
 
 \subsection{Sistemas comerciales\label{sec:Pro_empresa}}
 
-Muchas empresas han visto este campo como una oportunidad de negocio y han desarrollado varias aplicaciones que hacen uso de la medida de \acrshort{EEG} para diversos propósitos.
+Muchas empresas han visto este campo como una \textbf{oportunidad de negocio} y han desarrollado varias aplicaciones que hacen uso de la medida de \acrshort{EEG} para diversos propósitos.
 
 \subsubsection{The XWave Headset}
 
-Este sistema es exclusivo de usuarios de iPhone. Por el momento incluye una diadema que, mediante el contacto con la frente, permite ver al usuario sus ondas cerebrales y controlar ciertas aplicaciones.
+Este sistema es exclusivo de usuarios de iPhone. Por el momento incluye una diadema que, mediante el contacto con la frente, permite ver al usuario sus ondas cerebrales y \textbf{controlar ciertas aplicaciones}.
 
 \begin{figure} [h]
     \centering
@@ -116,11 +116,11 @@ Este sistema es exclusivo de usuarios de iPhone. Por el momento incluye una diad
 
 El estudio que realiza del \acrshort{EEG} no es muy exhaustivo de modo que no es un candidato a utilizar para estudios médicos pero sí que permite a los usuarios familiarizarse con la terminología y acostumbrarse a dispositivos similares.
 
-Su precio es de 99.90\$, (86€).
+Su \textbf{precio} es de \textbf{99.90\$, (86€)}.
 
 \subsubsection{NeuroSky}
 
-Esta compañía ha creado una diadema similar a la presentada con anterioridad. Esta compañía pone a disposición del usuario un paquete de inicio que incluye la diadema, software y una guía de inicio. Este software contiene entre otras aplicaciones una película cuya trama cambia en función del estado mental del usuario
+Esta compañía ha creado una diadema similar a la presentada con anterioridad. Esta compañía pone a disposición del usuario un paquete de inicio que incluye la diadema, software y una guía de inicio. Este software contiene entre otras aplicaciones una \textbf{película cuya trama cambia en función del estado mental} del usuario.
 
 \begin{figure} [h]
     \centering
@@ -142,9 +142,9 @@ Los ejemplos anteriores tienen características muy interesantes pero ambos son 
     \label{fig:GANGLION-mounted}
 \end{figure}
 
-Este sistema hace uso del convertidor analógico ADS1299 para realizar una adquisición de las señales procedentes del cerebro usando 4 canales. A continuación realiza un procesado inicial y las transmite a un ordenador, donde serán filtradas y reprocesadas para extraer la información de interés.
+Este sistema hace uso del \textbf{convertidor analógico ADS1299} para realizar una adquisición de las señales procedentes del cerebro usando \textbf{4 canales}. A continuación realiza un procesado inicial y las transmite a un ordenador, donde serán filtradas y reprocesadas para extraer la información de interés.
 
-Está basado en la utilización de módulos, siendo necesario comprar el módulo base (Ganglion) por 200\$ (175€) para funcionar mientras que el resto de módulos son opcionales y son usados para aumentar sus funcionalidades.
+Está basado en la utilización de módulos, siendo \textbf{necesario comprar el módulo base (Ganglion) por 200\$} (175€) para funcionar mientras que el resto de módulos son opcionales y son usados para aumentar sus funcionalidades.
 
 \section{Comparativa\label{sec:EdA_comparativa}}
 
@@ -174,8 +174,8 @@ NeuroSky & No & 86 \\
 OpenBCI & Sí & 175 \\
 \hline
 \end{tabular}
-\label{tab:EdA_Comparativa}
 \caption{Comparativa entre los dispositivos}
+\label{tab:EdA_Comparativa}
 \end{table}
 
 \footnotetext{Es posible aplicarlo a esos campos pero no se debe olvidar que no realiza una eliminación del ruido}

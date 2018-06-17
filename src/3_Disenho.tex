@@ -90,7 +90,7 @@ El dispositivo tiene tres modos de arranque dependiendo del sitio desde el que c
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=\textwidth]{esp8266-esp12e-pinout}
+    \includegraphics[width=15cm]{esp8266-esp12e-pinout}
     \caption{Resumen de todas las Entradas/Salidas del ESP12-E \cite{ESP_Pinout}}
     \label{fig:ESP8266_pinout}
 \end{figure}
@@ -119,27 +119,29 @@ Como este proyecto tiene como objetivo independizar el sistema lo máximo posibl
 \section{Diseño final\label{sec:Diseño_final}}
           
 Llegados a este punto se han analizado las características más importantes de cada uno de los elementos presentes en el sistema original, siendo los más importantes las distintas interfaces de comunicación y los pines de programación.
-\\Con esta información ya es posible independizar cada uno de esos elementos y crear un nuevo diseño que cumpla con las especificaciones de este nuevo proyecto.
+\\Con esta información ya es posible independizar cada uno de esos elementos y crear un \textbf{nuevo diseño que cumpla con las especificaciones de este proyecto}.
 
 \begin{figure} [h]
     \centering
-    \includegraphics[width=12cm]{Esquema_proyecto_Javier}
+    \includegraphics[width=13cm]{Esquema_proyecto_Javier}
     \caption{Esquema del proyecto final}
     \label{fig:Esquema_proyecto_Javier}
 \end{figure}
 
-El nuevo sistema estará compuesto por tres partes:
+\clearpage
+
+El nuevo sistema estará compuesto por \textbf{tres partes}:
 \begin{itemize}
-\item En primer lugar etapa de adquisición compuesta de un banco de electrodos con sus correspondientes filtros analógicos y dos \acrshort{ADC}. 
-\item Posteriormente un microcontrolador se encargará de realizar el procesado de la señal y la gestión de los distintos elementos.
-\item Por último la transmisión de datos se realizará de forma inalámbrica a un ordenador u otro dispositivo mediante Bluetooth o WiFi.
+\item En primer lugar etapa de \textbf{adquisición} compuesta de un \textbf{banco de electrodos} con sus correspondientes filtros analógicos y \textbf{dos \acrshort{ADC}}. 
+\item Posteriormente un \textbf{microcontrolador} se encargará de realizar el \textbf{procesado} de la señal y la \textbf{gestión} de los distintos elementos.
+\item Por último la transmisión de datos se realizará de forma \textbf{inalámbrica} a un ordenador u otro dispositivo mediante \textbf{Bluetooth o WiFi}.
 \end{itemize}
 
 Como se puede observar en la figura \ref{fig:Esquema_proyecto_Javier}, el ordenador sigue estando presente en el sistema pero en esta ocasión su función se limita a mostrar la información siendo fácilmente sustituible en un futuro por un dispositivo menos potente y barato. Al utilizar un microcontrolador en la propia placa de adquisición se consigue aumentar la independencia del sistema y se dota de unas características muy interesantes, tanto de procesado de señal como de almacenaje de la misma o gestión del consumo.
 
 \subsection{Selección del microcontrolador\label{sec:Sel_micro}}
 
-El microcontrolador es el núcleo del sistema. Para poder interactuar con todos los elementos anteriormente descritos deberá contar con las siguientes características:
+\textbf{El microcontrolador es el núcleo del sistema}. Para poder interactuar con todos los elementos anteriormente descritos deberá contar con las siguientes características:
 \begin{itemize}
 \item Bajo precio.
 \item Bajo consumo.
@@ -149,33 +151,32 @@ El microcontrolador es el núcleo del sistema. Para poder interactuar con todos 
 
 \end{itemize}
 
-Hay una gran cantidad de microcontroladores en el mercado que podrían utilizarse para este proyecto pero, de entre todos los disponibles, aquellos con arquitectura \textbf{ARM} son los que mejor se adaptan a las especificaciones. Concretamente los más adecuados son aquellos englobados en la familia \textbf{Cortex M4} ya que están especialmente diseñados con \acrshort{DSP} integrado para conseguir un rendimiento máximo minimizando el consumo.
+Hay una gran cantidad de microcontroladores en el mercado que podrían utilizarse para este proyecto pero, de entre todos los disponibles, aquellos con arquitectura \textbf{ARM} son los que mejor se adaptan a las especificaciones. Concretamente los más adecuados son aquellos englobados en la familia \textbf{Cortex M4} ya que están especialmente diseñados con \acrshort{DSP} integrado para conseguir un \textbf{rendimiento máximo minimizando el consumo}.
 
-\begin{figure}[h]
+\begin{figure}[H]
+  \centering
   \begin{subfigure}[b]{0.49\textwidth}
    	\centering
-    \includegraphics [height=2.5cm]{Texas_Instument}
-    \caption{Logo de Texas Instument}
+    \includegraphics [height=1.5cm]{Texas_Instument}
+    \caption{Logo de Texas Instument \cite{Texas_Instrument}}
     \label{fig:Logo_TI}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\textwidth}
   	\centering
-    \includegraphics[height=2.5cm]{STMicroelectronics}
-    \caption{Logo de STMicroelectronics}
+    \includegraphics[height=1.5cm]{STMicroelectronics}
+    \caption{Logo de STMicroelectronics\cite{STMicroelectronic}}
     \label{fig:Logo_STM}
   \end{subfigure}
   \caption{Principales fabricantes contemplados}
 \end{figure}
-
-\clearpage
 
 La tabla \ref{tab:Comparativa_MCU} muestra varios dispositivos de esa familia vendidos por Texas Instrument o STMicroelectronics y un resumen de sus características principales.
 \begin{table} [h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 \hline 
- &\multicolumn{2}{c|}{Texas Instruments}& \multicolumn{2}{c|}{STMicroelectronics} \\ 
+ &\multicolumn{2}{c|}{\textbf{Texas Instruments}}& \multicolumn{2}{c|}{\textbf{STMicroelectronics}} \\ 
 \hline 
  & TM4C123GH6PM & TM4C1294NCPDT & STM32F405& STM32F469  \\ 
 \hline 
@@ -194,12 +195,12 @@ Precio [€] & 8,72 & 12,74 & 9,24 & 13,48 \\
 	\label{tab:Comparativa_MCU}
 \end{table}
 
-Todos los dispositivos anteriormente contemplados tienen \acrshort{DSP} integrados así como una Unidad de Punto Flotante (\acrshort{FPU}) que permite realizar operaciones matemáticas avanzadas de forma óptima.
+Todos los dispositivos anteriormente contemplados tienen \acrshort{DSP} integrados así como una Unidad de Punto Flotante (\acrshort{FPU}) que permite realizar \textbf{operaciones matemáticas avanzadas} de forma óptima.
 
-Entre los dispositivos anteriores, los pertenecientes a la familia STM presentan mejor relación coste/prestaciones, pero el verdadero factor diferenciador son las herramientas dispuestas para la comunidad por parte del fabricante.
-\\En la página web se pueden encontrar distintas aplicaciones y documentación que facilitan sensiblemente el proceso de desarrollo para esta plataforma. 
+Entre los dispositivos anteriores, los pertenecientes a la familia \textbf{STM} presentan mejor relación coste/prestaciones, pero el verdadero factor diferenciador son las herramientas dispuestas para la comunidad por parte del fabricante.
+\\En la página web se pueden encontrar distintas \textbf{aplicaciones} y \textbf{documentación} que facilitan sensiblemente el proceso de desarrollo para esta plataforma. 
 
-Finalmente se seleccionó el \acrshort{MCU} STM32F405 en el formato \acrshort{LQFP64} ya que sus características se ajustan perfectamente a las especificaciones, manteniendo unas muy buenas prestaciones y un precio bastante bajo. Todo esto con el valor añadido de que ya se contaba con la placa de desarrollo STM32F4 Discovery lo cual permitió comenzar con el aprendizaje y estudio del entorno sin la necesidad de esperar al diseño, impresión y soldado de la placa final.
+Finalmente se seleccionó el \textbf{\acrshort{MCU} STM32F405} en el formato \textbf{\acrshort{LQFP64}} ya que sus características se ajustan perfectamente a las especificaciones, manteniendo unas muy buenas prestaciones y un precio bastante bajo. Todo esto con el valor añadido de que ya se contaba con la placa de desarrollo \textbf{STM32F4 Discovery} lo cual permitió comenzar con el aprendizaje y estudio del entorno sin la necesidad de esperar al diseño, impresión y soldado de la placa final.
 
 \begin{figure} [h]
     \centering
@@ -241,14 +242,14 @@ Tras seleccionar todos los elementos se va a proceder a escoger una alimentació
 	\label{tab:Alimentacion}
 \end{table}
 
-De la tabla \ref{tab:Alimentacion} se deduce que para que todos los dispositivos funcionen correctamente será necesario dotar a la placa de 5 voltios con los que se podrá alimentar la parte analógica del ADS así como el USB mientras que la parte digital se puede alimentar en el rango de 3V a 3.6V. 
+De la tabla \ref{tab:Alimentacion} se deduce que para que todos los dispositivos funcionen correctamente \textbf{será necesario dotar a la placa de 5 voltios} con los que se podrá alimentar la parte analógica del ADS así como el USB mientras que la parte digital se puede alimentar en el rango de 3V a 3.6V. 
 
 Por motivos de compatibilidad con el diseño anterior y tras comprobar que se cumple con los requisitos impuestos por los nuevos elementos del sistema se ha optado por mantener el mismo esquema de alimentación que en el proyecto base.
 
 El sistema de alimentación se compone de dos partes principales, cada una encargada de proporcionar el voltaje deseado manteniendo el ruido generado por el mismo al mínimo.
 
 \subsubsection{Alimentación 3.3V\label{sec:Alimentacion_3.3V}}
-Para conseguir un voltaje de 3.3V estable se ha utilizado el regulador AZ1117C-3.3 ya que es capaz de conseguir una precisión para el voltaje de salida del $\pm$1\% así como un ruido de salida de 0.003\% V$_{\text{out}}$ entre 10Hz y 10kHz.
+Para conseguir un voltaje de \textbf{3.3V} estable se ha utilizado el regulador \textbf{AZ1117C-3.3} ya que es capaz de conseguir una precisión para el voltaje de salida del $\pm$1\% así como un ruido de salida de 0.003\% V$_{\text{out}}$ entre 10Hz y 10kHz.
 En la figura \ref{fig:Alim_3.3} se muestra el esquema eléctrico utilizado, que es una variación del circuito recomendado por el fabricante en su \textit{datasheet} \cite{Datasheet_3.3}.
 
 \begin{figure} [h]
@@ -262,7 +263,7 @@ En la figura \ref{fig:Alim_3.3} se muestra el esquema eléctrico utilizado, que 
 
 Los 5V serán utilizados por el dispositivo de almacenamiento USB para su alimentación y por el ADS para generar los distintos voltajes de referencia que necesita para operar correctamente. Al afectar de forma directa a las mediciones realizadas por el ADS la eliminación de variaciones en este voltaje es crucial, pues estas supondrán un ruido añadido a la señal final.
 
-El regulador encargado de proporcionar 5V es el MCP1711. Este integrado está caracterizado por tener un rizado de salida menor al 1\% del voltaje de salida así como de poseer una corriente en reposo muy baja. Este último parámetro facilitará el diseño de un sistema portátil alimentado por baterías aumentando la duración de la misma. La figura \ref{fig:Alim_5} muestra el esquema eléctrico utilizado.
+El regulador encargado de proporcionar \textbf{5V} es el \textbf{MCP1711}. Este integrado está caracterizado por tener un rizado de salida menor al 1\% del voltaje de salida así como de poseer una corriente en reposo muy baja. Este último parámetro facilitará el diseño de un sistema portátil alimentado por baterías aumentando la duración de la misma. La figura \ref{fig:Alim_5} muestra el esquema eléctrico utilizado.
 
 \begin{figure} [h]
     \centering
@@ -274,21 +275,21 @@ El regulador encargado de proporcionar 5V es el MCP1711. Este integrado está ca
 Para funcionar correctamente ambos integrados necesitan que el voltaje de entrada sea superior al voltaje de salida en un factor que en la documentación técnica recibe el nombre de ``\gls{Tension de Dropout}''(V$_{\text{DROP}}$).
 \\De acuerdo al \textit{datasheet} de ambos reguladores, V$_{\text{DROP}}$ es para 3.3V y 5V, 1.3V y 0.43V respectivamente. Con esa información se deduce que el integrado que limita el diseño es el regulador de 5V de modo que con una entrada de al menos 5.43V ambos reguladores deberían funcionar correctamente.
 
-Finalmente se ha optado por una fuente de alimentación de 6V ya que esto permitirá hacer uso de pilas o baterías para alimentar el sistema, dotándolo de independencia de la red eléctrica y eliminando el riesgo de electrocución.
+Finalmente se ha optado por una \textbf{fuente de alimentación de 6V} ya que esto permitirá hacer uso de pilas o baterías para alimentar el sistema, dotándolo de independencia de la red eléctrica y eliminando el riesgo de electrocución.
 
 \clearpage
 
 \section{Circuito electrónico y esquemáticos\label{sec:Esquemáticos}}
 
-El último paso de la fase de desarrollo será generar un esquemático capaz de englobar todos los elementos anteriormente presentados, interconectarlos y dar como resultado un sistema funcional.
+El último paso de la fase de desarrollo será generar un \textbf{esquemático} capaz de englobar todos los elementos anteriormente presentados, interconectarlos y dar como resultado un sistema funcional.
 
 En este punto es importante valorar dos alternativas de diseño, cada una con sus ventajas e inconvenientes: implementación de todo el circuito de cero o crear una placa que se conecte a la ya existente.
 
 Si bien es cierto que para un diseño final crear una placa que englobe todos los componentes sería lo ideal, pues presentaría un formato más compacto y mejor presentación, hacerlo también supone crear una placa más grande y desaprovechar aquellas ya construidas en proyectos anteriores.
 
-Teniendo en cuenta que se cuenta con varias placas ya montadas y que el sistema está en fase de prototipo, se va a optar por la segunda opción, creando una segunda placa independiente en la que se incluirán todos los elementos correspondientes a la gestión de las señales digitales del sistema, dejando las señales analógicas en la otra placa. De esta forma la fase de diseño de la \acrshort{PCB} y de montaje se simplifica considerablemente y se abaratan costes al reutilizarse componentes.
+Teniendo en cuenta que se cuenta con varias tarjetas ya montadas y que el sistema está en fase de prototipo, se va a optar por la segunda opción, creando una \textbf{segunda tarjeta independiente} en la que se incluirán todos los elementos correspondientes a la gestión de las señales digitales del sistema, dejando las señales analógicas en la otra tarjeta. De esta forma la fase de diseño de la \acrshort{PCB} y de montaje se simplifica considerablemente y se \textbf{abaratan costes al reutilizarse componentes}.
 
-Para la conexión con la otra placa se aprovechará el espacio dejado por el módulo ESP12-E, pues al hacer uso de \acrshort{SPI} es posible obtener todas las señales necesarias para interactuar con el ADS.
+Para la conexión con la otra tarjeta se aprovechará el espacio dejado por el módulo ESP12-E, pues para comunicarse con el ADS sólo es necesario el bus \acrshort{SPI} y todas las señales necesarias se encuentran accesibles desde los conectores de dicho módulo.
 
 El sistema embebido en esta placa incluirá los elementos que se pueden ver en la figura \ref{fig:Esquematico_global}
 
@@ -299,7 +300,7 @@ El sistema embebido en esta placa incluirá los elementos que se pueden ver en l
     \label{fig:Esquematico_global}
 \end{figure}
 
-Se ha incluido en la placa un botón de reinicio con su correspondiente circuito electrónico así como una realimentación desde la alimentación hasta uno de los pines \acrshort{ADC} el microcontrolador para poder monitorizar el estado de la batería.
+Se ha incluido en la placa un \textbf{botón de reinicio} con su correspondiente circuito electrónico así como una realimentación desde la alimentación hasta uno de los pines \acrshort{ADC} el microcontrolador para poder \textbf{monitorizar el estado de la batería}.
 
 \subsection{Circuito de alimentación\label{sec:Esquemáticos_alim}}
 
@@ -312,17 +313,17 @@ Aunando los dos circuitos presentados en la sección \ref{sec:Alimentación} el 
     \label{fig:Alim_final}
 \end{figure}
 
-El fusible (F1) garantiza que la máxima corriente que consumirá el dispositivo es de 500mA, evitando así que el sistema o el paciente sufran daños en caso de un cortocircuito. Adicionalmente se ha incluido un diodo \acrshort{LED} cuya función es indicar el estado de la placa. Si la placa ha encendido correctamente o si se encuentra en funcionamiento el \acrshort{LED} se encenderá.
+El \textbf{fusible} (F1) garantiza que la máxima corriente que consumirá el dispositivo es de 500mA, \textbf{evitando} así que el sistema o el paciente sufran \textbf{daños} en caso de un cortocircuito. Adicionalmente se ha incluido un diodo \acrshort{LED} cuya función es indicar el estado de la placa. Si la placa ha encendido correctamente o si se encuentra en funcionamiento el \acrshort{LED} se encenderá.
 
 El diodo (D2) junto con el condensador (C3) evitarán que los transitorios afecten al voltaje de entrada asegurando así que la alimentación que recibirán ambos integrados será lo más estable posible.
 
-Con el objetivo de monitorizar el estado de la batería se ha utilizado el \acrshort{ADC} incorporado en el propio microcontrolador. Como la señal de entrada se encuentra fuera del rango soportado en las especificaciones del STM se ha optado por incorporar las resistencias R2 y R3 formando un divisor de tensión utilizando así la señal resultante para realizar las medidas.
+Con el objetivo de \textbf{monitorizar el estado de la batería} se ha utilizado el \textbf{\acrshort{ADC} incorporado en el propio microcontrolador}. Como la señal de entrada se encuentra fuera del rango soportado en las especificaciones del STM se ha optado por incorporar las resistencias R2 y R3 formando un divisor de tensión utilizando así la señal resultante para realizar las medidas.
 
 \clearpage
 
 \subsection{Microcontrolador\label{sec:Esquemáticos_micro}}
 
-El microcontrolador es el núcleo del sistema. Este hace de centro de control de todas las señales digitales que se transmiten así como de gestor de dispositivos, decidiendo que dispositivos se encuentran activos en cada momento. 
+El \textbf{microcontrolador es el núcleo del sistema}. Este hace de \textbf{centro de control} de todas las señales digitales que se transmiten así como de \textbf{gestor de dispositivos}, decidiendo que dispositivos se encuentran activos en cada momento. 
 Para gestionar que dispositivos se encuentran habilitados se ha sustituido el \textit{jumper} de la placa original por \acrshort{GPIO} del microcontrolador. De esta forma se consigue mayor flexibilidad, automatización y se optimiza el consumo. 
 
 Adicionalmente se ha integrado un \acrshort{LED} conectado al pin PA9 que dotará a la placa de indicadores visuales del estado en el que se encuentra.
@@ -336,14 +337,14 @@ La figura \ref{fig:Esquematico_micro} muestra una representación del integrado 
     \label{fig:Esquematico_micro}
 \end{figure}
 
-El modo de arranque del dispositivo viene determinado por el estado de los pines Boot0 y Boot1. Haciendo uso de las resistencias R13, R14, R15 y R16 se consigue forzar que en condiciones normales de operación el STM arranque desde la memoria Flash integrada. 
-\\Con el objetivo de reprogramar el microcontrolador se ha añadido el conector P5. Dicho conector permite alternar entre los distintos modos de arranque del STM e interactuar con el por UART. Esta última característica será la que permitirá subir el código a ejecutar pero también brinda funciones de \textit{debug}.
+El \textbf{modo de arranque} del dispositivo viene determinado por el estado de los pines Boot0 y Boot1. Haciendo uso de las resistencias R13, R14, R15 y R16 se consigue forzar que en condiciones normales de operación el STM \textbf{arranque desde la memoria Flash integrada}. 
+\\Con el objetivo de \textbf{reprogramar el microcontrolador} se ha añadido el conector P5. Dicho conector permite alternar entre los distintos modos de arranque del STM e interactuar con el por UART. Esta última característica será la que permitirá subir el código a ejecutar pero también brinda funciones de \textit{debug}.
 
 \clearpage
 
-El sistema aprovecha dos de los 3 buses \acrshort{SPI}. El bus SPI1, capaz de transmitir a 41Mb/s se ha reservado para la comunicación ESP12-E $\Longleftrightarrow$ STM32F4 mientras que el utilizado para comunicarse con los ADS es el SPI2 con una velocidad de hasta 21Mb/s.
+El sistema aprovecha dos de los tres buses \acrshort{SPI}. El bus SPI1, capaz de transmitir a 41Mb/s, se ha reservado para la comunicación ESP12-E $\Longleftrightarrow$ STM32F4 mientras que el utilizado para comunicarse con los ADS es el SPI2, con una velocidad de hasta 21Mb/s.
 
-El \acrshort{MCU} puede trabajar con un oscilador interno sin problemas pero la presencia de un oscilador externo basado en un cristal de cuarzo proporciona ciertas ventajas como son mayor precisión en el reloj y la posibilidad de usar \acrshort{PLL} para aumentar la frecuencia de trabajo del procesador.
+Aunque el \acrshort{MCU} puede trabajar con un oscilador interno, se ha optado por la utilización de un \textbf{oscilador externo basado en un cristal de cuarzo}. Esa opción permite una mayor precisión en el reloj y la posibilidad de usar \acrshort{PLL} para aumentar la frecuencia de trabajo del procesador.
 \\El circuito asociado al cristal se puede observar en la parte superior izquierda de la figura \ref{fig:Esquematico_micro} pero se incluye a continuación para facilitar la lectura de este documento:
 
 \begin{figure} [h]
@@ -354,9 +355,9 @@ El \acrshort{MCU} puede trabajar con un oscilador interno sin problemas pero la 
 \end{figure}
 
 
-Para realizar un diseño funcional del circuito del oscilador se ha utilizado el \textit{datasheet} del dispositivo junto con una guía de buenas prácticas \cite{Guia_Oscilador}, ambos proporcionados por el fabricante. La configuración utilizada a nivel de software para la gestión de dicho reloj se explicará en mayor profundidad en el capítulo \ref{sec:Implementacion_soft}.
+Para realizar un diseño óptimo del circuito del oscilador se ha utilizado como orientación la hoja de características del dispositivo junto con una guía de buenas prácticas \cite{Guia_Oscilador}, ambos proporcionados por el fabricante. La configuración utilizada a nivel de software para la gestión de dicho reloj se explicará en mayor profundidad en el capítulo \ref{sec:Implementacion_soft}.
 
-Se han añadido todos los condensadores recomendados por el fabricante. Algunos deben tener una capacidad determinada en función del modo de funcionamiento del microcontrolador (C25 y C26), otros, denominados condensadores de desacoplo, tienen como objetivo eliminar el ruido de altas frecuencias de la zona de alimentación. El condensador C11 es denominado Bulk y su función es garantizar una alimentación lo más estable posible.
+Se han añadido todos los condensadores recomendados por el fabricante. Algunos deben tener una capacidad determinada en función del modo de funcionamiento del microcontrolador (C25 y C26), otros, denominados \textbf{condensadores de desacoplo}, tienen como objetivo eliminar el ruido de altas frecuencias de la zona de alimentación. Un condensador a resaltar es el C11, denominado \textbf{\textit{Bulk}} y su función es garantizar una alimentación lo más estable posible.
 
 \begin{figure} [h]
     \centering
@@ -365,13 +366,13 @@ Se han añadido todos los condensadores recomendados por el fabricante. Algunos 
     \label{fig:Condensadores_micro}
 \end{figure}
 
- Por simplicidad y legibilidad se han agrupado todos en una zona del esquemático pero a la hora de diseñar la PCB será necesario tener presente que para que el dispositivo funcione correctamente estos últimos deben localizarse lo más cerca posible de los pines de alimentación.
+ Por simplicidad y legibilidad se han agrupado todos los condensadores en una zona del esquemático, pero a la hora de diseñar la PCB será necesario tener presente que para que el dispositivo funcione correctamente estos últimos \textbf{deben localizarse lo más cerca posible de los pines de alimentación}.
 
 Finalmente, como el \acrshort{MCU} tiene la capacidad de interactuar directamente con dispositivos \acrshort{USB}, con el objetivo de implementar en un futuro características que aprovechen dicha capacidad se ha añadido un conector \acrshort{USB} cuyo bus de alimentación se encuentra controlado por el propio \acrshort{MCU}. De esta forma es posible habilitar y deshabilitar el dispositivo USB y reducir el consumo.
 
 \subsection{Interfaz inalámbrica\label{sec:Esquematico_inalambrica}}
 
-En comparación con el STM, los esquemáticos necesarios para hacer funcionar los dos microcontroladores encargados de transmitir la información a través de WiFi y Bluetooth son bastante sencillos.
+Para finalizar con la parte del diseño, se incluirá una explicación de los esquemáticos necesarios para hacer funcionar los dos microcontroladores encargados de transmitir la información a través de Wifi y Bluetooth.
 
 \subsubsection{ESP12-E\label{sec:Esquematico_ESP}}
 
@@ -384,12 +385,12 @@ El ESP necesita, al igual que el STM, condensadores Bulk y de desacoplo. Ambos s
     \label{fig:Esquematico_ESP}
 \end{figure}
 
-La resistencia R10 fuerza al ESP a estar en un estado activo salvo que a través del pin ``EN\_WIFI'' el STM lo desactive. 
-\\El modo de arranque del STM viene definido por la resistencia R8 junto con el conector P4. Dicho conector permite poner el ESP en modo programación con sólo cortocircuitar los pines 6 y 8 e incluye acceso al bus UART a través de los pines 3 y 5.
+La resistencia R10 fuerza al ESP a estar en un estado activo salvo que el STM (Máster del sistema) lo deshabilite haciendo uso del pin ``EN\_WIFI''. 
+\\El modo de arranque del ESP viene definido por la resistencia R8 junto con el conector P4. Para poder ponerlo en modo programación sólo será necesario cortocircuitar los pines 6 y 8. El acceso al bus UART se realizará a través de los pines 3 y 5.
 
 \subsubsection{Bluetooth Simblee\label{sec:Esquematico_BT}}
 
-Para el dispositivo Bluetooth se ha habilitado otro conector de programación. En esta ocasión con los pines 2, 3 y 4 es suficiente ya que el \acrshort{IDE} de Arduino se encarga de gestionar el estado de los pines para forzar el modo programación.
+Para el dispositivo Bluetooth se ha incluido otro conector de programación. En esta ocasión sólo serán necesarios los pines 2, 3 y 4 para la programación ya que el \acrshort{IDE} de Arduino se encargará de la gestión de los diferentes modos de arranque el dispositivo.
 
 \begin{figure} [h]
     \centering
@@ -398,8 +399,8 @@ Para el dispositivo Bluetooth se ha habilitado otro conector de programación. E
     \label{fig:Esquematico_BT}
 \end{figure}
 
-Se han habilitado los pines relacionados con el bus \acrshort{SPI} así como los de DRDY y START, encargados de gestionar la transmisión de datos.
+El bus \acrshort{SPI} así como los de DRDY y START han sido conectados al STM ya que dichas conexiones serán necesarias para la transmisión de datos entre el STM y el módulo Bluetooth.
 
-En esta ocasión se ha dejado sólo un condensador de desacoplo ,pues los de Bulk dispuestos para los otros dispositivos suplen la necesidad de utilizar otro para este.
+En esta ocasión se ha dejado sólo un condensador de desacoplo dado que los de \textit{Bulk} dispuestos para los otros dispositivos suplen la necesidad de utilizar otro para este.
 
-Todos los esquemáticos presentados a lo largo de este apartado han sido generados haciendo uso de la herramienta Kicad. Al ser un esquemático su lectura e interpretación es independiente de la herramienta salvo por el caso del elemento ``PWR\_FLAG'' presente en algunas figuras. Dicho elemento es característico de esta herramienta y sive para evitar errores, ya que todos los pines categorizados como pines de alimentación que no lleven un ``PWR\_FLAG'' provocarán una alerta al compilar y generar el esquemático.
+Todos los esquemáticos presentados a lo largo de este capítulo han sido generados haciendo uso de la herramienta KiCad. Al ser un esquemático, su lectura e interpretación es independiente de la herramienta siendo el elemento ``PWR\_FLAG'' (presente en algunas figuras) el único exclusivo de dicha herramienta. Este elemento sive para evitar errores, ya que todos los pines categorizados como pines de alimentación que no lleven un ``PWR\_FLAG'' provocarán una alerta al compilar y generar el esquemático. 

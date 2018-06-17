@@ -1,20 +1,20 @@
 \chapter{Implementación de la PCB\label{sec:Implementacion_PCB}}
 
-En el diseño e implementación de la \acrshort{PCB} es muy importante tener presente que cualquier fallo a nivel de hardware supone una gran pérdida de tiempo y, por lo tanto, dinero. Desde que el diseño es terminado y se manda a producir la placa hasta que esta se recibe transcurre una media de dos semanas . Perder esa cantidad de tiempo por un fallo de diseño a nivel docente supone, en el peor de los casos, no entregar el proyecto en la fecha acordada pero a nivel empresarial puede significar perder la exclusividad del diseño cuando se compite con otras compañías. 
+En el diseño e implementación de la \acrshort{PCB} es muy importante tener presente que cualquier fallo a nivel de hardware supone una gran pérdida de tiempo y, por lo tanto, dinero. Desde que el diseño es terminado y se manda a producir la placa hasta que esta se recibe transcurre una media de dos semanas . Perder esa cantidad de tiempo por un fallo de diseño a nivel docente supone, en el peor de los casos, no entregar el proyecto en la fecha acordada, pero a nivel empresarial puede significar perder la exclusividad del diseño cuando se compite con otras compañías. 
 
-Las revisiones manuales permiten evitar ciertos errores pero una buena herramienta bien configurada contribuye a prevenir dichos errores desde el principio. Como ya se ha mencionado en el capítulo \ref{sec:Diseno}, para la realización de este proyecto se ha utilizado la herramienta KiCad, no sólo por ser Software Libre sino porque presenta ciertas características muy interesantes:
+En el diseño es muy importante revisar cualquier tipo de error con el fin de evitar retrasos en la entrega de proyectos. Una revisión manual puede evitar parte de ellos pero la utilización de una buena herramienta bien configurada contribuye a la realización de esta tarea de una manera más rápida y eficaz. Como ya se ha mencionado en el capítulo \ref{sec:Diseno}, para la realización de este proyecto se ha utilizado la herramienta KiCad, no sólo por ser Software Libre sino porque presenta ciertas ventajas o características muy interesantes:
 \begin{itemize}
 \item \textbf{Entorno de desarrollo integrado:}
-\\Desde la propia herramienta se pueden hacer los esquemáticos, definir los componenes y librerías e incluso diseñar y previsualizar la \acrshort{PCB}.
+\\Desde la propia herramienta se pueden hacer los esquemáticos, definir los componenes y librerías e, incluso, diseñar y previsualizar la \acrshort{PCB}.
 \item \textbf{Multiplataforma:}
 \\Disponible en Windows, Linux y Mac OS.
 \item \textbf{Respaldado por una gran comunidad} 
-\\Kicad tiene una gran comunidad que deja a disposición de los usuarios una documentación muy extensa.
+\\KiCad tiene una gran comunidad que deja a disposición de los usuarios una documentación muy extensa.
 \item \textbf{Constante desarrollo}
 \\Se liberan actualizaciones con regularidad.
 \end{itemize}
 
-Tras instalar y configurar KiCad, al abrir la herramienta se carga un gestor de proyectos desde el que se puede gestionar un gran número de elementos. La figura \ref{fig:Front_end_Kicad} muestra a modo de ejemplo el estado de KiCad al final del proyecto.
+Al abrir la herramienta se carga un gestor de proyectos desde el que se puede gestionar un gran número de elementos.
 
 \begin{figure} [h]
     \centering
@@ -23,17 +23,17 @@ Tras instalar y configurar KiCad, al abrir la herramienta se carga un gestor de 
     \label{fig:Front_end_Kicad}
 \end{figure}
 
-Como se puede observar en la imagen, a la izquierda aparecen todos los archivos pertenecientes al proyecto mientras que en la parte superior hay un acceso directo a las distintas partes que componen KiCad (gestor de esquemáticos, librerías, modelos 3D, etc).
+Como se puede observar en la imagen, a la izquierda aparecen todos los archivos pertenecientes al proyecto mientras que en la parte superior hay un acceso directo a las distintas partes que componen la herramienta (gestor de esquemáticos, librerías, modelos 3D, etc).
 
-Durante la fase de diseño y realización del esquemático, cada componente fue seleccionado de entre los disponibles preinstalados con la herramienta. Aunque los componentes más comunes como son las resistencias o los condensadores se pueden encontrar sin problemas, para trabajar con otros componentes como el ESP ha sido necesario crear una librería propia. Más adelante, cuando las especificaciones de diseño se hayan definido, se enlazará el símbolo que representa cada componente con el elemento físico que estará presente en la \acrshort{PCB}, es decir, su \textit{footprint} y su modelo 3D.
+Durante la fase de diseño y realización del esquemático, cada componente fue seleccionado de entre los disponibles preinstalados en KiCad. Aunque los componentes más comunes como son las resistencias o los condensadores se pueden encontrar sin problemas, para trabajar con otros componentes como el ESP ha sido necesario crear una librería propia. Más adelante, cuando las especificaciones de diseño se hayan definido, se enlazará el símbolo que representa cada componente con el elemento físico que estará presente en la \acrshort{PCB}, es decir, su \textit{footprint} y su modelo 3D.
 
 \section{Limitaciones del fabricante\label{sec:ITEAD_PCB}}
 
-El diseño de la \acrshort{PCB} tiene ciertas restricciones, algunas impuestas por el propio diseño del circuito (tipo de componentes, número de pistas, tamaño final, etc.), otras, como las tratadas en esta sección, serán impuestas por el propio fabricante de \acrshort{PCB}s.
+El diseño de la \acrshort{PCB} tiene ciertas \textbf{restricciones}, algunas impuestas por el propio diseño del circuito (tipo de componentes, número de pistas, tamaño final, etc.), otras, como las tratadas en esta sección, serán \textbf{impuestas por el propio fabricante de \acrshort{PCB}s}.
 
-La mayoría de empresas fabricantes de PCBs del mercado dejan a disposición de sus clientes un listado de las limitaciones con las que cuentan, garantizando que cualquier diseño que se adecue a dichas especificaciones será impreso sin problemas. 
+La mayoría de empresas fabricantes de PCBs del mercado dejan a disposición de sus clientes un listado de las limitaciones con las que cuentan, garantizando que cualquier diseño que se adecue a ellas será impreso correctamente. 
 
-De entre las disponibles en Internet se seleccionó la compañía ITEAD por presentar una buena relación prestaciones/precio, haberse contratado sus servicios previamente y un buen tiempo desde la impresión hasta la recepción de la placa.
+De entre las disponibles en el mercado se seleccionó la compañía ITEAD por presentar una buena relación prestaciones/precio, un tiempo de impresión y envío bajo y haberse contratado sus servicios con anterioridad.
 
 En su página web \cite{ITEAD_PCB_Limitations}, ITEAD ha preparado una tabla con un resumen de las características con las que se puede contar si se imprime una \acrshort{PCB} en condiciones normales. Dicha tabla se recoge a continuación:
 
@@ -101,7 +101,7 @@ Silkscreen line width (mim) &	6mil \\
 
 Aunque la lista de restricciones parece alta, la mayoría de ellas no supone un problema para un proyecto de estas dimensiones. Para comprobar si esta afirmación es correcta bastará con comprobar si la característica más restrictiva se cumple, es decir, comparar la separación mínima de los pads del módulo Bluetooth con la separación mínima entre conductores, denominada en la tabla \ref{tab:ITEAD} como \textit{Conductor Space}. De acuerdo a su \textit{datasheet}, la separación entre pines de este componente es de 9.84 mil (0.25 mm), valor muy superior a los 8 mil (0.2 mm) recomendados por el fabricante.
 \clearpage
-Adicionalmente, informan de que la utilización de \textit{Buried vias} y \textit{Blind vias} no es posible por el momento. En la figura \ref{fig:ITEAD_vias}, proporcionada por ITEAD en su página web, se ilustra como es cada tipo de vía.
+Adicionalmente, informan de que la utilización de \textit{Buried vias} y \textit{Blind vias} no es posible por el momento.
 
 \begin{figure} [h]
     \centering
@@ -110,7 +110,7 @@ Adicionalmente, informan de que la utilización de \textit{Buried vias} y \texti
     \label{fig:ITEAD_vias}
 \end{figure}
 
-Con toda la información recopilada hasta el momento ya es posible configurar KiCad para forzar que dichas restricciones se cumplan en todo momento. El menú ``\textit{Design Rules}'' permite configurar estos parámetros (ver fig. \ref{fig:Design_rules_general}) así como realizar ciertos ajustes dependiendo de la función que tendrá cada pista ( ver fig. \ref{fig:Design_rules_especial}).
+Con toda la información recopilada hasta el momento ya es posible configurar KiCad para forzar que dichas restricciones se cumplan en todo momento. El menú ``\textit{Design Rules}'' permite configurar estos parámetros (ver fig. \ref{fig:Design_rules_general}) así como realizar ciertos ajustes dependiendo de la función que tendrá cada pista (ver fig. \ref{fig:Design_rules_especial}).
 
 \begin{figure}[h]
   \begin{subfigure}[b]{8cm}
@@ -126,11 +126,9 @@ Con toda la información recopilada hasta el momento ya es posible configurar Ki
     \caption{Reglas de diseño en KiCad}
     \label{fig:Design_rules_general}
   \end{subfigure}
-  \caption{Reglas de diseño en KiCad}
+  \caption{Reglas de diseño en KiCad cumpliendo las restricciones de ITEAD}
   \label{fig:Design_rules}
 \end{figure}
-
- En la figura \ref{fig:Design_rules} se puede observar como las restricciones de diseño anteriomente mencionadas ya se encuentran aplicadas.
 
 \clearpage
 
@@ -140,9 +138,9 @@ Aunque en el esquemático se escogieron los valores de todos los componentes, a 
 
 Utilizar componentes en el formato \acrshort{THT} puede suponer una ventaja las primeras veces que se realiza una soldadura o al trabajar con electrónica de potencia. En ambos casos se aprovecha el grosor del conector y el hecho de que atraviese la placa para dar mayor comodidad al técnico y disminuir la resistividad de la unión respectivamente. 
 \\Por desgracia, al trabajar con electrónica digital o analógica que no involucra alta potencia, la utilización de dichos componentes limita el diseño e impone restricciones que mediante \acrshort{SMT} se evitan con relativa facilidad. Un claro ejemplo es la imposibilidad de enrutar pistas bajo los conectores de dichos componentes \acrshort{THT}.
-\\A lo largo del diseño de la \acrshort{PCB} se seleccionará en la medida de lo posible componentes en su formato \acrshort{SMT}.
+\\A lo largo del diseño de la \acrshort{PCB} se seleccionará en la medida de lo posible componentes en su formato \textbf{\acrshort{SMT}} ya que además introducen menos ruido en el circuito.
 
-Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de 0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm) ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales, y por otro, son medidas muy comunes, facilitándose de esta forma la localización de componentes así como distribuidores primarios y secundarios.
+Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de \textbf{0603 con medidas de 0.063'' x 0.031'' (1,6 mm x 0,8 mm)} ya que, por un lado permiten su manejo y soldado sin necesidad de herramientas especiales y, por otro, son medidas muy comunes facilitando la localización de componentes así como de distribuidores primarios y secundarios.
 
 \begin{figure} [h]
     \centering
@@ -151,14 +149,14 @@ Por simplicidad y comodidad se ha escogido trabajar con una tamaño estándar de
     \label{fig:0603}
 \end{figure}
 
-\subsection{Asignación de footprint\label{sec:Enlazado}}
+\subsection{Asignación de \textit{footprint}\label{sec:Enlazado}}
 
-Tras decidir el tamaño de los componentes ha llegado el momento de enlazar cada uno de los símbolos presentes en el esquemático que se generó al comienzo del proyecto con un componente que contenga un \textit{footprint} y, opcionalmente, un modelo 3D asociado.
+Tras decidir el tamaño de los componentes se debe \textbf{enlazar} cada uno de los \textbf{símbolos} presentes en el \textbf{esquemático} que se generó al comienzo del proyecto su \textbf{\textit{footprint}} correspondiente. Adicionalmente pueden añadirse \textbf{modelos 3D} para una visualización más realista del acabado final.
 
-Si bien el segundo elemento no es normalmente necesario el primero resulta imprescindible, pues contiene información básica sobre el componente (número de pads y conexiones, tamaño real, serigrafías, etc). 
+Si bien el segundo elemento no es normalmente necesario, el primero resulta imprescindible pues contiene información básica sobre el componente (número de pads y conexiones, tamaño real, serigrafías, etc). 
 
-Como ya se ha mencionado anteriormente, KiCad se caracteriza por tener una gran comunidad que lo respalda. Esto se traduce en que la mayoría de los componentes del mercado ya han sido incluidos en librerías de código abierto disponibles en Internet, lo cual supone un ahorro considerable de tiempo de cara a este o futuros proyectos. 
-Por desgracia esto no es siempre suficiente de modo que KiCad ha sido diseñado para, en caso de ser necesario, crear una librería en la que almacenar los \textit{footprints}, serigrafías y modelos 3D que hagan falta, conteniendo las herramientas con las que crear o editar uno ya existente para adaptarlo a las necesidades del proyecto.
+Como ya se ha mencionado anteriormente, KiCad se caracteriza por tener una gran comunidad que lo respalda. Esto se traduce en que la mayoría de los componentes del mercado ya han sido incluidos en \textbf{librerías de código abierto} disponibles en Internet, lo cual supone un ahorro considerable de tiempo de cara a este o futuros proyectos. 
+Por desgracia esto no es siempre suficiente por lo que KiCad ha sido diseñado para, en caso de ser necesario, crear una librería en la que almacenar los \textit{footprints}, serigrafías y \textbf{modelos 3D propios}, conteniendo las \textbf{herramientas con las que crear o editar} uno ya existente para adaptarlo a las necesidades del proyecto.
 
 \begin{figure} [h]
     \centering
@@ -172,7 +170,7 @@ La asociación se realiza con el complemento CvPcb, accesible desde Eeschema. La
 
 \clearpage
 
-A la izquierda aparecen todas las librerías disponibles, en la columna central los componentes de este proyecto y a la derecha los footprints contenidos en la librería seleccionada en la columna izquierda.
+En la imagen \ref{fig:cvpcb} se puede observar a la izquierda las librerías disponibles, en la columna central los componentes de este proyecto y a la derecha los \textit{footprints} contenidos en la librería seleccionada en la columna izquierda.
 
 \begin{figure} [h]
     \centering
@@ -181,31 +179,31 @@ A la izquierda aparecen todas las librerías disponibles, en la columna central 
     \label{fig:cvpcb}
 \end{figure}
 
-Es posible realizar búsquedas para agilizar el proceso haciendo uso de los tres botones situados en la parte superior derecha. De izquierda a derecha permiten filtrar por palabras clave extraídas del componente, por número de pines y por librería activa.
+Para agilizar el proceso es posible realizar \textbf{búsquedas} de componentes, \textit{footprints} y librerías haciendo uso de los tres botones situados en la parte superior derecha. De izquierda a derecha permiten \textbf{filtrar} por \textbf{palabras clave} extraídas del componente, por \textbf{número de pines} y por \textbf{librería activa}.
 
 \clearpage
 
 \section{PCBnew\label{sec:PCBnew}}
 
-Eeschema da como salida dos tipos de archivos que representan la interconexión del los elementos del circuito. Por un lado, un archivo PDF destinado a su lectura por humanos, por otro, un fichero en formato NET. Este último será el fichero de entrada de la herramienta de diseño de \acrshort{PCB} denominada PCBnew. 
+\textbf{Eeschema} da como salida dos tipos de archivos que representan la interconexión del los elementos del circuito. Por un lado, un archivo PDF destinado a su lectura por humanos, por otro, un fichero en formato NET. Este último será el fichero de entrada de la herramienta de diseño de \acrshort{PCB} denominada \textbf{PCBnew}. 
 
 \begin{figure} [h]
     \centering
     \includegraphics[width=16cm]{pcbnew}
-    \caption{Herramienta PCBnew tras finalizar el proyecto}
+    \caption{Panel principal de la herramienta PCBnew}
     \label{fig:pcbnew_1}
 \end{figure}
 
-Tras cargar el .net todos los componentes aparecen representados en la zona de trabajo. Cada uno de los conectores muestra una línea que indica a que otros dispositivos se debe conectar para que el la netlist se generada por Eeschema se cumpla.
+Tras cargar el .net todos los componentes aparecen representados en la zona de trabajo. Cada uno de los conectores muestra una línea que indica a que otros dispositivos se debe conectar para que el la \textit{netlist} se generada por Eeschema se cumpla.
 
-Para proyectos de menor envergadura como este, la disposición de los elementos se puede realizar de forma manual, pero KiCad está pensado para poder trabajar con diseños de miles de componentes. En estos casos es posible utilizar la propia disposición automática de KiCad o importar la disposición de herramientas externas como FreeRoute.
+Para proyectos de menor envergadura como este, la disposición de los \textbf{elementos} se puede realizar de \textbf{forma manual}, pero KiCad está pensado para poder trabajar con diseños de miles de componentes. En estos casos es posible utilizar la propia \textbf{disposición automática} de KiCad o importar la disposición de herramientas externas como \textbf{FreeRoute}.
 
-Una vez todos los componentes se encuentran posicionados, es el momento de conectarlos entre ellos. Con este objetivo se utiliza el trazado de las pistas. Como ya se había mencionado, las características de las pistas vendrán determinadas por las reglas de diseño y el tipo de red al que pertenece (por defecto, de alimentación, de tierra, etc).
+Una vez posicionados todos los componentes se deben realizar las interconexiones definidas en el esquemático. Con este \textbf{objetivo} se utiliza el \textbf{trazado de las pistas}. Como ya se había mencionado, las características de las pistas vendrán determinadas por las reglas de diseño y el tipo de red al que pertenece (por defecto, de alimentación, de tierra, etc).
 
-Para aquellos puntos comunes a varios dispositivos como son GND o Vcc es posible definir planos. La definición de planos permite, además de ahorrar el trazado de un gran número de pistas, disminuir la resistividad de una conexión, consiguiéndose así que el voltaje sea lo más parecido posible en todo el sistema.
-\\La definición de un plano no imposibilita el trazado de una pista que lo atraviese. Todas las pistas que atraviesan un plano son protegidas con una zona de guarda sin cobre que evita cortocircuitos y cuyo grosor viene definido en las reglas de diseño.
+Para aquellos puntos comunes a varios dispositivos como son \textbf{GND} o \textbf{Vcc} es posible definir \textbf{planos}. La definición de planos permite, además de ahorrar el trazado de un gran número de pistas, \textbf{disminuir la resistividad de una conexión}, consiguiéndose así que el voltaje sea lo más uniforme posible en todo el sistema.
+\\La definición de un plano no imposibilita el trazado de una pista que lo atraviese. Aquellas pistas que atraviesan un plano son protegidas con una \textbf{zona de guarda} sin cobre que evita cortocircuitos y cuyo grosor viene definido en las reglas de diseño.
 
-En ocasiones será necesario forzar que una parte de la placa no contenga ningún elemento conductor, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{keep out area}''. Al contrario que los planos normales, las pistas no pueden atravesarlos.
+En ocasiones será necesario forzar que una parte de la placa no contenga ningún \textbf{elemento conductor}, bien para evitar apantallamientos como en el caso de las antenas, bien para forzar aislamientos entre dos zonas. Para estos casos se puede definir un plano especial denominado ``\textit{\textbf{keep out area}}''. Al contrario que los planos normales, \textbf{las pistas no pueden atravesarlos}.
 
 \begin{figure} [H]
     \centering
@@ -214,13 +212,13 @@ En ocasiones será necesario forzar que una parte de la placa no contenga ningú
     \label{fig:PCB_zonas_y_pistas}
 \end{figure}
 
-En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos, que unos elementos acaban afectando a la visibilidad y ocultando otros. Para evitar estos problemas, en la parte derecha hay habilitado un panel que permite activar o desactivar el renderizado de ciertos objetos. Es posible ocultar cualquier grupo de elementos: planos, serigrafías, componentes, etc.
+En ocasiones el propio sistema puede incluir tantos componentes, pistas y planos que unos elementos acaban afectando a la visibilidad. Para evitar estos problemas, en la parte derecha del panel principal de PCBNew hay habilitado un panel que permite activar o desactivar el \textbf{renderizado} de ciertos objetos. Es posible \textbf{ocultar} cualquier \textbf{grupo de elementos}: planos, serigrafías, componentes, etc.
  
 \clearpage 
  
 \section{Diseño final de la PCB\label{sec:PCB_final}}
 
-El sistema seguido para la disposición de componentes en la \acrshort{PCB} ha venido determinado en gran medida por la disposición de componentes en la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de alimentar el sistema ha sido situada en la zona superior izquierda de la placa. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida con esta premisa en mente. Una los elementos más problemáticos han sido situados el resto de los componentes se han posicionado intentando mantener el número de cruces de pistas al mínimo.
+El sistema seguido para la \textbf{distribución de componentes en la \acrshort{PCB}} ha venido determinado en gran medida por la disposición de componentes de la tarjeta con la que deberá comunicarse. Con el objetivo de minimizar la distancia entre los conectores de ambas placas, la zona encargada de \textbf{alimentar el sistema} ha sido situada en la \textbf{zona superior derecha de la placa}. La localización del conector que transmitirá las señales a la tarjeta de adquisición también ha sido escogida siguiendo esta premisa. Tras posicionar los elementos más problemáticos, el resto de los componentes se han distribuido de manera que el número de cruces sea mínimo, evitando así en la medida de lo posible la interferencia entre pistas y simplificando la \acrshort{PCB}.
 
 \begin{figure} [H]
     \centering
@@ -229,13 +227,13 @@ El sistema seguido para la disposición de componentes en la \acrshort{PCB} ha v
     \label{fig:Esquema_PCB}
 \end{figure}
 
-En las siguientes secciones se explicará con más detalle cada una de las partes de la \acrshort{PCB}, haciendo una división en los tres grandes grupos que la componen: alimentación (rojo), microcontrolador (blanco) e interfaz inalámbrica (azul).
+En las siguientes secciones se explicará con más detalle cada una de las partes de la \acrshort{PCB}, haciendo una división en los tres grandes grupos que la componen: \textbf{alimentación} (rojo), \textbf{microcontrolador} (blanco) e \textbf{interfaz inalámbrica} (azul).
 
 \clearpage
 
 \subsection{Alimentación\label{sec:PCB_alimentacion}}
 
-La alimentación, ha sido agrupada para facilitar la localización de errores asociados a la misma a la vez que se simplifica la conexión con la tarjeta de adquisición. Los conectores se han situado en lugares en los que resulte cómodo realizar la interconexión a la par que se mantiene al mínimo el cable necesario para ello. Se ha posicionado el fusible de tal forma que en caso de ser necesaria su sustitución haya disponible suficiente espacio para maniobrar con comodidad.
+La \textbf{alimentación} ha sido agrupada para facilitar la \textbf{depuración de errores} y la sustitución de componentes así como la simplificación de la conexión con la tarjeta de adquisición. Los conectores se han posicionado en lugares en los que resulte cómodo realizar la interconexión a la par que se mantiene al mínimo la cantidad de cable necesario para ello. Se ha situado el fusible de tal forma que en caso de ser necesaria su sustitución haya disponible suficiente espacio para maniobrar con comodidad.
 
 \begin{figure} [h]
     \centering
@@ -246,9 +244,9 @@ La alimentación, ha sido agrupada para facilitar la localización de errores as
 
 \subsection{Microcontrolador\label{sec:PCB_micro}}
 
-Durante el posicionado del microcontrolador es muy importante tener en cuenta las restricciones impuestas por el fabricante, pues algunas de estas no se ven reflejadas en la \textit{netlist} ni en el esquemático. Los condensadores, tanto de desacoplo como bulk, han sido colocados lo más cerca posible de los pines de alimentación para asegurar el correcto funcionamiento del microcontrolador.
+Durante el posicionado del microcontrolador es muy importante tener en cuenta las restricciones impuestas por el fabricante, pues algunas de estas no se ven reflejadas en la \textit{netlist} ni en el esquemático. Los \textbf{condensadores}, tanto de desacoplo como \textit{Bulk}, han sido \textbf{colocados lo más cerca posible de los pines de alimentación} para asegurar el correcto funcionamiento del microcontrolador.
 
-STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño, sino que propone pautas a la hora de disponer los componentes en la PBC. Algunas de las recomendaciones son aislar el circuito del oscilador del resto de la placa con un plano de tierra, forzar una distribución de los componentes lo más simétrica posible y, al igual que con los condensadores, colocar el circuito lo más cerca posible de los pines del microcontrolador.
+STM Electronics ha puesto a disposición de sus clientes un manual para el correcto diseño y puesta a punto del circuito resonador de un microcontrolador. Este documento no sólo recomienda los valores de los componentes a utilizar en dicho diseño, sino que propone pautas a la hora de disponer los componentes en la PBC. Algunas de las recomendaciones son \textbf{aislar el circuito del oscilador} del resto de la placa con un plano de tierra, forzar una \textbf{distribución} de los componentes lo más \textbf{simétrica} posible y, al igual que con los condensadores, \textbf{colocar el circuito lo más cerca posible de los pines} del microcontrolador.
 
 \clearpage
 
@@ -259,11 +257,11 @@ STM Electronics ha puesto a disposición de sus clientes un manual para el corre
     \label{fig:Detalle_micro}
 \end{figure}
 
-Se ha dotado a la placa de un circuito que fuerza el reinicio del controlador. Dicho circuito será especialmente útil posteriormente ya que, si este se programa correctamente, permitirá reiniciar todos los microcontroladores simultáneamente. Adicionalmente, durante el desarrollo del firmware del microcontrolador, se podrá forzar su arranque en modo reprogramación sin necesidad de recurrir a cortar la alimentación de todo el sistema.
+Se ha dotado a la placa de un circuito que fuerza el \textbf{reinicio del microcontrolador}. Dicho circuito será especialmente útil posteriormente ya que, si este se programa correctamente, permitirá reiniciar \textbf{todos los microcontroladores simultáneamente}. Adicionalmente, durante el desarrollo del firmware del microcontrolador, se podrá forzar su \textbf{arranque en modo reprogramación} sin necesidad de recurrir a cortar la alimentación de todo el sistema.
 
 \subsection{Interfaz inalámbrica\label{sec:PCB_inalambrica}}
 
-La zona de la \acrshort{PCB} que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las antenas de los distintos módulos se quedan en la zona exterior de la placa. Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{keep out area}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
+La zona de la \acrshort{PCB} que corresponde a la interfaz inalámbrica ha sido configurada de tal forma que las \textbf{antenas} de los distintos módulos se quedan en la \textbf{zona exterior} de la placa. Además, para evitar apantallamientos, el plano que se encuentra bajo dichas antenas ha sido eliminado usando una ``\textit{\textbf{keep out area}}''. Ambos módulos están formados por microcontroladores de menor potencia que el presente en el STM de modo que los distintos condensadores de desacoplo y \textit{bulk} han sido dispuestos de forma similar.
 
 La localización de los conectores de programación de ambos módulos ha venido determinada por la posición de sus correspondientes pines. El objetivo ha sido aproximarlos al módulo correspondiente sin que por ello se produzcan cruces entre pistas. Al presentar unas restricciones de diseño leves por parte del fabricante, ha sido posible en ocasiones trazar pistas entre los pines del ESP lo cual ha facilitado sensiblemente la tarea de trazado de rutas y disposición de componentes.
 
@@ -276,9 +274,9 @@ La localización de los conectores de programación de ambos módulos ha venido 
     \label{fig:Detalle_inalambrica}
 \end{figure}
 
-Finalmente se han interconectado ambos módulos a través del bus SPI compartido así como con el microcontrolador y la alimentación. Con el objetivo de eliminar pistas y de unificar la alimentación se ha definido un plano de 3.3V en la parte superior de la placa y un plano de GND en la parte inferior. 
+Finalmente se han interconectado ambos módulos a través del \textbf{bus SPI compartido} así como con el microcontrolador y la alimentación. Con el objetivo de eliminar pistas y de unificar la alimentación se ha definido un \textbf{plano de 3.3V} en la parte superior de la placa y un plano de GND en la parte inferior. 
 
-Por desgracia, debido a la complejidad del diseño y a la cantidad de pistas trazadas, no todas las conexiones entre los elementos se han podido realizar en la capa superior. Por este motivo ha sido necesario hacer uso de vías, puentes y otras técnicas comunes en placas de dos o más capas.
+Por desgracia, debido a la complejidad del diseño y a la cantidad de pistas trazadas, no todas las conexiones entre los elementos se han podido realizar en la capa superior. Por este motivo ha sido necesario realizar una PCB con varias capas y hacer uso de vías, puentes y otras técnicas afines. 
 
 \clearpage
 
@@ -308,7 +306,7 @@ El resultado es bastante positivo. Al haberse respetado todas las restricciones 
 
 Aquellas zonas en las que no hay conductor en ninguno de los planos aún presenta un soporte físico de fibra de vidrio para dotar de consistencia a la placa.
 
-La serigrafía que acompaña a los componentes así como la generada manualmente se aprecia con mayor claridad incluso que en la previsualización generada por KiCad.
+La \textbf{serigrafía} que acompaña a los componentes así como la generada manualmente se aprecia con mayor \textbf{claridad} incluso que en la previsualización generada por KiCad.
 
 \clearpage
 
@@ -330,14 +328,17 @@ La serigrafía que acompaña a los componentes así como la generada manualmente
   \label{fig:PCB_Back_completa}
 \end{figure}
 
-Como se puede observar, la impresión real se encuentra en modo espejo con el \textit{layout} de KiCad de la capa inferior. Este fenómeno ocurre debido a  al trabajar con la capa inferior en KiCad se mantiene la vista cenital y las capas superiores simplemente no se renderizan. Con esto se consigue facilitar el proceso de diseño, no sólo por mantener un punto de referencia constante, sino porque al trazar pistas se puede pasar con comodidad entre unas capas y otras sin tener que cambiar el modo de vista.
+Como se puede observar, la impresión real se encuentra en \textbf{modo espejo} con el \textit{layout} de KiCad de la capa inferior. Este fenómeno ocurre debido a  al trabajar con la capa inferior en KiCad se mantiene la \textbf{vista cenital} y las capas superiores simplemente no se \textbf{renderizan}. Con esto se consigue facilitar el proceso de diseño, no sólo por mantener un punto de referencia constante, sino porque al trazar pistas se puede pasar con comodidad entre unas capas y otras sin tener que cambiar el modo de vista.
 
 \subsection{Previsualización 3D vs resultado final\label{sec:Modelo_3D}}
 
 Normalmente el \textit{footprint} de un componente incluye una serigrafía que delimita la zona de la placa que ocupará, garantizando que dos componentes cuya serigrafía no se solape no causarán problemas en el montaje final.
 
 Por desgracia, esto no siempre se cumple y en ocasiones puede ocurrir que dos componentes procedentes de una librería poco fiable contengan información errónea. 
-\\Como ya se ha mencionado anteriormente, un fallo en la fase de diseño de la electrónica del sistema puede tener un coste muy elevado. \\Para minimizar las posibilidades de error y asegurarse que el resultado final será el deseado KiCad permite realizar una representación 3D de todos los componentes así como su posición relativa en la placa.
+
+\clearpage
+
+Para minimizar las posibilidades de error y asegurarse que el resultado final será el deseado KiCad permite realizar una \textbf{representación 3D} de todos los componentes así como su posición relativa en la placa.
 
 
 \begin{figure} [h]
@@ -349,4 +350,4 @@ Por desgracia, esto no siempre se cumple y en ocasiones puede ocurrir que dos co
     \label{fig:Comparativa_PCB_final}
 \end{figure}
 
-En la figura \ref{fig:Comparativa_PCB_final} se puede comprobar que, efectivamente, la representación 3D proyectada  durante la fase de diseño ha resultado ser fiel al producto final obtenido.
+En la figura \ref{fig:Comparativa_PCB_final} se puede comprobar que, efectivamente, la \textbf{representación 3D proyectada}  durante la fase de diseño ha resultado ser \textbf{fiel al producto final} obtenido.

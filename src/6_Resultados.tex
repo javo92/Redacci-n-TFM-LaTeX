@@ -1,6 +1,6 @@
 \chapter{Resultados\label{sec:Resultados}}
 
-En el presente capítulo se han recopilado los resultados obtenidos tras cada una de las fases del proyecto. Por motivos de comprensión y presentación, \textbf{aquellos resultados asociados al desarrollo de la \acrshort{PCB} han sido presentados en el capítulo \ref{sec:Implementacion_PCB}} de modo que no se volverán a repetir en este. En caso de que se deseen revisar de nuevo estos se encuentran en el apartado \ref{sec:PCB_Resultados}.
+En el presente capítulo se han recopilado los resultados obtenidos tras cada una de las fases del proyecto. Por motivos de comprensión y presentación, \textbf{aquellos resultados asociados al desarrollo de la \acrshort{PCB} han sido presentados en el capítulo \ref{sec:Implementacion_PCB}} de modo que no se volverán a repetir en este. En caso de que se deseen revisar de nuevo, estos se encuentran en el apartado \ref{sec:PCB_Resultados}.
 
 Los siguientes apartados contienen aquellos resultados asociados al desarrollo del software tanto del microcontrolador STM32F4 como del ESP y su comunicación con LabView.
 
@@ -32,7 +32,7 @@ Tras comprobar que se recibe una señal con las características esperadas se pu
 
 \section{Medidas sobre señales reales\label{Resultados_Medida_Real}}
 
-Las primeras señales reales a medir han sido señales con características conocidas. De esta forma resulta muy sencillo identificar si algún elemento no está funcionando correctamente. Para una prueba inicial se preparó un generador de señales haciendo uso de un Arduino UNO. Esta señal presenta una amplitud que va entre 0V y 5V y una frecuencia de 2Hz. El resultado tras medir esta señal se encuentra representado en la figura \ref{fig:Senal_triangular_saturada}.
+Las primeras señales reales a medir han sido señales con características conocidas. De esta forma resulta muy sencillo identificar si algún elemento no está funcionando correctamente. Para una prueba inicial se preparó un generador de señales haciendo uso de un Arduino UNO y se generó una señal de amplitud entre 0V y 5V y frecuencia de 2Hz. El resultado tras medir esta señal se encuentra representado en la figura \ref{fig:Senal_triangular_saturada}.
 
 \begin{figure} [H]
     \centering
@@ -41,7 +41,7 @@ Las primeras señales reales a medir han sido señales con características cono
     \label{fig:Senal_triangular_saturada}
 \end{figure}
 
-Todos los parámetros se encuentran dentro de los rangos esperados, pero se aprecia una deformación en la señal en los picos superiores del triángulo. Este efecto es debido a la saturación del sistema, pues la amplitud máxima que es capaz de adquirir tanto en positivo como en negativo depende directamente de V$_{\text{REF}}$ (4.5V).
+La señal se está adquiriendo correctamente salvo por una pequeña deformación en los picos superiores del triángulo. Este efecto es debido a la saturación del sistema, pues la amplitud máxima que es capaz de adquirir tanto en positivo como en negativo depende directamente de V$_{\text{REF}}$ (4.5V).
 
 \clearpage
 
@@ -60,7 +60,7 @@ En primer lugar se realizó una estimación del efecto que tendría aplicar un f
     \label{fig:Notch_Matlab}
 \end{figure}
 
-Como se puede observar, la componente de 50Hz ha sido eliminada casi por completo a costa de afectar ligeramente a la amplitud de la señal original. Tras comprobar que el resultado es satisfactorio se procedió a realizar una implementación del mismo filtro haciendo uso de CMSIS-DSP y el microcontrolador STM32F4.
+Como se puede observar, la componente de 50Hz \textbf{ha sido eliminada} casi por completo a costa de afectar ligeramente a la amplitud de la señal original. Tras comprobar que el resultado es satisfactorio se procedió a realizar una implementación del mismo filtro haciendo uso de CMSIS-DSP y el microcontrolador STM32F4.
 
 Al no contarse con generadores de señales capaces de producir una señal de estas características se optó por generar una señal artificial con MatLab y almacenarla en la memoria del STM en la fase de programación. La figura \ref{fig:Filtro_en_STM} muestra la señal original (a) y la señal tras aplicarle el filtro (b).
 
@@ -82,7 +82,7 @@ Al no contarse con generadores de señales capaces de producir una señal de est
   \label{fig:Filtro_en_STM}
 \end{figure}
 
-Tal y como se esperaba, la señal de 50Hz ha sido eliminada completamente, siendo los resultados obtenidos prácticamente idénticos a los simulados.
+Tal y como se esperaba, la señal de 50Hz ha sido eliminada completamente, siendo los \textbf{resultados} obtenidos prácticamente \textbf{idénticos a los simulados}.
 
 El diseño del filtro fuerza a que las componentes en frecuencia cercanas a 50Hz se vean más atenuadas que aquellas más alejadas. Las siguientes figuras muestran señales de 5Hz, 10Hz, 50Hz y 65Hz y como el cambio de frecuencia afecta a la amplitud de la señal.
 
@@ -152,11 +152,11 @@ La figura \ref{fig:Sistema_medida} muestra el sistema de medida utilizado para a
 Por último se incluirán los resultados obtenidos mediante la transmisión de información por TCP y UDP a través de WiFi.
 
 La librería WiFi del ESP contienen un gran número de funciones relacionadas con la transmisión de información tanto por UDP como por TCP.
-Con el objetivo de transmitir los datos de la forma más fiable posible se optó por transmitirlos a través de TCP, pues este protocolo tiene sistemas que aseguran que el paquete llegará al destino.
+Con el objetivo de transmitir los datos de la forma más \textbf{fiable} posible se optó por transmitirlos a través de \textbf{TCP}, pues este protocolo tiene sistemas que aseguran que el paquete llegará al destino.
 
 Sin embargo utilizar este protocolo se tradujo en un tiempo de transmisión por cada 250 muestras superior a los 2 minutos haciendo inviable su uso.
 
-En vista de la eficiencia de transmisión conseguida con TCP se utilizó UDP para la transmisión de la información al ordenador. Haciendo uso de este sistema la transmisión se completaba en apenas 1 segundo pero no todos los paquetes llegaban. Tras un poco de investigación se observó que cuanto mayor fuese el retardo introducido entre paquetes menos paquetes se perdían así que se afinó la transmisión hasta conseguir una tasa de transferencia lo suficientemente rápida con una pérdida de paquetes mínima.
+En vista de la eficiencia de transmisión conseguida con TCP se utilizó \textbf{UDP} para la transmisión de la información al ordenador. Haciendo uso de este sistema la transmisión se completaba en apenas 1 segundo pero no todos los paquetes llegaban. Tras un poco de investigación se observó que cuanto mayor fuese el retardo introducido entre paquetes menos paquetes se perdían así que se afinó la transmisión hasta conseguir una tasa de \textbf{transferencia lo suficientemente rápida con una pérdida de paquetes mínima}.
 
 \clearpage
 
@@ -190,6 +190,6 @@ Con esta información se deduce que para que se reciban todas las muestras que s
 
 Este sistema sería ideal si entre transmisiones el sistema de adquisición capturase la siguiente muestra, pues permitiría montar un sistema de adquisición contínuo. Por desgracia esto no es compatible con el filtrado de la señal, al menos no directamente. Además la posibilidad de perder muestras es una característica no deseable.
 
-Finalmente se realizó una segunda iteración sobre TCP, revisando en profundidad las librerías se detectó un error que provocaba un aumento en el tiempo de transmisión muy elevado (es importante recordar que dichas librerías no son oficiales y están en constante desarrollo por lo que la presencia de errores menores es algo habitual). Tras solventar dicho error el tiempo de transmisión de 250 muestras bajó a 1.28 segundos.
+Finalmente se realizó una segunda iteración sobre TCP, revisando en profundidad las librerías se detectó un error que provocaba un aumento en el tiempo de transmisión muy elevado (es importante recordar que \textbf{dichas librerías no son oficiales} y están en constante desarrollo por lo que la presencia de errores menores es algo habitual). Tras solventar dicho error el tiempo de transmisión de 250 muestras bajó a 1.28 segundos.
 
-El resultado final es muy cercano al conseguido con UDP sin la posibilidad de perder muestras como ocurría con ese protocolo.
+\textbf{El resultado final es muy cercano al conseguido con UDP sin la posibilidad de perder muestras como ocurría con ese protocolo.}
